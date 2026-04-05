@@ -19,6 +19,7 @@ body {
 /* SIDEBAR */
 .sidebar {
     width: 220px;
+    max-width: 300px;
     background: #020617;
     padding: 20px;
     display: flex;
@@ -147,4 +148,16 @@ img {
     height: 500px;
     border-radius: 12px;
     margin-bottom: 15px;
+}
+div.chat-divider {
+    width: 5px;
+    height: 100%;
+    cursor: col-resize;
+    z-index: 10;
+    flex-shrink: 0;
+    background: #0f172a;
+    transition: background-color .1s ease-in-out;
+}
+div.chat-divider:hover {
+    background-color: grey;
 }

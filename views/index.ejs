@@ -4,77 +4,78 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Higher or Lower</title>
+    <script src="/javascripts/resize.js"></script>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="/stylesheets/style.css">
 </head>
-<body>
+    <body>
 
-<div class="app">
+        <div class="app">
 
-    <!-- SIDEBAR -->
-    <aside class="sidebar">
-        <div class="logo">HL</div>
+            <!-- SIDEBAR -->
+            <aside class="sidebar" id="nav">
+                <div class="logo">HL</div>
 
-        <nav>
-            <a href="#" class="active">Home</a>
-            <a href="#">Gioca</a>
-            <a href="#">Classifica</a>
-        </nav>
+                <nav>
+                    <a href="#" class="active">Home</a>
+                    <a href="#">Gioca</a>
+                    <a href="#">Classifica</a>
+                </nav>
 
-        <div class="sidebar-footer">
-            <a href="#">Contatti</a>
-            <a href="#">Privacy</a>
+                <div class="sidebar-footer">
+                    <a href="#">Contatti</a>
+                    <a href="#">Privacy</a>
+                </div>
+            </aside>
+            <div class="chat-divider" id="chat-divider"></div>
+            <!-- MAIN -->
+            <main class="main" id="main">
+
+                <!-- HEADER -->
+                <header class="topbar">
+                    <h1>Higher or Lower</h1>
+                    <button class="play-btn">Gioca ora</button>
+                </header>
+
+                <!-- HERO -->
+                <section class="hero">
+                    <div class="hero-text">
+                        <h2>Chi è più cercato?</h2>
+                        <p>
+                            Metti alla prova il tuo intuito: quale tra due cose è più popolare?
+                        </p>
+                        <button class="cta">Inizia subito</button>
+                    </div>
+
+                    <div class="hero-image">
+                        <img src="images/hero-image.jpg" alt="preview">
+                    </div>
+                </section>
+
+                <!-- INFO SECTION -->
+                <section class="info">
+                    <div class="card">
+                        <h3>🎯 Semplice</h3>
+                        <p>Due scelte, una decisione.</p>
+                    </div>
+
+                    <div class="card">
+                        <h3>🔥 Addictive</h3>
+                        <p>Una volta iniziato non smetti.</p>
+                    </div>
+
+                    <div class="card">
+                        <h3>🏆 Sfida</h3>
+                        <p>Batti il tuo record.</p>
+                    </div>
+                </section>
+
+            </main>
+
         </div>
-    </aside>
 
-    <!-- MAIN -->
-    <main class="main">
-
-        <!-- HEADER -->
-        <header class="topbar">
-            <h1>Higher or Lower</h1>
-            <button class="play-btn">Gioca ora</button>
-        </header>
-
-        <!-- HERO -->
-        <section class="hero">
-            <div class="hero-text">
-                <h2>Chi è più cercato?</h2>
-                <p>
-                    Metti alla prova il tuo intuito: quale tra due cose è più popolare?
-                </p>
-                <button class="cta">Inizia subito</button>
-            </div>
-
-            <div class="hero-image">
-                <img src="images/hero-image.jpg" alt="preview">
-            </div>
-        </section>
-
-        <!-- INFO SECTION -->
-        <section class="info">
-            <div class="card">
-                <h3>🎯 Semplice</h3>
-                <p>Due scelte, una decisione.</p>
-            </div>
-
-            <div class="card">
-                <h3>🔥 Addictive</h3>
-                <p>Una volta iniziato non smetti.</p>
-            </div>
-
-            <div class="card">
-                <h3>🏆 Sfida</h3>
-                <p>Batti il tuo record.</p>
-            </div>
-        </section>
-
-    </main>
-
-</div>
-
-</body>
+    </body>
 </html>
