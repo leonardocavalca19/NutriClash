@@ -6,10 +6,10 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/', function(req, res, next) {
-  const { nome, cognome, username, eta, email, password, confermaPassword } = req.body;
-  console.log('Dati ricevuti:', { nome, cognome, username, eta, email, password, confermaPassword });
+  const { nome, cognome, eta, email, password, confermaPassword } = req.body;
+  console.log('Dati ricevuti:', { nome, cognome, eta, email, password, confermaPassword });
 
-  res.redirect('/login');
+  res.redirect('/username'); 
 });
 
 
