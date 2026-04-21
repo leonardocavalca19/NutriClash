@@ -8,8 +8,8 @@ router.get('/', function(req, res, next) {
 module.exports = router;
 
 router.post('/', function(req, res, next) {
-  const { email, password } = req.body;
-  console.log('Dati ricevuti:', { email, password });
+  const { email_username, password } = req.body;
+  console.log('Dati ricevuti:', { email_username, password });
 
-  res.redirect('/login'); //TODO: sostituire con la pagina di destinazione dopo il login, ad esempio /dashboard
+  res.redirect('/pippo'); //TODO: sostituire con la pagina di destinazione dopo il login, ad esempio /dashboard
 });
