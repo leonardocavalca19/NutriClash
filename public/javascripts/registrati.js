@@ -4,7 +4,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const nome = document.getElementById('Nome');
     const cognome = document.getElementById('Cognome');
-    const username = document.getElementById('Username');
     const email = document.getElementById('email');
     const password = document.getElementById('password');
     const confermaPassword = document.getElementById('confermaPassword');
@@ -34,22 +33,17 @@ document.addEventListener('DOMContentLoaded', () => {
             errori.push("Il cognome non è valido.");
         }
 
-        // 2. Validazione Username
-        if (username.value.length < 4) {
-            errori.push("Lo username deve avere almeno 4 caratteri.");
-        }
-
-        // 3. Validazione Email
+        // 2. Validazione Email
         if (!regexEmail.test(email.value)) {
             errori.push("Inserisci un indirizzo email valido.");
         }
 
-        // 4. Validazione Password
+        // 3. Validazione Password
         if (!regexPassword.test(password.value)) {
             errori.push("La password deve contenere almeno 8 caratteri, tra cui lettere e numeri.");
         }
 
-        // 5. Controllo uguaglianza Password
+        // 4. Controllo uguaglianza Password
         if (password.value !== confermaPassword.value) {
             errori.push("Le password non coincidono.");
         }
