@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%title%></title>
+    <link rel="stylesheet" href="/stylesheets/registrati.css">
+</head>
+<body>
+
+    <div class="login-container">
+        <div class="login-box">
+            <h2>Username</h2>
+            <p class="subtitle">Inserisci un username</p>
+
+            <% if (locals.error) { %>
+                <div class="error-message">
+                    <%= error %>
+                </div>
+            <% } %>
+
+            <form action="/username" method="POST">
+                <section>
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" placeholder="mariorossi2000">
+                </section>
+
+                <button type="submit" class="login-button">Invia</button>
+            </form>
+
+            <footer>
+                <p>Torna a <a href="/registrati">Registrati</a></p>
+            </footer>
+        </div>
+    </div>
+
+</body>
+</html>
