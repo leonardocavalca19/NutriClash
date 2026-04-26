@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Higher or Lower</title>
+    <title><%= title %></title>
     <script src="/javascripts/resize.js"></script>
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
@@ -22,7 +22,7 @@
 
                 <nav>
                     <a href="#" class="active">Home</a>
-                    <a href="#">Gioca</a>
+                    <a href="/game">Gioca</a>
                     <a href="#">Classifica</a>
                     <a href="#">Il nostro obiettivo</a>
                 </nav>
@@ -40,7 +40,7 @@
                 <!-- HEADER -->
                 <header class="topbar">
                     <h1>NutriClash</h1>
-                    <button class="play-btn">Gioca ora</button>
+                    <a class="play-btn" href="/game">Gioca ora</a>
                 </header>
 
                 <!-- HERO -->
@@ -50,7 +50,7 @@
                         <p>
                             Metti alla prova il tuo intuito: quale tra due cose è più popolare?
                         </p>
-                        <button class="cta">Inizia subito</button>
+                        <a class="cta" href="/game">Inizia subito</a>
                     </div>
 
                     <div class="hero-image">
