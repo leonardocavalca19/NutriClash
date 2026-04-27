@@ -1,8 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.querySelector('form');
 
-
-
     const nome = document.getElementById('Nome');
     const cognome = document.getElementById('Cognome');
     const dataNascita = document.getElementById('dataNascita');
