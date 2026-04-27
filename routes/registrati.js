@@ -11,3 +11,5 @@ router.post('/', function(req, res, next) {
 
   res.redirect('/username'); 
 });
+
+module.exports = router;
