@@ -1,0 +1,14 @@
+.container-game
+{
+    display: flex;
+    justify-content: space-evenly;
+}
+.element1, .element2
+{
+    width: fit-content;
+    text-align: center;
+}
+.element1 > img, .element2 > img
+{
+    width: auto;
+}

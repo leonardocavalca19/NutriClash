@@ -1,13 +1,53 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
-
-    <link rel="stylesheet" href="/stylesheets/style.css">
+    <link rel="stylesheet" href="./stylesheets/style.css">
+    <link rel="stylesheet" href="./stylesheets/game.css">
+    <script src="/javascripts/game.js"></script>
+    <script src="/javascripts/resize.js"></script>
     <title><%= title %></title>
 </head>
-<body></body>
+<body>
+    <div class="app">
+        <!-- SIDEBAR -->
+        <aside class="sidebar" id="nav">
+            <div class="logo">
+                <img src="/logo.png" alt="LOGO">
+            </div>
+    
+            <nav>
+                <a href="#" class="active">Home</a>
+                <a href="/game">Gioca</a>
+                <a href="#">Classifica</a>
+                <a href="#">Il nostro obiettivo</a>
+            </nav>
+    
+            <div class="sidebar-footer">
+                <a href="#">Contatti</a>
+                <a href="#">Privacy</a>
+                <a href="/login">Accedi</a>
+            </div>
+        </aside>
+        <div class="chat-divider" id="chat-divider"></div>
+        <main class="main" id="main">
+
+            <p>Tempo: </p><span id="timer">0</span>
+
+            <div class="container-game">
+                <div class="element1" id="element1">
+                    <img src="" alt="ELEMENTO 1" id="img-element1">
+                    <p id="name-element1"></p>
+                </div>
+                <div class="element2" id="element2">
+                    <img src="" alt="ELEMENTO 2" id="img-element2">
+                    <p id="name-element2"></p>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
 </html>

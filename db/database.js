@@ -30,16 +30,28 @@ function createTabella()
     const sqlUtenti = `
         CREATE TABLE IF NOT EXISTS utenti (
             username TEXT PRIMARY KEY,
-            email TEXT NOT NULL,
+            email TEXT UNIQUE NOT NULL,
             nome TEXT NOT NULL,
             cognome TEXT NOT NULL,
-            eta INTEGER NOT NULL
+            dataNascita DATE NOT NULL,
+            sesso TEXT NOT NULL,
+            password TEXT NOT NULL
         )
-    `
+    `;
+
+    const sqlPartita = `
+        CREATE TABLE IF NOT EXISTS partita (
+            idPartita INTEGER PRIMARY KEY,
+            punteggio INTEGER NOT NULL,
+            tempo INTEGER NOT NULL,
+            username TEXT NOT NULL REFERENCES utenti(username)
+        )
+    `;
 
     db.serialize(()=>{
         db.run(sqlProdotti, (err)=>{ if(err){ console.log("Errore creazione tabella: ", err.message) } });
         db.run(sqlUtenti, (err)=>{ if(err){ console.log("Errore creazione tabella: ", err.message) } });
+        db.run(sqlPartita, (err)=>{ if(err){ console.log("Errore creazione tabella: ", err.message) } });
     });
 }
 
