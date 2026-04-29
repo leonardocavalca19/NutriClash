@@ -3,7 +3,7 @@ var router = express.Router();
 
 
 router.get('/', function(req, res, next) {
-  res.render('obbiettivo', { title: 'Obbiettivo' });
+  res.render('obiettivo', { title: 'Il nostro obiettivo' });
 });
 
 module.exports = router;

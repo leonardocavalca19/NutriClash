@@ -23,7 +23,9 @@ router.get('/call', function(req, res, next){
         }));
         res.json(list);
     });
-
 });
+
+/* GET SAVE GAME ON DB */
+router.get('/save', function(res, req, next){});
 
 module.exports = router;
