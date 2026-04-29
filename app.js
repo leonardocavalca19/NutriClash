@@ -27,6 +27,9 @@ var nutriscoreRouter = require('./routes/nutriscore');
 var gameRouter = require('./routes/game');
 var scontroRouter = require('./routes/scontro');
 var obiettivoRouter = require('./routes/obiettivo');
+var contattiRouter = require('./routes/contatti');
+var privacyRouter = require('./routes/privacy');
+
 
 var app = express();
 
@@ -49,6 +52,9 @@ app.use('/game', gameRouter);
 app.use('/nutriscore', nutriscoreRouter);
 app.use('/scontro', scontroRouter);
 app.use('/obiettivo', obiettivoRouter);
+app.use('/contatti', contattiRouter);
+app.use('/privacy', privacyRouter);
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

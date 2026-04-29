@@ -1,0 +1,71 @@
+/* --- STILI PRIVACY SEMPLIFICATA --- */
+
+.scheda-info {
+    background: #fff;
+    border-radius: 12px;
+    padding: 35px;
+    margin-bottom: 40px; /* Più spazio per staccare il blocco successivo */
+    border: 1px solid #eee;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+.scheda-info h3 {
+    color: #28a745;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+}
+
+.scheda-info p {
+    color: #555;
+    line-height: 1.8;
+    margin-bottom: 20px;
+}
+
+/* BLOCCO DOWNLOAD SEPARATO */
+.box-download-staccato {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #fff;
+    border: 1px solid #28a745;
+    padding: 20px 30px;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(40, 167, 69, 0.1);
+}
+
+.testo-dl h4 {
+    margin: 0;
+    color: #333;
+    font-size: 1.1rem;
+}
+
+.testo-dl p {
+    margin: 5px 0 0 0;
+    font-size: 0.9rem;
+    color: #777;
+}
+
+.pulsante-download {
+    background: #28a745;
+    color: white;
+    padding: 12px 25px;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.pulsante-download:hover {
+    background: #218838;
+    transform: scale(1.03);
+}
+
+/* Responsive */
+@media (max-width: 650px) {
+    .box-download-staccato {
+        flex-direction: column;
+        text-align: center;
+        gap: 20px;
+    }
+}
