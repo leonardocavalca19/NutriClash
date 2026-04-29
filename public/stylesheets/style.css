@@ -36,7 +36,6 @@ body {
     display: flex;
     flex-direction: column;
     gap: 15px;
-    margin-top: 40px;
 }
 
 .sidebar a {

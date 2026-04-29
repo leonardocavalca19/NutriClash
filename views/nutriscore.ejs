@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NutriClash - Nutri-Score</title>
+    <script src="/javascripts/resize.js"></script>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <link rel="stylesheet" href="/stylesheets/nutriscore.css">
+</head>
+<body>
+
+    <div class="app">
+        <aside class="sidebar" id="nav">
+            <div class="logo">
+                <img src="/logo.png" alt="LOGO">
+            </div>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/game">Gioca</a>
+                <a href="#">Classifica</a>
+                <a href="#">Il nostro obiettivo</a>
+                <a href="/nutriscore" class="active">Nutri-score</a>
+                <a href="#">Pagina informativa 1</a>
+                <a href="#">Pagina informativa 2</a>
+                <a href="#">Pagina informativa 3</a>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="#">Contatti</a>
+                <a href="#">Privacy</a>
+                <a href="/login">Accedi</a>
+            </div>
+        </aside>
+
+        <div class="chat-divider" id="chat-divider"></div>
+
+        <main class="main" id="main">
+            <header class="topbar">
+                <h1>Nutriscore</h1>
+                <a class="play-btn" href="/login">Accedi</a>
+            </header>
+
+            <section class="nutri-content">
+                
+                <div class="info-card">
+                    <h2 class="primo">Cos'è il Nutri-Score?</h2>
+                    <p class="primo">
+                        Il Nutri-Score è un sistema di etichettatura nutrizionale sintetica, nato per aiutare a capire a colpo d'occhio la qualità dei prodotti che si mettono nel carrello. Progettato per tradurre la complessità dei valori nutrizionali di un alimento in un formato visivo immediato, il Nutri-Score riassume tutto in una scala intuitiva di 5 colori e 5 lettere
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <h3>La Scala dei Valori</h3>
+                    <table class="nutri-table">
+                        <thead>
+                            <tr>
+                                <th>Grado</th>
+                                <th>Valutazione</th>
+                                <th>Descrizione</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% 
+                            const scaleData = [
+                                { l: 'A', c: 'Verde Scuro', d: 'Ottima qualità nutrizionale' },
+                                { l: 'B', c: 'Verde Chiaro', d: 'Buona qualità nutrizionale' },
+                                { l: 'C', c: 'Giallo', d: 'Qualità nutrizionale media' },
+                                { l: 'D', c: 'Arancione', d: 'Qualità nutrizionale scarsa' },
+                                { l: 'E', c: 'Rosso', d: 'Limitare il consumo' }
+                            ];
+                            %>
+                            <% scaleData.forEach(function(item) { %>
+                                <tr>
+                                    <td><span class="badge-ns ns-<%= item.l %>"><%= item.l %></span></td>
+                                    <td><span class="txt-<%= item.l %>"><%= item.c %></span></td>
+                                    <td style="color: #666;"><%= item.d %></td>
+                                </tr>
+                            <% }); %>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="info-card">
+                    <h2 class="section-title">⚙️ Come viene calcolato?</h2>
+                    <p>Il voto viene assegnato analizzando <strong>100g</strong> di prodotto. L'algoritmo calcola un punteggio basato sulla bilancia tra "nemici" e "alleati" della salute:</p>
+                    
+                    <div class="grid-factors">
+                        <div class="factor-card factor-neg">
+                            <strong>Negativi</strong>
+                            <ul>
+                                <li>Calorie eccessive</li>
+                                <li>Zuccheri semplici</li>
+                                <li>Grassi saturi</li>
+                                <li>Sale (Sodio)</li>
+                            </ul>
+                        </div>
+                        <div class="factor-card factor-pos">
+                            <strong>Positivi</strong>
+                            <ul>
+                                <li>Fibre alimentari</li>
+                                <li>Proteine</li>
+                                <li>Frutta e Verdura</li>
+                                <li>Legumi e Frutta a guscio</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="formula-box">
+                        Score = [Negativi] - [Positivi]
+                    </div>
+                </div>
+
+                <div class="info-card text-center" style="border-top: 5px solid #28a745;">
+                    <h2>Pronto a testare le tue conoscenze?</h2>
+                    <p>Su <strong>NutriClash</strong>, giochiamo proprio con queste etichette. Sapresti distinguere uno yogurt "A" da uno "C"?</p>
+                    <a href="/game" class="but">Inizia la Sfida</a>
+                </div>
+
+            </section>
+        </main>
+    </div>
+
+</body>
+</html>
