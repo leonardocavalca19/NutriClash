@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <script src="/javascripts/resize.js"></script>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <link rel="stylesheet" href="/stylesheets/nutriscore.css">
+    <link rel="stylesheet" href="/stylesheets/scontro.css">
+</head>
+<body>
+
+    <div class="app">
+            <aside class="sidebar" id="nav">
+                <div class="logo">
+                    <img src="/logo.png" alt="LOGO">
+                </div>
+
+                <nav>
+                    <a href="#" >Home</a>
+                    <a href="/game">Gioca</a>
+                    <a href="#">Classifica</a>
+                    <a href="/obbiettivo">Il nostro obiettivo</a>
+                    <a href="/nutriscore">Nutri-score</a>
+                    <a href="/scontro" class="active">Scontro tra Prodotti</a>
+                </nav>
+
+                <div class="sidebar-footer">
+                    <a href="#">Contatti</a>
+                    <a href="#">Privacy</a>
+                    <a href="/login">Accedi</a>
+                </div>
+            </aside>
+
+        <main class="main" id="main">
+            <header class="topbar">
+                <h1>Scontro tra Prodotti</h1>
+                <p>Miti da sfatare e confronti intelligenti</p>
+            </header>
+
+            <section class="nutri-content">
+                
+                <div class="info-card intro-clash">
+                    <h2>La Regola d'Oro del Confronto</h2>
+                    <p>
+                        Il Nutri-Score non è nato per confrontare una mela con una bistecca. Il suo vero potere emerge quando mettiamo a confronto <strong>prodotti della stessa categoria</strong> o <strong>prodotti consumati nello stesso momento della giornata</strong>.
+                    </p>
+                </div>
+
+                <div class="clash-section">
+                    <h3 class="clash-title">Sfida 1: Cereali</h3>
+                    <div class="clash-row">
+                        <div class="product-box">
+                            <a href="https://world.openfoodfacts.org/product/5059319031491/kellogg-s-all-bran-natural" target="_blank">
+                                <img src="https://images.openfoodfacts.org/images/products/505/931/903/1491/front_it.22.400.jpg" alt="Cereali Integrali">
+                            </a>
+                            <span class="badge-ns ns-A">A</span>
+                            <h4>Cereali Integrali</h4>
+                            <p>Ricchi di fibre, pochi zuccheri.</p>
+                        </div>
+                        <div class="vs-badge">VS</div>
+                        <div class="product-box">
+                            <a href="https://world.openfoodfacts.org/product/8017596057792/multi-grain-cioccolato-fondente-eurospin" target="_blank">
+                                <img src="https://images.openfoodfacts.org/images/products/801/759/605/7792/front_it.27.400.jpg" alt="Cereali al cioccolato">
+                            </a>
+                            <span class="badge-ns ns-D">D</span>
+                            <h4>Cereali Extra-Golosità</h4>
+                            <p>Molti zuccheri e grassi saturi.</p>
+                        </div>
+                    </div>
+                    <div class="analysis-box">
+                        <strong>L'Analisi:</strong> Qui il Nutri-Score aiuta a capire che molti prodotti venduti come "per la colazione dei campioni" sono in realtà carichi di zuccheri. Scegliere la <strong>A</strong> significa energia a lento rilascio ed evitare zuccheri complessi di un prodotto molto raffinato.
+                    </div>
+                </div>
+
+                <div class="clash-section highlight-paradox">
+                    <h3 class="clash-title">Sfida 2: Il "Paradosso" Salmone vs Patatine</h3>
+                    <div class="clash-row">
+                        <div class="product-box">
+                            <a href="https://it.openfoodfacts.org/product/8001120600851/salmone-scozzese-affumicato-coop" target="_blank">
+                                <img src="https://images.openfoodfacts.org/images/products/800/112/060/0851/front_it.11.400.jpg" alt="Salmone Affumicato">
+                            </a>
+                            <span class="badge-ns ns-D">D</span>
+                            <h4>Salmone Affumicato</h4>
+                            <small>Sale e fumo</small>
+                        </div>
+                        <div class="vs-badge">VS</div>
+                        <div class="product-box">
+                            <a href="https://it.openfoodfacts.org/product/8003170012455/patatine-da-forno-conad" target="_blank">
+                                <img src="https://images.openfoodfacts.org/images/products/800/317/001/2455/front_it.9.400.jpg" alt="Patatine da Forno">
+                            </a>
+                            <span class="badge-ns ns-A">A</span>
+                            <h4>Patatine da Forno</h4>
+                            <small>99% Patate</small>
+                        </div>
+                    </div>
+                    <div class="analysis-box warning">
+                        <strong>Perché le patatine vincono?</strong> Le patatine surgelate da forno sono solo patate tagliate con pochissimi grassi aggiunti. Il salmone è un pesce nobile, ma la versione affumicata è una "bomba" di sale per la conservazione.
+                        <br><strong>Il trucco:</strong> Il Nutri-Score punisce i processi industriali (troppo sale). Il salmone fresco sarebbe una <strong>A</strong>, ma quello lavorato perde punti preziosi.
+                    </div>
+                </div>
+
+                <div class="clash-section highlight-paradox">
+                    <h3 class="clash-title">Sfida 3: All'interno del Sugo Pronto</h3>
+                    <div class="clash-row">
+                        <div class="product-box">
+                            <a href="https://it.openfoodfacts.org/product/8004690950043/passata-la-molisana" target="_blank">
+                                <img src="https://images.openfoodfacts.org/images/products/800/469/095/0043/front_it.50.400.jpg" alt="Patatine da Forno">
+                            </a>
+                            <span class="badge-ns ns-A">A</span>
+                            <h4>Passata di pomodoro</h4>
+                            <small>Solo pomodoro e erbe</small>
+                        </div>
+                        <div class="vs-badge">VS</div>
+                        <div class="product-box">
+                            <a href="https://it.openfoodfacts.org/product/80791539/sugo-alla-carbonara-giovanni-rana" target="_blank">
+                                <img src="https://images.openfoodfacts.org/images/products/000/008/079/1539/front_it.28.400.jpg" alt="Sugo alla Carbonara">
+                            </a>
+                            <span class="badge-ns ns-D">D</span>
+                            <h4>Sugo alla Carbonara</h4>
+                            <small>Grassi saturi e molto sale</small>
+                        </div>
+                    </div>
+                    <div class="analysis-box warning">
+                        <strong>Perché questa differenza?</strong> Entrambi sono condimenti per la pasta nello stesso scaffale. La versione al basilico è pura verdura processata pochissimo. La versione alla carbonara è un mix industriale di grassi animali e sodio.
+                        <br><strong>Il trucco:</strong> Il Nutri-Score ti dice che se vuoi condire la pasta ogni giorno, la <strong>A</strong> è la scelta sicura, mentre la <strong>D</strong> è uno "sfizio" da limitare.
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <h3>Tabella Riassuntiva dei Confronti</h3>
+                    <table class="clash-summary-table">
+                        <thead>
+                            <tr>
+                                <th>Categoria</th>
+                                <th>Scelta Migliore</th>
+                                <th>Scelta da Limitare</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Snack Salati</td>
+                                <td>Popcorn fatti in casa (A)</td>
+                                <td>Patatine fritte (D)</td>
+                            </tr>
+                            <tr>
+                                <td>Yogurt</td>
+                                <td>Yogurt Bianco Naturale (A)</td>
+                                <td>Yogurt alla Frutta con zuccheri (C)</td>
+                            </tr>
+                            <tr>
+                                <td>Bibite</td>
+                                <td>Spremuta d'Arancia (C)</td>
+                                <td>Aranciata gassata (E)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="info-card text-center" style="border-top: 5px solid #28a745;">
+                    <h2>Pronto a testare le tue conoscenze?</h2>
+                    <p>Su <strong>NutriClash</strong>, giochiamo proprio con queste etichette. Sapresti distinguere uno yogurt "A" da uno "C"?</p>
+                    <a href="/game" class="but">Inizia la Sfida</a>
+                </div>
+
+            </section>
+        </main>
+    </div>
+
+</body>
+</html>

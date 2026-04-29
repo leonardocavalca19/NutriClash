@@ -25,6 +25,8 @@ var registratiRouter = require('./routes/registrati');
 var loginRouter = require('./routes/login');
 var nutriscoreRouter = require('./routes/nutriscore');
 var gameRouter = require('./routes/game');
+var scontroRouter = require('./routes/scontro');
+var obbiettivoRouter = require('./routes/obbiettivo');
 
 var app = express();
 
@@ -45,6 +47,8 @@ app.use('/registrati', registratiRouter);
 app.use('/login', loginRouter);
 app.use('/game', gameRouter);
 app.use('/nutriscore', nutriscoreRouter);
+app.use('/scontro', scontroRouter);
+app.use('/obbiettivo', obbiettivoRouter);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

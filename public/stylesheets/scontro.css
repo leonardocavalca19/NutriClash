@@ -1,0 +1,102 @@
+/* Stili specifici per la pagina Scontro tra Prodotti */
+
+.intro-clash {
+    border-bottom: 4px solid #d63031;
+}
+
+.clash-section {
+    background: white;
+    border-radius: 20px;
+    padding: 30px;
+    margin-bottom: 40px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    border: 1px solid #eee;
+}
+
+.clash-title {
+    text-align: center;
+    font-size: 1.5rem;
+    margin-bottom: 30px;
+    color: #2d3436;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.clash-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.product-box {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+    background: #fbfbfb;
+    border-radius: 15px;
+    transition: transform 0.3s;
+}
+
+.product-box:hover {
+    transform: translateY(-5px);
+}
+a> img{
+    width: 100%;
+    height: auto;
+    margin-bottom: 15px;
+}
+
+.vs-badge {
+    font-size: 2rem;
+    font-weight: 900;
+    color: #d63031;
+    font-style: italic;
+    text-shadow: 2px 2px 0px rgba(0,0,0,0.1);
+}
+
+.analysis-box {
+    background: #e1f5fe;
+    padding: 20px;
+    border-radius: 12px;
+    border-left: 5px solid #03a9f4;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+.analysis-box.warning {
+    background: #fff3e0;
+    border-left-color: #ff9800;
+}
+
+/* Tabella riassuntiva */
+.clash-summary-table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+}
+
+.clash-summary-table th {
+    background: #f1f2f6;
+    padding: 15px;
+    text-align: left;
+}
+
+.clash-summary-table td {
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .clash-row {
+        flex-direction: column;
+    }
+    .vs-badge {
+        margin: 10px 0;
+    }
+}
