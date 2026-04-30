@@ -12,3 +12,13 @@
 {
     width: auto;
 }
+.nutriscore
+{
+    font-size: 30px;
+    font-weight: bold;
+}
+.nutriscore.a { color: green; }
+.nutriscore.b { color: lightgreen; }
+.nutriscore.c { color: orange; }
+.nutriscore.d { color: darkorange; }
+.nutriscore.e { color: red; }

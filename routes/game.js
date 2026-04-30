@@ -25,6 +25,9 @@ router.get('/call', function(req, res, next){
     });
 });
 
+/* GET loads defeat screen */
+router.get('/lost', function(req, res, next){ res.render("lost"); });
+
 /* GET SAVE GAME ON DB */
 router.get('/save', function(res, req, next){});
 
