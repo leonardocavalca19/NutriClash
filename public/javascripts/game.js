@@ -37,7 +37,7 @@ function startTimer()
 {
     timer = setInterval(() => {
         secondi++;
-        document.getElementById("timer").innerText = secondi;
+        document.getElementById("timer").innerText = Math.floor(secondi/60) + ":" + (secondi%60<10?0:"") + secondi%60;
     }, 1000);
 }
 
@@ -58,16 +58,6 @@ async function lost(tempo, data = null)
         });
     const page = await response.text();
     document.getElementById("main").innerHTML = page;
-    /*
-    stopTimer();
-    document.getElementById("main").innerHTML = "";
-    partita.punteggio = punteggio;
-    partita.tempo = tempo;
-
-    let p = document.createElement("p");
-    p.innerText = "PERSO!!!";
-    document.getElementById("main").appendChild(p);
-    */
 }
 
 async function setItems()
@@ -79,11 +69,11 @@ async function setItems()
         listaProdotti = listaProdotti.concat(nuovaLista);
     }
     const [p1, p2] = listaProdotti;
-    img_element1.src = p1.image_url;
-    img_element2.src = p2.image_url;
+    img_element1.src = p1.image_url ? p1.image_url : "/images/not-available.png";
+    img_element2.src = p2.image_url ? p2.image_url : "/images/not-available.png";
 
-    name_element1.innerText = (p1.product_name_it ?? p1.product_name) + p1.nutriscore_grade;
-    name_element2.innerText = (p2.product_name_it ?? p2.product_name) + p2.nutriscore_grade;
+    name_element1.innerText = (p1.product_name_it ?? p1.product_name) + p1.nutriscore_grade; //nutriscore temporaneo
+    name_element2.innerText = (p2.product_name_it ?? p2.product_name) + p2.nutriscore_grade; //nutriscore temporaneo
 }
 
 async function checkChoice(index)
@@ -124,6 +114,9 @@ function showNutriScore()
     const s1 = document.getElementById("score1");
     const s2 = document.getElementById("score2");
 
+    s1.style.display = "flex";
+    s2.style.display = "flex";
+
     s1.innerText = p1.nutriscore_grade.toUpperCase();
     s2.innerText = p2.nutriscore_grade.toUpperCase();
 
@@ -132,8 +125,8 @@ function showNutriScore()
 }
 function hideNutriScore()
 {
-    document.getElementById("score1").innerText = "";
-    document.getElementById("score2").innerText = "";
+    document.getElementById("score1").style.display = "none";
+    document.getElementById("score2").style.display = "none";
 }
 
 function delay(ms)

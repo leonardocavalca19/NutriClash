@@ -1,24 +1,47 @@
 .container-game
 {
-    display: flex;
-    justify-content: space-evenly;
+    margin: auto;
+    padding: 20px;
+    display: grid;
+    grid-template-columns: 40% 10% 40%;
 }
 .element1, .element2
 {
-    width: fit-content;
+    border: 5px solid;
+    border-radius: 15%;
+    border-image: linear-gradient(45deg, red, blue) 1;
+    margin: auto;
+    width: 70%;
+    height: 100%;
     text-align: center;
 }
 .element1 > img, .element2 > img
 {
-    width: auto;
+    margin: auto;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    display: block;
+}
+.versus
+{
+    margin: auto;
 }
 .nutriscore
 {
-    font-size: 30px;
-    font-weight: bold;
+    margin: 20px auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 45px;
+    height: 45px;
+    border-radius: 10px;
+    font-weight: 800;
+    font-size: 1.6rem;
+    color: #0f172a;
 }
-.nutriscore.a { color: green; }
-.nutriscore.b { color: lightgreen; }
-.nutriscore.c { color: orange; }
-.nutriscore.d { color: darkorange; }
-.nutriscore.e { color: red; }
+.nutriscore.a { background-color: #008b4c; }
+.nutriscore.b { background-color: #85bb2f; }
+.nutriscore.c { background-color: #fecb02; }
+.nutriscore.d { background-color: #ee8100; }
+.nutriscore.e { background-color: #e63e11; }
