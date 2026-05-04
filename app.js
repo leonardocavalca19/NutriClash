@@ -29,6 +29,7 @@ var scontroRouter = require('./routes/scontro');
 var obiettivoRouter = require('./routes/obiettivo');
 var contattiRouter = require('./routes/contatti');
 var privacyRouter = require('./routes/privacy');
+var accountRouter = require('./routes/account');
 
 
 var app = express();
@@ -54,6 +55,7 @@ app.use('/scontro', scontroRouter);
 app.use('/obiettivo', obiettivoRouter);
 app.use('/contatti', contattiRouter);
 app.use('/privacy', privacyRouter);
+app.use('/account', accountRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

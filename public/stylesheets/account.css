@@ -1,0 +1,121 @@
+.contenuto-principale {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+/* La scheda principale divisa in due colonne */
+.scheda-profilo {
+    background: white;
+    border-radius: 15px;
+    border: 1px solid #eee;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+    display: flex;
+    overflow: hidden;
+}
+
+/* Colonna Avatar (Sinistra) */
+.sezione-avatar {
+    flex: 1;
+    background: #f9fbf9;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    border-right: 1px solid #eee;
+}
+
+.avatar-circle {
+    width: 160px;
+    height: 160px;
+    background: #f0f2f0;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+    border: 3px solid white;
+}
+.user-img-local {
+    width: 100%;       
+    height: 100%;     
+    object-fit: cover; 
+    display: block;
+}
+
+.avatar-circle svg {
+    width: 80px;
+    height: 80px;
+}
+
+.username-display {
+    color: #28a745;
+    font-size: 1.4rem;
+    margin: 0;
+}
+
+/* Colonna Dati (Destra) */
+.sezione-dati {
+    flex: 2;
+    padding: 40px;
+}
+
+.riga-dato {
+    margin-bottom: 25px;
+}
+
+.riga-dato:last-child {
+    margin-bottom: 0;
+}
+
+.riga-dato label {
+    display: block;
+    font-size: 0.8rem;
+    color: #95a5a6;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 5px;
+}
+
+.riga-dato p {
+    font-size: 1.1rem;
+    color: #2d3436;
+    margin: 0;
+    font-weight: 500;
+}
+
+/* Box Elimina */
+.box-danger {
+    margin-top: 30px;
+    background: #fff;
+    border: 1px solid #fadbd8;
+    padding: 20px 30px;
+    border-radius: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.box-danger h4 { margin: 0; color: #e74c3c; }
+.box-danger p { margin: 5px 0 0 0; font-size: 0.9rem; color: #7f8c8d; }
+
+.btn-elimina {
+    background: #e74c3c;
+    color: white;
+    border: none;
+    padding: 10px 25px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-elimina:hover { background: #c0392b; }
+
+/* Adattamento Mobile */
+@media (max-width: 768px) {
+    .scheda-profilo { flex-direction: column; }
+    .sezione-avatar { border-right: none; border-bottom: 1px solid #eee; }
+    .box-danger { flex-direction: column; text-align: center; gap: 20px; }
+}

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profilo - NutriClash</title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <link rel="stylesheet" href="/stylesheets/account.css">
+</head>
+<body>
+
+    <div class="app">
+        <aside class="sidebar" id="nav">
+            <div class="logo">
+                <img src="/logo.png" alt="LOGO">
+            </div>
+                <nav>
+                    <a href="/" class="active">Home</a>
+                    <a href="/game">Gioca</a>
+                    <a href="/classifica">Classifica</a>
+                    <a href="/obiettivo">Il nostro obiettivo</a>
+                    <a href="/nutriscore">Nutri-score</a>
+                    <a href="/scontro">Scontro tra Prodotti</a>
+                </nav>
+
+                <div class="sidebar-footer">
+                    <a href="/contatti">Contatti</a>
+                    <a href="/privacy">Privacy</a>
+                    <a href="/login">Accedi</a>
+                    <a href="/account" class="active">Il mio account</a>
+                </div>
+        </aside>
+
+        <main class="main">
+            <header class="topbar">
+                <h1>Il Mio Profilo</h1>
+                <p>Gestione delle informazioni personali</p>
+            </header>
+
+            <section class="contenuto-principale">
+                
+                <div class="scheda-profilo">
+                    <div class="sezione-avatar">
+                        <div class="avatar-circle">
+                            <img src="/images/icona_utente.png" alt="Avatar Utente" class="user-img-local">
+                        </div>
+                        <h2 class="username-display">@<%= user.username %></h2>
+                    </div>
+
+                    <div class="sezione-dati">
+                        <div class="riga-dato">
+                            <label>Nome e Cognome</label>
+                            <p><%= user.nome %> <%= user.cognome %></p>
+                        </div>
+                        <div class="riga-dato">
+                            <label>Email</label>
+                            <p><%= user.email %></p>
+                        </div>
+                        <div class="riga-dato">
+                            <label>Data di Nascita</label>
+                            <p><%= user.data_nascita %></p>
+                        </div>
+                        <div class="riga-dato">
+                            <label>Genere</label>
+                            <p><%= user.sesso %></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="box-danger">
+                    <div class="testo">
+                        <h4>Elimina Profilo</h4>
+                        <p>Rimuovi permanentemente i tuoi dati dal server.</p>
+                    </div>
+                    <form action="/account/delete" method="POST" onsubmit="return confirm('Vuoi davvero cancellare il tuo account NutriClash?');">
+                        <button type="submit" class="btn-elimina">Elimina</button>
+                    </form>
+                </div>
+
+            </section>
+        </main>
+    </div>
+
+</body>
+</html>
