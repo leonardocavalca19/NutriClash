@@ -1,14 +1,14 @@
 var express = require('express');
 var router = express.Router();
 const db = require('../db/database');
-const crypto = require('node:crypto'); 
+const crypto = require('node:crypto');
 
-const sql = `SELECT password FROM utenti WHERE username = ? OR email = ?`;
+const sql = `SELECT username, password, nome, cognome FROM utenti WHERE username = ? OR email = ?`;
 
 // Funzione per verificare la password inserita confrontandola con l'hash salvato nel DB
 function verifyPassword(passwordInserita, stringaDalDB) {
     return new Promise((resolve, reject) => {
-       
+
         const parti = stringaDalDB.split(':');   // Estraiamo salt e hash originale dalla stringa "salt:hash"
         if (parti.length !== 2) return resolve(false); // Formato DB non valido
 
@@ -17,7 +17,6 @@ function verifyPassword(passwordInserita, stringaDalDB) {
         crypto.scrypt(passwordInserita, salt, 64, (err, derivedKey) => {  // Rigeneriamo l'hash usando lo stesso salt recuperato dal DB
             if (err) reject(err);
 
-            
             const trovato = crypto.timingSafeEqual(     // Confronto sicuro contro timing attacks
                 Buffer.from(hashOriginale, 'hex'),      
                 derivedKey
@@ -48,7 +47,13 @@ router.post('/', async function(req, res, next) {
             const trova = await verifyPassword(password, row.password);
 
             if (trova) {
-                return res.redirect('/PIPPO');
+                req.session.user = {
+                    username: row.username,
+                    nome: row.nome,
+                    cognome: row.cognome
+                }
+                req.session.punteggio = 0;
+                return res.redirect('/account');
             } else {
                 return res.render('login', { title: 'Login', error: 'Credenziali non valide' });
             }
@@ -59,9 +64,15 @@ router.post('/', async function(req, res, next) {
     });
 });
 
+/* GET logs out the user */
+router.get('/logout', (req, res) => {
+    req.session.destroy(() => {
+        res.redirect("/");
+    });
+});
+
 module.exports = router;
 
-  /*
-  TODO: sostituire con la pagina di destinazione dopo il login, ad esempio /dashboard
-  */
-
+/*
+    TODO: sostituire con la pagina di destinazione dopo il login, ad esempio /dashboard
+*/

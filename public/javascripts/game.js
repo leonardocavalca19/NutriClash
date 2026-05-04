@@ -14,8 +14,6 @@ let name_element2;
 
 let secondi = 0;
 
-const valoriNScore = {e: 0,d: 1, c: 2, b: 3, a: 4 };
-
 document.addEventListener("DOMContentLoaded", async ()=>{
     startTimer();
 
@@ -65,7 +63,7 @@ async function setItems()
     if(listaProdotti.length < 2)
     {
         const data = await fetch("/game/call");
-        const nuovaLista = data.json();
+        const nuovaLista = await data.json();
         listaProdotti = listaProdotti.concat(nuovaLista);
     }
     const [p1, p2] = listaProdotti;
@@ -79,32 +77,37 @@ async function setItems()
 async function checkChoice(index)
 {
     if (listaProdotti.length < 2) return;
-    const otherIndex = index === 0 ? 1 : 0;
 
-    const selectedScore = valoriNScore[listaProdotti[index].nutriscore_grade];
-    const otherScore = valoriNScore[listaProdotti[otherIndex].nutriscore_grade];
+    const p1 = listaProdotti[0];
+    const p2 = listaProdotti[1];
 
     showNutriScore();
 
     await delay(1500);
 
+    const response = await fetch("/game/check", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            p1: p1.barcode,
+            p2: p2.barcode,
+            scelta: index
+        })
+    });
+    const result = await response.json();
+
     hideNutriScore();
 
-    if(selectedScore < otherScore)
+    if(!result.win)
     {
+        await fetch("/game/finish", { method: "POST" });
         lost(secondi);
-        /**
-         * TODO salvare il punteggio nel DB se si è collegati ad un account
-         * controllare routes game.js
-         */
+        return;
     }
-    else
-    {
-        partita.punteggio++;
-        document.getElementById("punteggio").innerText = partita.punteggio;
-        listaProdotti.splice(0,2);
-        await setItems();
-    }
+    listaProdotti.splice(0, 2);
+    await setItems();
 }
 
 function showNutriScore()

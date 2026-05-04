@@ -85,8 +85,7 @@
     font-weight: 500;
 }
 
-/* Box Elimina */
-.box-danger {
+.box-logout, .box-danger {
     margin-top: 30px;
     background: #fff;
     border: 1px solid #fadbd8;
@@ -96,6 +95,22 @@
     justify-content: space-between;
     align-items: center;
 }
+
+.box-logout h4 { margin: 0; color: #6495ed; }
+.box-logout p { margin: 5px 0 0 0; font-size: 0.9rem; color: #7f8c8d; }
+
+.btn-logout {
+    background: #6495ed;
+    color: white;
+    border: none;
+    padding: 10px 25px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-logout:hover { background: #5281da; }
 
 .box-danger h4 { margin: 0; color: #e74c3c; }
 .box-danger p { margin: 5px 0 0 0; font-size: 0.9rem; color: #7f8c8d; }

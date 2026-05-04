@@ -41,7 +41,7 @@ function createTabella()
 
     const sqlPartita = `
         CREATE TABLE IF NOT EXISTS partita (
-            idPartita INTEGER PRIMARY KEY,
+            idPartita INTEGER PRIMARY KEY AUTOINCREMENT,
             punteggio INTEGER NOT NULL,
             tempo INTEGER NOT NULL,
             username TEXT NOT NULL REFERENCES utenti(username)

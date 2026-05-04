@@ -4,6 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const fs = require("fs");
+const session = require("express-session");
 const seedDatabase = require("./db/seed");
 
 if(!fs.existsSync("db/database.js"))
@@ -34,6 +35,12 @@ var accountRouter = require('./routes/account');
 
 var app = express();
 
+app.use(session({
+    secret: 'supersegreto',
+    resave: false,
+    saveUninitialized: false,
+    cookie: { secure: false }
+}));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -79,4 +86,3 @@ var server = app.listen(port, hostname, () => {
 });
 
 module.exports = app;
-

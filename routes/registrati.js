@@ -5,7 +5,6 @@ const crypto = require('node:crypto');
 
 const sql = `INSERT INTO utenti (username, email, nome, cognome, dataNascita, sesso, password) VALUES (?, ?, ?, ?, ?, ?, ?)`;
 
-
 //funzione per hashare la password con scrypt e salt univoco
 function hashPassword(password) {
     const salt = crypto.randomBytes(16).toString('hex');
@@ -48,7 +47,7 @@ router.post('/', function(req, res) {
                 error: messaggioErrore,
                 dati: req.body 
             });
-     });
+        });
 
     } catch (err) {
         console.error("Errore hashing:", err);
