@@ -14,21 +14,20 @@
             <div class="logo">
                 <img src="/logo.png" alt="LOGO">
             </div>
-                <nav>
-                    <a href="/" class="active">Home</a>
-                    <a href="/game">Gioca</a>
-                    <a href="/classifica">Classifica</a>
-                    <a href="/obiettivo">Il nostro obiettivo</a>
-                    <a href="/nutriscore">Nutri-score</a>
-                    <a href="/scontro">Scontro tra Prodotti</a>
-                </nav>
-
-                <div class="sidebar-footer">
-                    <a href="/contatti">Contatti</a>
-                    <a href="/privacy">Privacy</a>
-                    <a href="/login">Accedi</a>
-                    <a href="/account" class="active">Il mio account</a>
-                </div>
+            <nav>
+                <a href="/" >Home</a>
+                <a href="/game">Gioca</a>
+                <a href="/classifica">Classifica</a>
+                <a href="/obiettivo">Il nostro obiettivo</a>
+                <a href="/nutriscore">Nutri-score</a>
+                <a href="/scontro">Scontro tra Prodotti</a>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="/contatti">Contatti</a>
+                <a href="/privacy">Privacy</a>
+                <a href="/login">Accedi</a>
+                <a href="/account" class="active">Il mio account</a>
+            </div>
         </aside>
 
         <main class="main">
@@ -72,7 +71,7 @@
                         <h4>Esci</h4>
                         <p>Effettua il logout</p>
                     </div>
-                    <form action="/login/logout" method="POST" onsubmit="return confirm('Vuoi davvero cancellare il tuo account NutriClash?');">
+                    <form action="/login/logout" method="GET" onsubmit="return confirm('Vuoi davvero cancellare il tuo account NutriClash?');">
                         <button type="submit" class="btn-logout">Logout</button>
                     </form>
                 </div>
@@ -82,7 +81,7 @@
                         <h4>Elimina Profilo</h4>
                         <p>Rimuovi permanentemente i tuoi dati dal server.</p>
                     </div>
-                    <form action="/account/delete" method="POST" onsubmit="return confirm('Vuoi davvero cancellare il tuo account NutriClash?');">
+                    <form action="/account/delete" method="GET" onsubmit="return confirm('Vuoi davvero cancellare il tuo account NutriClash?');">
                         <button type="submit" class="btn-elimina">Elimina</button>
                     </form>
                 </div>

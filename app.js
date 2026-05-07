@@ -42,6 +42,12 @@ app.use(session({
     cookie: { secure: false }
 }));
 
+app.use(function(req, res, next) {
+  
+  res.locals.user = req.session.user || null; // Questo rende la variabile "user" disponibile in tutti i file .ejs
+  next();
+});
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');

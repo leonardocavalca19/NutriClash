@@ -43,7 +43,13 @@
                 <!-- HEADER -->
                 <header class="topbar">
                     <h1>NutriClash</h1>
-                    <a class="play-btn" href="/login">Accedi</a>
+                    <% if (user) { %>
+                            <div class="user-info">
+                                <a href="/account" class="play-btn"><strong>👤 <%= user.username %></strong></a>
+                            </div>
+                        <% } else { %>
+                            <a class="" href="/login">Accedi</a>
+                        <% } %>
                 </header>
 
                 <!-- HERO -->

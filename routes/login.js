@@ -3,7 +3,7 @@ var router = express.Router();
 const db = require('../db/database');
 const crypto = require('node:crypto');
 
-const sql = `SELECT username, password, nome, cognome FROM utenti WHERE username = ? OR email = ?`;
+const sql = `SELECT username, password, nome, cognome, email, dataNascita, sesso FROM utenti WHERE username = ? OR email = ?`;
 
 // Funzione per verificare la password inserita confrontandola con l'hash salvato nel DB
 function verifyPassword(passwordInserita, stringaDalDB) {
@@ -50,8 +50,12 @@ router.post('/', async function(req, res, next) {
                 req.session.user = {
                     username: row.username,
                     nome: row.nome,
-                    cognome: row.cognome
+                    cognome: row.cognome,
+                    email: row.email,
+                    dataNascita: row.dataNascita,
+                    sesso: row.sesso
                 }
+                
                 req.session.punteggio = 0;
                 return res.redirect('/account');
             } else {
@@ -72,7 +76,3 @@ router.get('/logout', (req, res) => {
 });
 
 module.exports = router;
-
-/*
-    TODO: sostituire con la pagina di destinazione dopo il login, ad esempio /dashboard
-*/
