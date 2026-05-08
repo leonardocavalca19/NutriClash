@@ -14,6 +14,8 @@ function seedDatabase()
     VALUES (?, ?, ?, ?, ?)
     `;
 
+
+
     db.serialize(() => {
         db.run("BEGIN TRANSACTION");
 
