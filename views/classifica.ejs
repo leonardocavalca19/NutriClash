@@ -7,106 +7,7 @@
     <link rel="stylesheet" href="/stylesheets/account.css">
     <link rel="stylesheet" href="/stylesheets/classifica.css">
     <style>
-        .label-mini {
-            font-size: 0.7rem;
-            color: #95a5a6;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            margin-top: 10px;
-        }
-
-        .punteggio-recap {
-            font-weight: bold;
-            color: #7f8c8d;
-            margin-top: 5px;
-        }
-
-        .tabella-ranking {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-
-        .tabella-ranking th {
-            text-align: left;
-            padding: 12px 15px;
-            background-color: #f8f9fa;
-            color: #2c3e50;
-            border-bottom: 2px solid #28a745;
-        }
-
-        .col-rank {
-            font-weight: bold;
-            color: #28a745;
-            width: 60px;
-        }
-
-        .riga-utente {
-            background-color: #f1f8f1 !important; /* Verde chiarissimo per evidenziare te stesso */
-            font-weight: bold;
-        }
-
-        .separatore {
-            text-align: center;
-            color: #bdc3c7;
-            font-size: 1.2rem;
-            background-color: #fff;
-        }
-
-.tabella-ranking {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 20px;
-        background-color: #ffffff; /* Sfondo della tabella forzato a bianco */
-    }
-
-    /* Intestazione: Sfondo grigio chiaro, Testo blu scuro */
-    .tabella-ranking th {
-        text-align: left;
-        padding: 12px 15px;
-        background-color: #f8f9fa;
-        color: #2c3e50 !important; /* !important assicura che non resti bianco */
-        border-bottom: 2px solid #28a745;
-        font-weight: bold;
-    }
-
-    /* Celle: Testo grigio molto scuro (quasi nero) */
-    .tabella-ranking td {
-        padding: 12px 15px;
-        border-bottom: 1px solid #f1f1f1;
-        color: #333333 !important; /* Forza il testo a essere visibile */
-    }
-
-    /* Forza il colore anche per i tag strong e span dentro la tabella */
-    .tabella-ranking td strong, 
-    .tabella-ranking td span:not(.tempo-badge) {
-        color: #333333 !important;
-    }
-
-    .col-rank {
-        font-weight: bold;
-        color: #28a745 !important; /* Posizione in verde */
-        width: 60px;
-    }
-
-    .riga-utente {
-        background-color: #f1f8f1 !important; 
-        color: #155724 !important; /* Testo verde scuro per la tua riga */
-    }
-
-    .tempo-badge {
-        font-size: 0.85rem;
-        color: #444444 !important; /* Testo del badge tempo */
-        background: #e9ecef;
-        padding: 4px 10px;
-        border-radius: 10px;
-        display: inline-block;
-    }
-
-    /* Se il testo è ancora bianco, questo è il "colpo di grazia" */
-    .tabella-ranking * {
-        text-shadow: none !important;
-    }
+        
     </style>
 </head>
 <body>
@@ -151,29 +52,31 @@
                             </thead>
                         <tbody>
                             <% 
-                                const top10 = classifica.slice(0, 10); // Assumiamo sia già ordinata dalla query SQL
-                                let currentRank = 1;
-                                let userInTop10 = false; // Flag per vedere se l'utente loggato è già visualizzato
+                                const top10 = classifica.slice(0, 10);
+                                let rankCorrente = 1;       //Campo per aumentare man mano il rank
+                                let utentiInTop10 = false;  //Campo per vedere se l'utente loggato è già visualizzato
                                 
-                                top10.forEach((player, index) => { 
-                                    if (index > 0) {
-                                        const prevPlayer = top10[index - 1];
-                                        if (!(player.punteggio === prevPlayer.punteggio && player.tempo === prevPlayer.tempo)) {
-                                            currentRank = index + 1;
+                                
+                                top10.forEach((player, index) => {      // Ciclo per visualizzare la top 10 con gestione dei pari merito
+                                    if (index > 0) {            
+                                        const precPlayer = top10[index - 1];       
+                                        if (!(player.punteggio === precPlayer.punteggio && player.tempo === precPlayer.tempo)) {
+                                            rankCorrente = index + 1;
                                         }
                                     }
-                                    if (user && player.username === user.username) { userInTop10 = true; }
+                                    
+                                    if (user && player.username === user.username) { utentiInTop10 = true; }    //Controllo se l'utente loggato è presente nella top 10 per evitare di visualizzarlo due volte
                             %>
                                 <tr class="<%= (user && player.username === user.username) ? 'riga-utente' : '' %>">
-                                    <td class="col-rank"><%= currentRank %>°</td>
+                                    <td class="col-rank"><%= rankCorrente %>°</td>
                                     <td>@<%= player.username %></td>
                                     <td><strong><%= player.punteggio %></strong> pts</td>
                                     <td><span class="tempo-badge"><%= player.tempo %>s</span></td>
                                 </tr>
                             <% }); %>
 
-                            <% /* SE L'UTENTE È LOGGATO MA NON ERA NELLA TOP 10 */ %>
-                            <% if (user && !userInTop10) { %>
+                            // se l'utente è loggato ma non era nella top 10
+                            <% if (user && !utentiInTop10) { %>
                                 <tr>
                                     <td colspan="4" class="separatore">...</td>
                                 </tr>

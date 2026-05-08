@@ -13,13 +13,12 @@ const sqlClassifica = `
     ) as miglior_partita ON p.username = miglior_partita.username 
     AND p.punteggio = miglior_partita.max_punteggio
     ORDER BY p.punteggio DESC, p.tempo ASC
-    LIMIT 2;`;
+    LIMIT 10;`;
 
 
 const sqlUtente = `
-    WITH MiglioriPartite AS (
-        SELECT username, MAX(punteggio) as max_punteggio, MIN(tempo) as min_tempo
-        FROM Partita
+    WITH MiglioriPartite AS (                   
+         SELECT username, MAX(punteggio) as max_punteggio, MIN(tempo) as min_tempo  
         GROUP BY username
     )
     SELECT 

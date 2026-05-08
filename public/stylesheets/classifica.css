@@ -1,0 +1,98 @@
+.label-mini {
+        font-size: 0.7rem;
+        color: #95a5a6;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        margin-top: 10px;
+}
+
+.punteggio-recap {
+    font-weight: bold;
+    color: #7f8c8d;
+    margin-top: 5px;
+}
+
+.tabella-ranking {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.tabella-ranking th {
+    text-align: left;
+    padding: 12px 15px;
+    background-color: #f8f9fa;
+    color: #2c3e50;
+    border-bottom: 2px solid #28a745;
+}
+
+.col-rank {
+    font-weight: bold;
+    color: #28a745;
+    width: 60px;
+}
+
+.riga-utente {
+    background-color: #f1f8f1 !important; 
+    font-weight: bold;
+}
+
+.separatore {
+    text-align: center;
+    color: #bdc3c7;
+    font-size: 1.2rem;
+    background-color: #fff;
+}
+
+.tabella-ranking {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #ffffff; 
+}
+
+
+.tabella-ranking th {
+    text-align: left;
+    padding: 12px 15px;
+    background-color: #f8f9fa;
+    color: #2c3e50 !important; 
+    border-bottom: 2px solid #28a745;
+    font-weight: bold;
+}
+
+
+.tabella-ranking td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #f1f1f1;
+    color: #333333 !important; 
+}
+
+.tabella-ranking td strong, 
+.tabella-ranking td span:not(.tempo-badge) {
+    color: #333333 !important;
+}
+
+.col-rank {
+    font-weight: bold;
+    color: #28a745 !important; 
+    width: 60px;
+}
+
+.riga-utente {
+    background-color: #f1f8f1 !important; 
+    color: #155724 !important; 
+}
+
+.tempo-badge {
+    font-size: 0.85rem;
+    color: #444444 !important; 
+    background: #e9ecef;
+    padding: 4px 10px;
+    border-radius: 10px;
+    display: inline-block;
+}
+
+.tabella-ranking * {
+    text-shadow: none !important;
+}
