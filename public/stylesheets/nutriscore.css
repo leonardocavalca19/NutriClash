@@ -1,3 +1,6 @@
+/* =========================================
+   1. CONTENUTI GENERALI (NUTRIZIONE)
+   ========================================= */
 .nutri-content {
     padding: 40px;
     color: #333;
@@ -12,6 +15,25 @@
     border: 1px solid #eee;
 }
 
+h2.primo {
+    font-weight: 800; 
+    font-size: 2rem; 
+    margin-bottom: 15px;
+}
+
+p.primo {
+    font-size: 1.1rem;
+    line-height: 1.6; 
+    color: #555;
+}
+
+h3 {
+    margin-bottom: 20px;
+}
+
+/* =========================================
+   2. TABELLA VALORI NUTRIZIONALI
+   ========================================= */
 .nutri-table {
     width: 100%;
     border-collapse: separate;
@@ -38,7 +60,9 @@
 .nutri-table td:first-child { border-left: 1px solid #eee; border-radius: 10px 0 0 10px; }
 .nutri-table td:last-child { border-right: 1px solid #eee; border-radius: 0 10px 10px 0; }
 
-/* Badge colorati */
+/* =========================================
+   3. SISTEMA NUTRI-SCORE (BADGE & COLORI)
+   ========================================= */
 .badge-ns {
     display: flex;
     align-items: center;
@@ -51,41 +75,23 @@
     color: #fff !important;
 }
 
-/* Colori Nutri-Score */
+/* Colori Sfondo Nutri-Score */
 .ns-A { background-color: #008b4c !important; }
 .ns-B { background-color: #85bb2f !important; }
 .ns-C { background-color: #fecb02 !important; color: #000 !important; }
 .ns-D { background-color: #ee8100 !important; }
 .ns-E { background-color: #e63e11 !important; }
 
+/* Colori Testo Nutri-Score */
 .txt-A { color: #008b4c; font-weight: 700; }
 .txt-B { color: #85bb2f; font-weight: 700; }
 .txt-C { color: #fecb02; font-weight: 700; }
 .txt-D { color: #ee8100; font-weight: 700; }
 .txt-E { color: #e63e11; font-weight: 700; }
 
-.formula-box {
-    background: #2d3436;
-    color: #fab1a0;
-    padding: 20px;
-    border-radius: 12px;
-    font-family: 'Courier New', Courier, monospace;
-    margin: 20px 0;
-}
-.grid-factors {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-    margin-top: 20px;
-}
-.factor-card {
-    padding: 20px;
-    border-radius: 12px;
-    font-size: 0.95rem;
-}
-.factor-neg { background: #fff5f5; border-left: 5px solid #ff4d4d; }
-.factor-pos { background: #f0fff4; border-left: 5px solid #38a169; }
-
+/* =========================================
+   4. CALCOLO & FATTORI (FORMULE)
+   ========================================= */
 .formula-box {
     background: #1e272e;
     color: #0be881;
@@ -96,27 +102,34 @@
     font-size: 1.2rem;
     margin: 20px 0;
 }
+
+.grid-factors {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.factor-card {
+    padding: 20px;
+    border-radius: 12px;
+    font-size: 0.95rem;
+}
+
+.factor-neg { background: #fff5f5; border-left: 5px solid #ff4d4d; }
+.factor-pos { background: #f0fff4; border-left: 5px solid #38a169; }
+
+/* =========================================
+   5. BOX EVIDENZIATI & PULSANTI
+   ========================================= */
 .highlight-box {
     background: #eef2ff;
     border-radius: 15px;
     padding: 25px;
     border-left: 6px solid #4f46e5;
 }
-h2.primo{
-    font-weight: 800; 
-    font-size: 2rem; 
-    margin-bottom: 15px;
-}
-p.primo{
-    font-size: 1.1rem;
-    line-height: 1.6; 
-    color: #555;
-}
 
-h3{
-    margin-bottom: 20px;
-}
-.but{
+.but {
     text-decoration: none;
     display: inline-block; 
     background-color: #28a745;

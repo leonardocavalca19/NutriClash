@@ -1,5 +1,6 @@
-/* --- STILI PRIVACY SEMPLIFICATA --- */
-
+/* =========================================
+   1. SCHEDA INFORMATIVA (PRIVACY)
+   ========================================= */
 .scheda-info {
     background: #fff;
     border-radius: 12px;
@@ -21,7 +22,9 @@
     margin-bottom: 20px;
 }
 
-/* BLOCCO DOWNLOAD SEPARATO */
+/* =========================================
+   2. BLOCCO DOWNLOAD SEPARATO
+   ========================================= */
 .box-download-staccato {
     display: flex;
     align-items: center;
@@ -45,6 +48,9 @@
     color: #777;
 }
 
+/* =========================================
+   3. BOTTONI & INTERAZIONI
+   ========================================= */
 .pulsante-download {
     background: #28a745;
     color: white;
@@ -61,7 +67,9 @@
     transform: scale(1.03);
 }
 
-/* Responsive */
+/* =========================================
+   4. RESPONSIVE DESIGN
+   ========================================= */
 @media (max-width: 650px) {
     .box-download-staccato {
         flex-direction: column;

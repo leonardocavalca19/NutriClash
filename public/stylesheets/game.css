@@ -1,12 +1,21 @@
-.container-game
-{
+/* =========================================
+   1. GRIGLIA DI GIOCO (LAYOUT)
+   ========================================= */
+.container-game {
     margin: auto;
     padding: 20px;
     display: grid;
     grid-template-columns: 40% 10% 40%;
 }
-.element1, .element2
-{
+
+.versus {
+    margin: auto;
+}
+
+/* =========================================
+   2. ELEMENTI DI CONFRONTO (PRODOTTI)
+   ========================================= */
+.element1, .element2 {
     border: 5px solid;
     border-radius: 15%;
     border-image: linear-gradient(45deg, red, blue) 1;
@@ -15,20 +24,19 @@
     height: 100%;
     text-align: center;
 }
-.element1 > img, .element2 > img
-{
+
+.element1 > img, .element2 > img {
     margin: auto;
     max-width: 100%;
     max-height: 100%;
     object-fit: contain;
     display: block;
 }
-.versus
-{
-    margin: auto;
-}
-.nutriscore
-{
+
+/* =========================================
+   3. NUTRI-SCORE (VERSIONE GIOCO)
+   ========================================= */
+.nutriscore {
     margin: 20px auto;
     display: flex;
     align-items: center;
@@ -40,6 +48,8 @@
     font-size: 1.6rem;
     color: #0f172a;
 }
+
+/* Varianti Colore Nutri-Score Game */
 .nutriscore.a { background-color: #008b4c; }
 .nutriscore.b { background-color: #85bb2f; }
 .nutriscore.c { background-color: #fecb02; }

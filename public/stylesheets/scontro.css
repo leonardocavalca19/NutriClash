@@ -1,9 +1,13 @@
-/* Stili specifici per la pagina Scontro tra Prodotti */
-
+/* =========================================
+   1. INTESTAZIONE & INTRODUZIONE
+   ========================================= */
 .intro-clash {
     border-bottom: 4px solid #d63031;
 }
 
+/* =========================================
+   2. SEZIONE PRINCIPALE (CONTENITORE)
+   ========================================= */
 .clash-section {
     background: white;
     border-radius: 20px;
@@ -22,6 +26,9 @@
     letter-spacing: 1px;
 }
 
+/* =========================================
+   3. GRID & BOX PRODOTTI
+   ========================================= */
 .clash-row {
     display: flex;
     align-items: center;
@@ -45,7 +52,8 @@
 .product-box:hover {
     transform: translateY(-5px);
 }
-a> img{
+
+a > img {
     width: 100%;
     height: auto;
     margin-bottom: 15px;
@@ -59,6 +67,9 @@ a> img{
     text-shadow: 2px 2px 0px rgba(0,0,0,0.1);
 }
 
+/* =========================================
+   4. ANALISI & FEEDBACK (ALERT)
+   ========================================= */
 .analysis-box {
     background: #e1f5fe;
     padding: 20px;
@@ -73,7 +84,9 @@ a> img{
     border-left-color: #ff9800;
 }
 
-/* Tabella riassuntiva */
+/* =========================================
+   5. TABELLA DI CONFRONTO
+   ========================================= */
 .clash-summary-table {
     width: 100%;
     margin-top: 20px;
@@ -91,7 +104,9 @@ a> img{
     border-bottom: 1px solid #eee;
 }
 
-/* Responsive */
+/* =========================================
+   6. RESPONSIVE DESIGN
+   ========================================= */
 @media (max-width: 768px) {
     .clash-row {
         flex-direction: column;
