@@ -36,6 +36,7 @@ function createTabella()
             dataNascita DATE NOT NULL,
             sesso TEXT NOT NULL,
             password TEXT NOT NULL
+            
         )
     `;
 

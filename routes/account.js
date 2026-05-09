@@ -9,7 +9,8 @@ const datiUtente = {
         username: "",
         email: "",
         data_nascita: "",
-        sesso: ""
+        sesso: "",
+        apiKey: ""
     };
 
 function requireLogin(req, res, next) {
@@ -22,7 +23,7 @@ function requireLogin(req, res, next) {
         datiUtente.email = req.session.user.email;
         datiUtente.data_nascita = req.session.user.dataNascita;
         datiUtente.sesso = req.session.user.sesso;
-
+        
         console.log(datiUtente);
     }
     next();
