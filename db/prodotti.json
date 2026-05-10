@@ -21464,8 +21464,8 @@
         "code": "8002190006826",
         "image_url": "https://images.openfoodfacts.org/images/products/800/219/000/6826/front_it.34.400.jpg",
         "nutriscore_grade": "e",
-        "product_name": "I morbppo D’agave",
-        "product_name_it": "Scriroppo D’agave"
+        "product_name": "I morbidi cioccolato e fave di cacao - Galbusera",
+        "product_name_it": "I morbidi cioccolato e fave di cacao - Galbusera"
     },
     {
         "code": "6411200000976",
@@ -56858,10 +56858,6 @@
         "nutriscore_grade": "c",
         "product_name": "Saucisse aux lentilles",
         "product_name_it": "Salsicce CON LENTICCHIE"
-    },
-    {
-        "code": "8004395126217",
-        "image_url": "https://images.openfoodfacts.org/images/products/800/439/512/6217/front_it.3.400.jpg"
     },
     {
         "code": "80794110",

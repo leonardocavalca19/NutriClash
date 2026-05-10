@@ -18,9 +18,10 @@ router.get('/', function(req, res, next) {
 router.get('/call', function(req, res, next){
     const sql = 'SELECT * FROM prodotti ORDER BY RANDOM() LIMIT 100';
 
-    db.all(sql, [], (err, rows) => {
-        if(err) { console.error("Errore nella raccolta dei dati: ", err.message); return; }
-
+    try
+    {
+        const stmt = db.prepare(sql);
+        const rows = stmt.all();
         const list = rows.map(row => ({
             barcode: row.barcode,
             image_url: row.image_url,
@@ -29,7 +30,12 @@ router.get('/call', function(req, res, next){
             nutriscore_grade: row.nutriscore_grade
         }));
         res.json(list);
-    });
+    }
+    catch (err)
+    {
+        console.error("Errore query prodotti:", err.message);
+        res.status(500).json({ error: "DB error" });
+    }
 });
 
 /* POST loads defeat screen */
@@ -44,39 +50,36 @@ router.post('/check', express.json(), (req, res) => {
 
     const sql = `SELECT barcode, nutriscore_grade FROM prodotti WHERE barcode IN (?, ?)`;
 
-    db.all(sql, [p1, p2], (err, rows) => {
-        if (err) return res.status(500).json({ error: "Errore DB" });
-
+    try
+    {
+        const stmt = db.prepare(sql);
+        const rows = stmt.all(p1, p2);
         const valoriNScore = { e: 0, d: 1, c: 2, b: 3, a: 4 };
-
         const prod1 = rows.find(r => r.barcode === p1);
         const prod2 = rows.find(r => r.barcode === p2);
-
         const scores = [
             valoriNScore[prod1.nutriscore_grade],
             valoriNScore[prod2.nutriscore_grade]
         ];
-
         const otherIndex = scelta === 0 ? 1 : 0;
-
-        const win = scores[scelta] >= scores[otherIndex] ? true : false;
-
-        if(!req.session.punteggio)
-        {
+        const win = scores[scelta] >= scores[otherIndex];
+        if (!req.session.punteggio) {
             req.session.punteggio = 0;
         }
-
-        if(win)
-        {
+        if (win) {
             req.session.punteggio++;
         }
-
         res.json({
             win,
             punteggio: req.session.punteggio,
             logged: !!req.session.user
         });
-    });
+    }
+    catch (err)
+    {
+        console.error("Errore DB:", err.message);
+        res.status(500).json({ error: "Errore DB" });
+    }
 });
 
 router.post('/finish', (req, res) => {
@@ -87,22 +90,23 @@ router.post('/finish', (req, res) => {
     if (!username) {
         return res.json({ saved: false, newRecord: false });
     }
-    const sqlSetScores = `
-        INSERT INTO partita (punteggio, tempo, username)
-        VALUES (?, ?, ?)
-    `;
 
-    db.run(sqlSetScores, [punteggio, tempo, username], (err) => {
-        if (err) {
-            console.error(err);
-            return res.status(500).json({ error: "DB error" });
-        }
+    const sqlSetScores = `INSERT INTO partita (punteggio, tempo, username) VALUES (?, ?, ?)`;
 
+    try
+    {
+        const stmt = db.prepare(sqlSetScores);
+        stmt.run(punteggio, tempo, username);
         res.json({
             saved: true,
             newRecord: true
         });
-    });
+    }
+    catch (err)
+    {
+        console.error("DB error:", err.message);
+        res.status(500).json({ error: "DB error" });
+    }
 });
 
 module.exports = router;

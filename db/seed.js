@@ -14,25 +14,24 @@ function seedDatabase()
     VALUES (?, ?, ?, ?, ?)
     `;
 
+    const stmt = db.prepare(sql);
 
-
-    db.serialize(() => {
-        db.run("BEGIN TRANSACTION");
-
-        prodotti.forEach(p => {
-            db.run(sql, [
-            p.code,
-            p.image_url,
-            p.product_name,
-            p.product_name_it,
-            p.nutriscore_grade
-            ]);
-        });
-
-        db.run("COMMIT", () => {
-            console.log("Import completato");
-        });
+    //transazione per inserimento nel database
+    const insertMany = db.transaction((items) => {
+        for (const p of items) {
+            stmt.run(
+                p.code,
+                p.image_url,
+                p.product_name,
+                p.product_name_it,
+                p.nutriscore_grade
+            );
+        }
     });
+
+    insertMany(prodotti);
+
+    console.log("Import completato");
 }
 
 module.exports = seedDatabase();

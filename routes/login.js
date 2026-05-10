@@ -30,42 +30,44 @@ router.get('/', function(req, res, next) {
     res.render('login', { title: 'Login' });
 });
 
-router.post('/', async function(req, res, next) {
+router.post('/', async function(req, res) {
     const { email_username, password } = req.body;
-
-    db.get(sql, [email_username, email_username], async function(err, row) {
-        if (err) {
-            console.error('Errore durante il login:', err);
-            return res.render('login', { title: 'Login', error: 'Errore interno' });
-        }
-
+    try
+    {
+        const stmt = db.prepare(sql);
+        const row = stmt.get(email_username, email_username);
         if (!row) {
-            return res.render('login', { title: 'Login', error: 'Credenziali non valide' });
+            return res.render('login', {
+                title: 'Login',
+                error: 'Credenziali non valide'
+            });
         }
-
-        try {
-            const trova = await verifyPassword(password, row.password);
-
-            if (trova) {
-                req.session.user = {
-                    username: row.username,
-                    nome: row.nome,
-                    cognome: row.cognome,
-                    email: row.email,
-                    dataNascita: row.dataNascita,
-                    sesso: row.sesso
-                }
-                
-                req.session.punteggio = 0;
-                return res.redirect('/account');
-            } else {
-                return res.render('login', { title: 'Login', error: 'Credenziali non valide' });
-            }
-        } catch (error) {
-            console.error("Errore hashing:", error);
-            return res.render('login', { title: 'Login', error: 'Errore durante la verifica' });
+        const ok = await verifyPassword(password, row.password);
+        if (!ok) {
+            return res.render('login', {
+                title: 'Login',
+                error: 'Credenziali non valide'
+            });
         }
-    });
+        // sessione utente
+        req.session.user = {
+            username: row.username,
+            nome: row.nome,
+            cognome: row.cognome,
+            email: row.email,
+            dataNascita: row.dataNascita,
+            sesso: row.sesso
+        };
+        return res.redirect('/account');
+    }
+    catch (error)
+    {
+        console.error("Errore login:", error);
+        return res.render('login', {
+            title: 'Login',
+            error: 'Errore durante la verifica'
+        });
+    }
 });
 
 /* POST logs out the user */

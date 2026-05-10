@@ -63,8 +63,17 @@ async function setItems()
         listaProdotti = listaProdotti.concat(nuovaLista);
     }
     const [p1, p2] = listaProdotti;
-    img_element1.src = p1.image_url ? p1.image_url : "/images/not-available.png";
-    img_element2.src = p2.image_url ? p2.image_url : "/images/not-available.png";
+
+    if (!p1.image_url) {
+        img_element1.src = "/images/not-available.png";
+    } else {
+        img_element1.src = `/cached-images/${p1.barcode}`;
+    }
+    if (!p2.image_url) {
+        img_element2.src = "/images/not-available.png";
+    } else {
+        img_element2.src = `/cached-images/${p2.barcode}`;
+    }
 
     name_element1.innerText = (p1.product_name_it ?? p1.product_name) + p1.nutriscore_grade; //nutriscore temporaneo
     name_element2.innerText = (p2.product_name_it ?? p2.product_name) + p2.nutriscore_grade; //nutriscore temporaneo

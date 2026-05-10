@@ -56,43 +56,59 @@ router.get('/', function(req, res, next) {
 
 // Risponde a: GET /api/compara?code1=...&code2=...&key=...
 router.get('/compara', rateLimiterManuale, controllaApiKey, (req, res) => {
+
     const { code1, code2 } = req.query;
 
     if (!code1 || !code2) {
-        return res.status(400).json({ error: "Fornire entrambi i barcode (code1 e code2)" });
+        return res.status(400).json({
+            error: "Fornire entrambi i barcode (code1 e code2)"
+        });
     }
 
-    db.get(sql, [code1], (err, row1) => {
-        if (err) return res.status(500).json({ error: "Errore DB 1" });
-        if (!row1) return res.status(404).json({ error: `Prodotto ${code1} non trovato` });
-
-        db.get(sql, [code2], (err, row2) => {
-            if (err) return res.status(500).json({ error: "Errore DB 2" });
-            if (!row2) return res.status(404).json({ error: `Prodotto ${code2} non trovato` });
-
-
-            const punteggio1 = row1.nutriscore_grade;
-            const punteggio2 = row2.nutriscore_grade;
-
-            let vincitore;
-            if (punteggio1 === punteggio2) {
-                vincitore = "Pareggio";
-            } else {
-                vincitore = punteggio1 < punteggio2 ? row1.product_name_it : row2.product_name_it;
-            }
-
-            // 4. Risposta finale
-            res.json({
-                success: true,
-                risultato: punteggio1 === punteggio2 ? "Pareggio" : "Vincitore trovato",
-                vincitore: vincitore,
-                dettagli: { 
-                    prodotto1: row1, 
-                    prodotto2: row2 
-                }
+    try
+    {
+        const stmt = db.prepare(sql);
+        const row1 = stmt.get(code1);
+        const row2 = stmt.get(code2);
+        if (!row1) {
+            return res.status(404).json({
+                error: `Prodotto ${code1} non trovato`
             });
+        }
+        if (!row2) {
+            return res.status(404).json({
+                error: `Prodotto ${code2} non trovato`
+            });
+        }
+        const punteggio1 = row1.nutriscore_grade;
+        const punteggio2 = row2.nutriscore_grade;
+        let vincitore;
+        if (punteggio1 === punteggio2) {
+            vincitore = "Pareggio";
+        } else {
+            vincitore = punteggio1 < punteggio2
+                ? row1.product_name_it
+                : row2.product_name_it;
+        }
+        res.json({
+            success: true,
+            risultato: punteggio1 === punteggio2
+                ? "Pareggio"
+                : "Vincitore trovato",
+            vincitore,
+            dettagli: {
+                prodotto1: row1,
+                prodotto2: row2
+            }
         });
-    });
+    }
+    catch (err)
+    {
+        console.error("Errore DB:", err.message);
+        res.status(500).json({
+            error: "Errore interno DB"
+        });
+    }
 });
 
 module.exports = router;
