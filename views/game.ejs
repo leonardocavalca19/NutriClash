@@ -27,23 +27,21 @@
                 <a href="/nutriscore">Nutri-score</a>
                 <a href="/scontro">Scontro tra Prodotti</a>
             </nav>
-    
             <div class="sidebar-footer">
+                <a href="/api">API Docs</a>
                 <a href="/contatti">Contatti</a>
                 <a href="/privacy">Privacy</a>
-                <a href="/login">Accedi</a>
-                <a href="/account">Il mio account</a>
+                <% if(!user) { %> <a href="/login">Accedi</a> <% }  else {%><a href="/account">Il mio account</a><% } %>
             </div>
         </aside>
         <div class="chat-divider" id="chat-divider"></div>
         <main class="main" id="main">
-
             <div class="scores-container" id="scores-container">
                 <div class="scores">
-                    <p>Tempo: </p><span id="timer">0:00</span>
+                    <h1>Tempo: </h1><span class="timer" id="timer">0:00</span>
                 </div>
                 <div class="scores">
-                    <p>Punteggio: </p><span id="punteggio">0</span>
+                    <h1>Punteggio: </h1><span class="punteggio" id="punteggio">0</span>
                 </div>
             </div>
 

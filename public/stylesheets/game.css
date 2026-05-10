@@ -1,5 +1,7 @@
-.container-game
-{
+/* =========================================
+    1. GRIGLIA DI GIOCO (LAYOUT)
+========================================= */
+.container-game {
     margin: auto;
     padding: 20px;
     display: grid;
@@ -32,8 +34,11 @@
 {
     margin: auto;
 }
-.nutriscore
-{
+
+/* =========================================
+    3. NUTRI-SCORE (VERSIONE GIOCO)
+========================================= */
+.nutriscore {
     margin: 20px auto;
     display: flex;
     align-items: center;
@@ -45,6 +50,8 @@
     font-size: 1.6rem;
     color: #0f172a;
 }
+
+/* Varianti Colore Nutri-Score Game */
 .nutriscore.a { background-color: #008b4c; }
 .nutriscore.b { background-color: #85bb2f; }
 .nutriscore.c { background-color: #fecb02; }
@@ -59,6 +66,21 @@
 {
     display: flex;
     justify-content: space-evenly;
+}
+.scores
+{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+.scores *
+{
+    font-weight: 800;
+    margin: 10px;
+}
+.timer, .punteggio
+{
+    font-size: 200%;
 }
 
 .lost-page

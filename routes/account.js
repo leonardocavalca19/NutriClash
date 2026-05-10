@@ -9,7 +9,8 @@ const datiUtente = {
         username: "",
         email: "",
         data_nascita: "",
-        sesso: ""
+        sesso: "",
+        apiKey: ""
     };
 
 function requireLogin(req, res, next) {
@@ -22,8 +23,6 @@ function requireLogin(req, res, next) {
         datiUtente.email = req.session.user.email;
         datiUtente.data_nascita = req.session.user.dataNascita;
         datiUtente.sesso = req.session.user.sesso;
-
-        console.log(datiUtente);
     }
     next();
 }
@@ -32,7 +31,7 @@ router.get('/', requireLogin, function(req, res, next) {
     res.render('account', { title: 'Account', user: datiUtente });
 });
 
-router.get('/delete', (req, res) => {
+router.post('/delete', (req, res) => {
     db.get(sql, [datiUtente.username, datiUtente.email], function(err, row) {
         if (err) {
             console.error('Errore durante la cancellazione dell\'account:', err);

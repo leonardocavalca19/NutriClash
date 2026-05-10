@@ -25,13 +25,13 @@
                 <a href="/scontro">Scontro tra Prodotti</a>
             </nav>
                 <div class="sidebar-footer">
+                    <a href="/api">API Docs</a>
                     <a href="/contatti" class="active">Contatti</a>
                     <a href="/privacy">Privacy</a>
-                    <a href="/login">Accedi</a>
-                    <a href="/account">Il mio account</a>
+                    <% if(!user) { %> <a href="/login">Accedi</a> <% }  else {%><a href="/account">Il mio account</a><% } %>
                 </div>
         </aside>
-
+        <div class="chat-divider" id="chat-divider"></div>
         <main class="main" id="main">
             <header class="topbar">
                 <h1>Il Team di NutriClash</h1>

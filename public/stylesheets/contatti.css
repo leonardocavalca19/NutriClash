@@ -1,5 +1,6 @@
-/* Stili per la pagina Team/Contatti */
-
+/* =========================================
+   1. LAYOUT GRIGLIA TEAM
+   ========================================= */
 .griglia-team {
     display: flex;
     justify-content: center;
@@ -8,6 +9,9 @@
     flex-wrap: wrap;
 }
 
+/* =========================================
+   2. SCHEDA MEMBRO (PROFILO)
+   ========================================= */
 .scheda-membro {
     flex: 1;
     min-width: 280px;
@@ -38,6 +42,9 @@
     margin-bottom: 15px;
 }
 
+/* =========================================
+   3. LINK & AZIONI DI CONTATTO
+   ========================================= */
 .link-contatto {
     display: inline-block;
     margin-top: 20px;
@@ -66,6 +73,9 @@
     font-weight: 600;
 }
 
+/* =========================================
+   4. UTILITY TESTO
+   ========================================= */
 .testo-centrato {
     text-align: center;
     margin-top: 40px;

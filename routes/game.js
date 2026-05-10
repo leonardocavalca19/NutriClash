@@ -11,7 +11,7 @@ function requireLogin(req, res, next) {
 
 /* GET game page. */
 router.get('/', function(req, res, next) {
-    res.render('game', { title: 'NutriClash - Game' });
+    res.render('game', { title: 'NutriClash - Game', user: req.session?.user || null });
 });
 
 /* GET products array */
@@ -84,28 +84,23 @@ router.post('/finish', (req, res) => {
     const tempo = req.body.tempo || 0;
     const username = req.session?.user?.username;
 
-    // reset sempre la partita
-    req.session.punteggio = 0;
-    req.session.tempo = 0;
-
     if (!username) {
-        return res.json({ saved: false });
+        return res.json({ saved: false, newRecord: false });
     }
-
-    const sql = `
+    const sqlSetScores = `
         INSERT INTO partita (punteggio, tempo, username)
         VALUES (?, ?, ?)
     `;
 
-    db.run(sql, [punteggio, tempo, username], (err) => {
+    db.run(sqlSetScores, [punteggio, tempo, username], (err) => {
         if (err) {
             console.error(err);
             return res.status(500).json({ error: "DB error" });
         }
 
         res.json({
-            saved: true
-            //TODO portare i valori alla pagina successiva per il riepilogo partita
+            saved: true,
+            newRecord: true
         });
     });
 });

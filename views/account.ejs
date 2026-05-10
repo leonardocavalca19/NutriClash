@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profilo - NutriClash</title>
+    <title><%= title %></title>
     <link rel="stylesheet" href="/stylesheets/style.css">
     <link rel="stylesheet" href="/stylesheets/account.css">
+    <script src="/javascripts/resize.js"></script>
 </head>
 <body>
 
@@ -23,13 +24,13 @@
                 <a href="/scontro">Scontro tra Prodotti</a>
             </nav>
             <div class="sidebar-footer">
+                <a href="/api">API Docs</a>
                 <a href="/contatti">Contatti</a>
                 <a href="/privacy">Privacy</a>
-                <a href="/login">Accedi</a>
                 <a href="/account" class="active">Il mio account</a>
             </div>
         </aside>
-
+        <div class="chat-divider" id="chat-divider"></div>
         <main class="main">
             <header class="topbar">
                 <h1>Il Mio Profilo</h1>
@@ -71,7 +72,7 @@
                         <h4>Esci</h4>
                         <p>Effettua il logout</p>
                     </div>
-                    <form action="/login/logout" method="GET" onsubmit="return confirm('Vuoi davvero cancellare il tuo account NutriClash?');">
+                    <form action="/login/logout" method="POST">
                         <button type="submit" class="btn-logout">Logout</button>
                     </form>
                 </div>
@@ -81,7 +82,7 @@
                         <h4>Elimina Profilo</h4>
                         <p>Rimuovi permanentemente i tuoi dati dal server.</p>
                     </div>
-                    <form action="/account/delete" method="GET" onsubmit="return confirm('Vuoi davvero cancellare il tuo account NutriClash?');">
+                    <form action="/account/delete" method="POST" onsubmit="return confirm('Vuoi davvero cancellare il tuo account NutriClash?');">
                         <button type="submit" class="btn-elimina">Elimina</button>
                     </form>
                 </div>

@@ -32,6 +32,7 @@ var contattiRouter = require('./routes/contatti');
 var privacyRouter = require('./routes/privacy');
 var accountRouter = require('./routes/account');
 var classificaRouter = require('./routes/classifica');
+var apiRouter = require('./routes/api');
 
 var app = express();
 
@@ -70,6 +71,7 @@ app.use('/contatti', contattiRouter);
 app.use('/privacy', privacyRouter);
 app.use('/account', accountRouter);
 app.use('/classifica', classificaRouter);
+app.use('/api', apiRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
