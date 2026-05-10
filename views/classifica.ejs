@@ -11,8 +11,13 @@
     </style>
 </head>
 <body>
-
     <div class="app">
+        <input type="checkbox" id="menu-toggle" class="menu-toggle">
+        <label for="menu-toggle" class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </label>
         <aside class="sidebar">
             <div class="logo"><img src="/logo.png" alt="LOGO"></div>
             <nav>
@@ -33,7 +38,7 @@
         <div class="chat-divider" id="chat-divider"></div>
         <main class="main">
             <header class="topbar">
-                <h1>Classifica Mondiale</h1>
+                <h1>Classifica Generale</h1>
                 <p>I migliori esperti di Nutri-Score della community</p>
             </header>
 
@@ -99,8 +104,10 @@
                 </div>
                 <div class="registerTo">
                     <% if(!user) { %>
-                        <a href="/registrati">Registrati</a><p> per salvare i tuoi progressi,</p><br>
-                        <p>oppure </p><a href="/accedi">Accedi</a><p> per visualizzare i tuoi risultati!</p>
+                        <p>
+                            <a href="/registrati">Registrati</a> per salvare i tuoi progressi, 
+                            oppure <a href="/accedi">Accedi</a> per visualizzare i tuoi risultati!
+                        </p>
                     <% } %>
                 </div>
             </section>

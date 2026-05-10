@@ -18,7 +18,36 @@
     max-width: 400px;
     text-align: center;
     padding: 30px !important;
-    border-top: 5px solid #28a745;
+    
+    background: #0f172a; 
+    color: #f8fafc; 
+    
+    /* BORDINO NEON: Sottile e professionale */
+    border: 1px solid rgba(34, 197, 94, 0.2);
+    border-top: 5px solid #22c55e; 
+    
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    animation: floating 4s ease-in-out infinite;
+}
+
+.scheda-membro:hover {
+    transform: translateY(-15px) scale(1.02);
+    border-color: #22c55e;
+    box-shadow: 0 15px 40px rgba(34, 197, 94, 0.2); 
+}
+
+@keyframes floating {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
+}
+
+
+.scheda-membro:nth-child(2) {
+    animation-delay: 2s;
 }
 
 .avatar-cerchio {
@@ -80,3 +109,66 @@
     text-align: center;
     margin-top: 40px;
 }
+
+/* =========================================
+   LOGICA RESPONSIVE & MENU
+   ========================================= */
+.menu-toggle, .hamburger { display: none; }
+
+@media (max-width: 768px) {
+    .hamburger {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        z-index: 2000;
+        cursor: pointer;
+        padding: 10px;
+        background: rgba(34, 197, 94, 0.1);
+        border-radius: 8px;
+    }
+
+    .hamburger span {
+        display: block;
+        width: 25px;
+        height: 3px;
+        background: #22c55e;
+        border-radius: 3px;
+    }
+
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        width: 260px;
+        height: 100vh;
+        z-index: 1500;
+        transition: 0.4s ease;
+        background: #020617;
+    }
+
+    .menu-toggle:checked ~ .app .sidebar { left: 0; }
+
+    .app { display: block; }
+    .main { padding: 15px; padding-top: 80px; }
+
+    /* Griglia Team */
+    .griglia-team {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .scheda-membro {
+        width: 100%;
+        max-width: none;
+    }
+}
+
+
+
+
+
+

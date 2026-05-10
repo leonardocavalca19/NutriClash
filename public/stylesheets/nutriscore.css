@@ -137,4 +137,203 @@ h3 {
     border-radius: 8px;
     padding: 12px 25px;
     margin-top: 10px;
+} 
+
+/* --- Nuova CTA Dark --- */
+.cta-section-dark {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%) !important;
+    color: white !important;
+    text-align: center;
+    padding: 60px 40px !important;
+    border: none !important;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2) !important;
 }
+
+.cta-section-dark h2 { color: #22c55e; margin-bottom: 15px; }
+
+/* Bottone consistente con Obiettivo */
+.btn-nutriclash {
+    display: inline-block;
+    background-color: #22c55e;
+    color: white !important;
+    padding: 14px 40px;
+    border-radius: 50px;
+    margin-top: 20px;
+    font-weight: 700;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(34, 197, 94, 0.3);
+}
+
+.btn-nutriclash:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(34, 197, 94, 0.5);
+    background-color: #1ed760;
+}
+
+/* --- Footer Download Professionale --- */
+.download-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #f8fafc;
+    padding: 25px 40px;
+    border-radius: 20px;
+    border: 1px solid #e2e8f0;
+    margin-top: 40px;
+}
+
+.download-content { display: flex; align-items: center; gap: 20px; }
+
+.download-icon {
+    width: 50px;
+    height: 50px;
+    background: white;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #22c55e;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.download-icon svg { width: 24px; height: 24px; }
+
+.download-text h4 { margin: 0; color: #1e293b; font-size: 1.1rem; }
+.download-text p { margin: 0; color: #64748b; font-size: 0.9rem; }
+
+.btn-outline-download {
+    text-decoration: none;
+    color: #1e293b;
+    font-weight: 600;
+    padding: 10px 20px;
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
+    transition: all 0.2s;
+}
+
+.btn-outline-download:hover {
+    background: #1e293b;
+    color: white;
+    border-color: #1e293b;
+}
+
+
+
+
+/* =========================================
+   LOGICA MENU (Uguale alle altre pagine)
+   ========================================= */
+.menu-toggle, .hamburger { display: none; }
+
+/* =========================================
+   MEDIA QUERY RESPONSIVE
+   ========================================= */
+@media (max-width: 768px) {
+    
+    /* 1. Hamburger & Sidebar */
+    .hamburger {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        z-index: 2000;
+        cursor: pointer;
+        padding: 10px;
+        background: rgba(34, 197, 94, 0.1);
+        border-radius: 8px;
+    }
+
+    .hamburger span {
+        display: block;
+        width: 25px;
+        height: 3px;
+        background: #22c55e;
+        border-radius: 3px;
+        transition: 0.3s;
+    }
+
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        width: 260px;
+        height: 100vh;
+        z-index: 1500;
+        transition: 0.4s cubic-bezier(0.77, 0.2, 0.05, 1.0);
+        background: #020617;
+    }
+
+    .menu-toggle:checked ~ .app .sidebar {
+        left: 0;
+    }
+
+    /* 2. Layout Generale */
+    .app { display: block; }
+
+    .main {
+        padding: 15px;
+        padding-top: 80px;
+    }
+
+    .nutri-content {
+        padding: 10px;
+    }
+
+    /* 3. Tabella Gradi Nutri-Score */
+    /* Su mobile la tabella diventa una serie di card scorrevoli */
+    .nutri-table {
+        display: block;
+        overflow-x: auto;
+    }
+
+    .nutri-table td {
+        padding: 15px 10px;
+        font-size: 0.9rem;
+    }
+
+    .badge-ns {
+        width: 35px;
+        height: 35px;
+        font-size: 1.1rem;
+    }
+
+    /* 4. Griglia Fattori (Nemici/Alleati) */
+    .grid-factors {
+        grid-template-columns: 1fr; /* Una colonna sola su mobile */
+        gap: 15px;
+    }
+
+    .factor-card {
+        padding: 15px;
+    }
+
+    /* 5. Formula & CTA */
+    .formula-box {
+        font-size: 1rem;
+        padding: 15px;
+        word-break: break-all; /* Evita che la formula esca dallo schermo */
+    }
+
+    .info-card h2.primo {
+        font-size: 1.5rem;
+    }
+
+    /* Animazione Hamburger */
+    .menu-toggle:checked ~ .hamburger span:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 6px);
+    }
+    .menu-toggle:checked ~ .hamburger span:nth-child(2) { opacity: 0; }
+    .menu-toggle:checked ~ .hamburger span:nth-child(3) {
+        transform: rotate(-45deg) translate(5px, -6px);
+    }
+    .download-footer { flex-direction: column; text-align: center; gap: 20px; }
+    .download-content { flex-direction: column; }
+}
+
+
+

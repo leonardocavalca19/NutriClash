@@ -8,10 +8,16 @@
     <link rel="stylesheet" href="/stylesheets/style.css">
     <link rel="stylesheet" href="/stylesheets/nutriscore.css">
     <link rel="stylesheet" href="/stylesheets/scontro.css">
-</head>
+</head> 
 <body>
 
     <div class="app">
+        <input type="checkbox" id="menu-toggle" class="menu-toggle">
+        <label for="menu-toggle" class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </label>
         <aside class="sidebar" id="nav">
             <div class="logo">
                 <img src="/logo.png" alt="LOGO">
@@ -158,10 +164,12 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="info-card text-center" style="border-top: 5px solid #28a745;">
-                    <h2>Pronto a testare le tue conoscenze?</h2>
-                    <p>Su <strong>NutriClash</strong>, giochiamo proprio con queste etichette. Sapresti distinguere uno yogurt "A" da uno "C"?</p>
-                    <a href="/game" class="but">Inizia la Sfida</a>
+                <div class="info-card cta-section-dark">
+                    <h2>Pensi di saper scegliere il migliore?</h2>
+                    <p>Metti alla prova i tuoi riflessi e la tua conoscenza nel nostro gioco interattivo.</p>
+                    <div class="cta-container">
+                        <a href="/game" class="btn-nutriclash">Inizia la Sfida</a>
+                    </div>
                 </div>
 
             </section>

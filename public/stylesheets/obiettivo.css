@@ -1,9 +1,19 @@
 /* =========================================
-   1. HERO SECTION (OBIETTIVO)
+   1. HERO SECTION & CARDS
    ========================================= */
 .goal-hero {
-    background: linear-gradient(135deg, #ffffff 0%, #f0f3ff 100%) !important;
+    background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%) !important;
     text-align: center;
+    padding: 40px !important;
+    border-radius: 20px;
+}
+
+.info-card {
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    margin-bottom: 30px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
 }
 
 /* =========================================
@@ -11,70 +21,195 @@
    ========================================= */
 .goal-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 25px;
     margin: 40px 0;
 }
 
 .goal-item {
     background: white;
-    padding: 30px;
+    padding: 35px 25px;
     border-radius: 20px;
     text-align: center;
-    border: 1px solid #eee;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
-    transition: transform 0.3s ease;
+    border: 1px solid rgba(0,0,0,0.05);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    transition: transform 0.3s ease, border-color 0.3s ease;
 }
 
 .goal-item:hover {
     transform: translateY(-10px);
-    border-color: #28a745;
+    border-color: #22c55e; 
 }
 
 .goal-icon {
-    font-size: 3rem;
+    font-size: 3.5rem;
     margin-bottom: 20px;
+    display: block;
 }
 
 .goal-item h3 {
-    color: #28a745;
+    color: #1e293b;
     margin-bottom: 15px;
-    font-size: 1.4rem;
+    font-size: 1.5rem;
+    font-weight: 700;
 }
 
 .goal-item p {
-    color: #636e72;
-    line-height: 1.6;
+    color: #475569;
+    line-height: 1.7;
 }
 
+
 /* =========================================
-   3. VISION STATEMENT (CITAZIONE)
+   3. VISION STATEMENT
    ========================================= */
 .vision-statement {
-    background: #28a745 !important;
+    background: #22c55e !important; 
     color: white !important;
     text-align: center;
-    padding: 50px !important;
+    padding: 60px 40px !important;
+    border-radius: 20px;
 }
 
 .vision-statement h2 {
     color: white;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
+    font-size: 2rem;
 }
 
 .vision-statement blockquote {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     font-style: italic;
     font-weight: 300;
-    max-width: 800px;
+    max-width: 850px;
     margin: 0 auto;
+    line-height: 1.5;
+}
+
+
+.cta-section {
+    text-align: center;
+    border-top: 5px solid #22c55e !important; 
+    padding: 35px 30px !important;
+}
+
+.cta-container {
+    margin-top: 25px;
+}
+
+/* Il nuovo Bottone NutriClash */
+.btn-nutriclash {
+    display: inline-block;
+    background-color: #22c55e;
+    color: white !important;
+    padding: 15px 35px;
+    border-radius: 50px; 
+    font-size: 1.1rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(34, 197, 94, 0.3);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btn-nutriclash:hover {
+    transform: translateY(-3px) scale(1.05);
+    background-color: #1ed760; 
+    box-shadow: 0 8px 25px rgba(34, 197, 94, 0.5); 
+    color: #fff !important;
+}
+
+.btn-nutriclash:active {
+    transform: translateY(-1px);
 }
 
 /* =========================================
-   4. RESPONSIVE DESIGN
+   4. LOGICA RESPONSIVE & HAMBURGER
    ========================================= */
+.menu-toggle, .hamburger {
+    display: none;
+}
+
 @media (max-width: 768px) {
+    /* Hamburger Menu */
+    .hamburger {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        z-index: 2000;
+        cursor: pointer;
+        padding: 10px;
+        background: rgba(34, 197, 94, 0.1);
+        border-radius: 8px;
+    }
+
+    .hamburger span {
+        display: block;
+        width: 25px;
+        height: 3px;
+        background: #22c55e;
+        border-radius: 3px;
+        transition: 0.3s;
+    }
+
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        width: 260px;
+        height: 100vh;
+        z-index: 1500;
+        transition: 0.4s cubic-bezier(0.77, 0.2, 0.05, 1.0);
+        background: #020617;
+    }
+
+    .menu-toggle:checked ~ .app .sidebar {
+        left: 0;
+    }
+
+    /* Layout Adaptations */
+    .app {
+        display: block;
+    }
+
+    .main {
+        padding: 20px;
+        padding-top: 80px; 
+    }
+
+    .topbar h1 {
+        font-size: 28px;
+        text-align: center;
+    }
+
+    .topbar p {
+        text-align: center;
+    }
+
+    /* Componenti interni */
+    .goal-hero {
+        padding: 30px 20px !important;
+    }
+
     .vision-statement blockquote {
         font-size: 1.2rem;
+    }
+
+    .goal-grid {
+        grid-template-columns: 1fr; 
+    }
+
+    .menu-toggle:checked ~ .hamburger span:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 6px);
+    }
+    .menu-toggle:checked ~ .hamburger span:nth-child(2) {
+        opacity: 0;
+    }
+    .menu-toggle:checked ~ .hamburger span:nth-child(3) {
+        transform: rotate(-45deg) translate(5px, -6px);
     }
 }

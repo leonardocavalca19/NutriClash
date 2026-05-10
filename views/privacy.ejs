@@ -11,10 +11,16 @@
 <body>
 
     <div class="app">
+        <input type="checkbox" id="menu-toggle" class="menu-toggle">
+        <label for="menu-toggle" class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </label>
         <aside class="sidebar" id="nav">
             <div class="logo">
                 <img src="/logo.png" alt="LOGO">
-            </div>
+            </div> 
             <nav>
                 <a href="/">Home</a>
                 <a href="/game">Gioca</a>
@@ -48,12 +54,22 @@
                     <p>I dati sono conservati su server protetti per la durata del progetto. Anche se l'interfaccia non prevede attualmente un tasto di cancellazione automatica, trattiamo ogni informazione con il massimo rispetto delle buone pratiche di sviluppo web.</p>
                 </div>
 
-                <div class="box-download-staccato">
-                    <div class="testo-dl">
-                        <h4>Specifiche Tecniche</h4>
-                        <p>Documentazione completa sulla gestione dei dati.</p>
+                <div class="download-footer">
+                    <div class="download-content">
+                        <div class="download-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                <polyline points="14 2 14 8 20 8"></polyline>
+                                <line x1="12" y1="18" x2="12" y2="12"></line>
+                                <polyline points="9 15 12 18 15 15"></polyline>
+                            </svg>
+                        </div>
+                        <div class="download-text">
+                            <h4>Informativa Completa</h4>
+                            <p>Documentazione legale dettagliata in formato PDF.</p>
+                        </div>
                     </div>
-                    <a href="/downloads/Documento_privacy.pdf" download class="pulsante-download">
+                    <a href="/downloads/Documento_privacy.pdf" download class="btn-outline-download">
                         Scarica PDF
                     </a>
                 </div>

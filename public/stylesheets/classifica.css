@@ -3,7 +3,7 @@
 ========================================= */
 .label-mini {
     font-size: 0.7rem;
-    color: #95a5a6;
+    color: #94a3b8; 
     text-transform: uppercase;
     letter-spacing: 1.5px;
     margin-top: 10px;
@@ -11,13 +11,21 @@
 
 .punteggio-recap {
     font-weight: bold;
-    color: #7f8c8d;
+    color: #fff;
     margin-top: 5px;
 }
 
 /* =========================================
-    2. TABELLA RANKING (STRUTTURA & COLORI)
+    2. TABELLA RANKING (BIANCA MODERNA)
 ========================================= */
+.scheda-profilo {
+    background: #ffffff;
+    border-radius: 16px; 
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    overflow: hidden; 
+    padding: 0;
+}
+
 .tabella-ranking {
     width: 100%;
     border-collapse: collapse;
@@ -26,16 +34,17 @@
 
 .tabella-ranking th {
     text-align: left;
-    padding: 12px 15px;
+    padding: 15px;
     background-color: #f8f9fa;
-    color: #2c3e50 !important;
-    border-bottom: 2px solid #28a745;
+    color: #334155 !important;
     font-weight: bold;
+    text-transform: uppercase;
+    font-size: 13px;
 }
 
 .tabella-ranking td {
-    padding: 12px 15px;
-    border-bottom: 1px solid #f1f1f1;
+    padding: 15px;
+    border-bottom: 1px solid #f1f5f9;
     color: #333333 !important;
 }
 
@@ -44,18 +53,18 @@
 ========================================= */
 .col-rank {
     font-weight: bold;
-    color: #28a745 !important;
-    width: 60px;
+    color: #22c55e !important; 
+    width: 70px;
 }
 
 .riga-utente {
-    background-color: #f1f8f1 !important;
-    color: #155724 !important;
+    background-color: #f0fdf4 !important; 
+    border-left: 4px solid #22c55e;
 }
 
 .separatore {
     text-align: center;
-    color: #bdc3c7;
+    color: #94a3b8;
     font-size: 1.2rem;
     background-color: #fff;
 }
@@ -63,35 +72,165 @@
 /* =========================================
     4. DETTAGLI & BADGE (TEMPO/TESTO)
 ========================================= */
-.tabella-ranking td strong, 
-.tabella-ranking td span:not(.tempo-badge) {
-    color: #333333 !important;
+.tabella-ranking td strong {
+    color: #0f172a !important;
 }
 
 .tempo-badge {
     font-size: 0.85rem;
-    color: #444444 !important;
-    background: #e9ecef;
+    color: #475569 !important;
+    background: #f1f5f9;
     padding: 4px 10px;
-    border-radius: 10px;
+    border-radius: 8px;
     display: inline-block;
 }
 
-.tabella-ranking * {
-    text-shadow: none !important;
+/* =========================================
+    5. SEZIONE FINALE (SOTTO TABELLA)
+========================================= */
+.registerTo {
+    margin-top: 25px;
+    text-align: center;
+    padding: 10px;
 }
 
-.registerTo
-{
-    margin-top: 10px;
+.registerTo p {
+    color: #94a3b8; 
+    font-size: 14px;
+    display: block;
+    line-height: 1.6;
 }
-.registerTo *
-{
-    font-weight: 600;
-    display: inline;
-}
-.registerTo a
-{
-    color: rgb(15, 159, 226);
+
+.registerTo a {
+    color: #22c55e;
     text-decoration: none;
+    font-weight: 700;
+    display: inline; 
+    margin: 0 2px;
+}
+
+.registerTo a:hover {
+    text-decoration: underline;
+}
+
+/* =========================================
+    LOGICA MENU A SCOMPARSA (Default)
+========================================= */
+.menu-toggle, .hamburger {
+    display: none; 
+}
+
+/* =========================================
+    MEDIA QUERY PER MOBILE (Sotto 768px)
+========================================= */
+@media (max-width: 768px) {
+    
+    /* 1. Tasto Hamburger */
+    .hamburger {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        z-index: 2000;
+        cursor: pointer;
+        padding: 10px;
+        background: rgba(34, 197, 94, 0.1);
+        border-radius: 8px;
+    }
+
+    .hamburger span {
+        display: block;
+        width: 25px;
+        height: 3px;
+        background: #22c55e;
+        border-radius: 3px;
+        transition: 0.3s;
+    }
+
+    /* 2. Sidebar a comparsa */
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        width: 250px;
+        height: 100vh;
+        z-index: 1500;
+        transition: 0.4s cubic-bezier(0.77, 0.2, 0.05, 1.0);
+        background: #020617;
+        box-shadow: 10px 0 30px rgba(0,0,0,0.5);
+    }
+
+    /* Apertura Sidebar */
+    .menu-toggle:checked ~ .app .sidebar {
+        left: 0;
+    }
+
+    /* Animazione Hamburger -> X */
+    .menu-toggle:checked ~ .hamburger span:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 6px);
+    }
+    .menu-toggle:checked ~ .hamburger span:nth-child(2) {
+        opacity: 0;
+    }
+    .menu-toggle:checked ~ .hamburger span:nth-child(3) {
+        transform: rotate(-45deg) translate(5px, -6px);
+    }
+
+    /* 3. Adattamento Layout */
+    .app {
+        display: block;
+        height: auto;
+    }
+
+    .main {
+        padding: 15px;
+        padding-top: 80px; 
+    }
+
+    .topbar {
+        text-align: center;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .topbar h1 {
+        font-size: 24px;
+    }
+
+    /* 4. Tabella Responsive */
+    .scheda-profilo {
+        overflow-x: auto; 
+        -webkit-overflow-scrolling: touch;
+        margin: 0 -5px; 
+    }
+
+    .tabella-ranking th, 
+    .tabella-ranking td {
+        padding: 10px 8px;
+        font-size: 13px; 
+    }
+
+    .col-rank {
+        width: 50px;
+    }
+
+    .tempo-badge {
+        padding: 2px 6px;
+        font-size: 11px;
+    }
+
+    .registerTo p {
+        font-size: 13px;
+        line-height: 1.8;
+    }
+    
+    .menu-toggle {
+        display: none;
+    }
+    
+    .chat-divider {
+        display: none; 
+    }
 }

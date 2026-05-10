@@ -10,7 +10,7 @@
     border: 1px solid #eee;
     box-shadow: 0 4px 15px rgba(0,0,0,0.05);
 }
-
+ 
 .scheda-info h3 {
     color: #28a745;
     margin-bottom: 20px;
@@ -49,32 +49,107 @@
     color: #777;
 }
 
+
 /* =========================================
-    3. BOTTONI & INTERAZIONI
-========================================= */
-.pulsante-download {
-    background: #28a745;
-    color: white;
-    padding: 12px 25px;
+   3. FOOTER DOWNLOAD
+   ========================================= */
+.download-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #1e293b;
+    padding: 25px 40px;
+    border-radius: 20px;
+    border: 1px solid rgba(34, 197, 94, 0.2);
+}
+
+.download-content { display: flex; align-items: center; gap: 20px; }
+
+.download-icon {
+    width: 50px;
+    height: 50px;
+    background: #0f172a;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #22c55e;
+}
+
+.download-icon svg { width: 24px; height: 24px; }
+
+.download-text h4 { margin: 0; color: #f8fafc; font-size: 1.1rem; }
+.download-text p { margin: 5px 0 0 0; color: #94a3b8; font-size: 0.9rem; }
+
+.btn-outline-download {
     text-decoration: none;
-    border-radius: 8px;
-    font-weight: bold;
-    font-size: 0.9rem;
-    transition: all 0.3s ease;
+    color: #22c55e;
+    font-weight: 700;
+    padding: 12px 25px;
+    border: 2px solid #22c55e;
+    border-radius: 12px;
+    transition: all 0.3s;
 }
 
-.pulsante-download:hover {
-    background: #218838;
-    transform: scale(1.03);
+.btn-outline-download:hover {
+    background: #22c55e;
+    color: white;
+    box-shadow: 0 0 20px rgba(34, 197, 94, 0.4);
 }
 
 /* =========================================
-    4. RESPONSIVE DESIGN
-========================================= */
-@media (max-width: 650px) {
-    .box-download-staccato {
+   4. LOGICA RESPONSIVE & MENU
+   ========================================= */
+.menu-toggle, .hamburger { display: none; }
+
+@media (max-width: 768px) {
+    .hamburger {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        z-index: 2000;
+        cursor: pointer;
+        padding: 10px;
+        background: rgba(34, 197, 94, 0.1);
+        border-radius: 8px;
+    }
+
+    .hamburger span {
+        display: block;
+        width: 25px;
+        height: 3px;
+        background: #22c55e;
+        border-radius: 3px;
+    }
+
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        width: 260px;
+        height: 100vh;
+        z-index: 1500;
+        transition: 0.4s ease;
+        background: #020617;
+    }
+
+    .menu-toggle:checked ~ .app .sidebar { left: 0; }
+    
+    .main { padding: 15px; padding-top: 80px; }
+
+    .download-footer {
         flex-direction: column;
         text-align: center;
-        gap: 20px;
+        gap: 25px;
+        padding: 30px 20px;
     }
+
+    .download-content { flex-direction: column; }
+    
+    .scheda-info { padding: 25px; }
+    .scheda-info h3 { font-size: 1.5rem; }
 }
+

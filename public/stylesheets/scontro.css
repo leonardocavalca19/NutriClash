@@ -3,7 +3,7 @@
    ========================================= */
 .intro-clash {
     border-bottom: 4px solid #218838;
-}
+} 
 
 /* =========================================
    2. SEZIONE PRINCIPALE (CONTENITORE)
@@ -103,15 +103,107 @@ a > img {
     padding: 15px;
     border-bottom: 1px solid #eee;
 }
+/* =========================================
+   5. BOTTONE FINALE
+   ========================================= */
+.cta-section-dark {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%) !important;
+    color: white !important;
+    text-align: center;
+    padding: 50px 30px !important;
+    border: none !important;
+    border-radius: 20px;
+    margin-top: 40px;
+}
+
+.btn-nutriclash {
+    display: inline-block;
+    background-color: #22c55e;
+    color: white !important;
+    padding: 14px 40px;
+    border-radius: 50px;
+    font-weight: 700;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(34, 197, 94, 0.4); 
+}
+
+.btn-nutriclash:hover {
+    transform: translateY(-3px);
+    background-color: #1ed760;
+    box-shadow: 0 10px 25px rgba(34, 197, 94, 0.6); 
+}
 
 /* =========================================
-   6. RESPONSIVE DESIGN
+   LOGICA MENU (Standard per NutriClash)
+   ========================================= */
+.menu-toggle, .hamburger { display: none; }
+
+/* =========================================
+   MEDIA QUERY & RESPONSIVE
    ========================================= */
 @media (max-width: 768px) {
-    .clash-row {
+    /* 1. Hamburger & Sidebar */
+    .hamburger {
+        display: flex;
         flex-direction: column;
+        gap: 5px;
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        z-index: 2000;
+        cursor: pointer;
+        padding: 10px;
+        background: rgba(34, 197, 94, 0.1);
+        border-radius: 8px;
     }
+
+    .hamburger span {
+        display: block;
+        width: 25px;
+        height: 3px;
+        background: #22c55e;
+        border-radius: 3px;
+    }
+
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        width: 260px;
+        height: 100vh;
+        z-index: 1500;
+        transition: 0.4s cubic-bezier(0.77, 0.2, 0.05, 1.0);
+        background: #020617;
+    }
+
+    .menu-toggle:checked ~ .app .sidebar { left: 0; }
+
+    /* 2. Scontro Prodotti (Layout) */
+    .clash-row {
+        flex-direction: column; 
+        gap: 15px;
+    }
+
     .vs-badge {
         margin: 10px 0;
+        font-size: 1.5rem;
+        transform: rotate(0deg); 
     }
+
+    .product-box {
+        width: 100%;
+    }
+
+    /* 3. Tabelle & Testi */
+    .main { padding: 15px; padding-top: 80px; }
+    
+    .table-responsive {
+        overflow-x: auto; 
+    }
+
+    .analysis-box { font-size: 0.9rem; }
 }
+

@@ -13,7 +13,12 @@
     <body>
 
         <div class="app">
-
+            <input type="checkbox" id="menu-toggle" class="menu-toggle">
+            <label for="menu-toggle" class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </label>
             <!-- SIDEBAR -->
             <aside class="sidebar" id="nav">
                 <div class="logo">
@@ -55,7 +60,7 @@
                 <!-- HERO -->
                 <section class="hero">
                     <div class="hero-text">
-                        <h2>Qual è più salutare?</h2>
+                        <h2>Qual è più <span class="highlight">salutare?</span></h2>
                         <p>
                             Metti alla prova il tuo intuito: quale tra qeusti due cibi è più salutare?
                         </p>
@@ -64,24 +69,6 @@
 
                     <div class="hero-image">
                         <img src="<%= img_url %>" alt="Preview">
-                    </div>
-                </section>
-
-                <!-- INFO SECTION -->
-                <section class="info">
-                    <div class="card">
-                        <h3>🎯 Semplice</h3>
-                        <p>Due scelte, una decisione.</p>
-                    </div>
-
-                    <div class="card">
-                        <h3>🔥 Addictive</h3>
-                        <p>Una volta iniziato non smetti.</p>
-                    </div>
-
-                    <div class="card">
-                        <h3>🏆 Sfida</h3>
-                        <p>Batti il tuo record.</p>
                     </div>
                 </section>
 
