@@ -2,8 +2,7 @@ let timer;
 
 let partita = {
     punteggio: 0,
-    tempo: 0,
-    username: null
+    tempo: 0
 };
 let listaProdotti;
 
@@ -11,8 +10,6 @@ let img_element1;
 let img_element2;
 let name_element1;
 let name_element2;
-
-let secondi = 0;
 
 document.addEventListener("DOMContentLoaded", async ()=>{
     startTimer();
@@ -34,8 +31,8 @@ document.addEventListener("DOMContentLoaded", async ()=>{
 function startTimer()
 {
     timer = setInterval(() => {
-        secondi++;
-        document.getElementById("timer").innerText = Math.floor(secondi/60) + ":" + (secondi%60<10?0:"") + secondi%60;
+        partita.tempo++;
+        document.getElementById("timer").innerText = Math.floor(partita.tempo/60) + ":" + (partita.tempo%60<10?0:"") + partita.tempo%60;
     }, 1000);
 }
 
@@ -44,15 +41,14 @@ function stopTimer()
     clearInterval(timer)
 }
 
-async function lost(tempo, data = null)
+async function lost(data)
 {
-    stopTimer();
     const response = await fetch("/game/lost", {
-            method: "GET",
+            method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: data ? JSON.stringify(data) : null
+            body: JSON.stringify(data)
         });
     const page = await response.text();
     document.getElementById("main").innerHTML = page;
@@ -81,10 +77,7 @@ async function checkChoice(index)
     const p1 = listaProdotti[0];
     const p2 = listaProdotti[1];
 
-    showNutriScore();
-
-    await delay(1500);
-
+    
     const response = await fetch("/game/check", {
         method: "POST",
         headers: {
@@ -98,16 +91,36 @@ async function checkChoice(index)
     });
     const result = await response.json();
 
-    hideNutriScore();
-
     if(!result.win)
     {
-        await fetch("/game/finish", { method: "POST" });
-        lost(secondi);
+        await fetch("/game/finish", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                punteggio: partita.punteggio,
+                tempo: partita.tempo
+            })
+        });
+        stopTimer();
+        showNutriScore();
+        await delay(1500);
+        hideNutriScore();
+        lost(partita);
         return;
     }
-    listaProdotti.splice(0, 2);
-    await setItems();
+    else
+    {
+        showNutriScore();
+        await delay(1500);
+        hideNutriScore();
+
+        partita.punteggio++;
+        listaProdotti.splice(0, 2);
+        document.getElementById("punteggio").innerText = partita.punteggio;
+        await setItems();
+    }
 }
 
 function showNutriScore()
@@ -117,8 +130,8 @@ function showNutriScore()
     const s1 = document.getElementById("score1");
     const s2 = document.getElementById("score2");
 
-    s1.style.display = "flex";
-    s2.style.display = "flex";
+    s1.classList.remove("hidden");
+    s2.classList.remove("hidden");
 
     s1.innerText = p1.nutriscore_grade.toUpperCase();
     s2.innerText = p2.nutriscore_grade.toUpperCase();
@@ -128,8 +141,8 @@ function showNutriScore()
 }
 function hideNutriScore()
 {
-    document.getElementById("score1").style.display = "none";
-    document.getElementById("score2").style.display = "none";
+    document.getElementById("score1").classList.add("hidden");
+    document.getElementById("score2").classList.add("hidden");
 }
 
 function delay(ms)

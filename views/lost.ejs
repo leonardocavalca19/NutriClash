@@ -1,2 +1,10 @@
-<h1>HAI PERSO!!!</h1>
-<a href="/game">Rigioca</a>
+<div class="lost-page">
+    <section class="lost-screen">
+        <div class="lost-items">
+            <h1>PARTITA TERMINATA</h1>
+            <p>Punteggio: <%= data.punteggio %></p>
+            <p>Tempo: <%= Math.floor(data.tempo/60) + ":" + (data.tempo%60<10?"0":"") + (data.tempo%60) %></p>
+            <a class="rematch" href="/game">Rigioca</a>
+        </div>
+    </section>
+</div>

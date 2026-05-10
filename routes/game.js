@@ -32,8 +32,8 @@ router.get('/call', function(req, res, next){
     });
 });
 
-/* GET loads defeat screen */
-router.get('/lost', function(req, res, next){ res.render("lost"); });
+/* POST loads defeat screen */
+router.post('/lost', function(req, res, next){ res.render("lost", {data: req.body}); });
 
 /* GET SAVE GAME ON DB */
 router.get('/save', function(res, req, next){});
@@ -80,8 +80,8 @@ router.post('/check', express.json(), (req, res) => {
 });
 
 router.post('/finish', (req, res) => {
-    const punteggio = req.session?.punteggio || 0;
-    const tempo = req.session?.tempo || 0;
+    const punteggio = req.body.punteggio || 0;
+    const tempo = req.body.tempo || 0;
     const username = req.session?.user?.username;
 
     // reset sempre la partita

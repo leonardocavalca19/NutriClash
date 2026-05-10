@@ -3,21 +3,26 @@
     margin: auto;
     padding: 20px;
     display: grid;
-    grid-template-columns: 40% 10% 40%;
+    grid-template-columns: 49% 2% 49%;
 }
 .element1, .element2
 {
-    border: 5px solid;
-    border-radius: 15%;
-    border-image: linear-gradient(45deg, red, blue) 1;
     margin: auto;
-    width: 70%;
+    padding: 30px;
     height: 100%;
     text-align: center;
 }
-.element1 > img, .element2 > img
+.border
 {
     margin: auto;
+    border: 5px solid rgba(114, 23, 23, 0.712);
+    border-radius: 15px;
+    width: 70%;
+}
+.element1 > .border > img, .element2 > .border > img
+{
+    margin: auto;
+    padding: 20px;
     max-width: 100%;
     max-height: 100%;
     object-fit: contain;
@@ -45,3 +50,50 @@
 .nutriscore.c { background-color: #fecb02; }
 .nutriscore.d { background-color: #ee8100; }
 .nutriscore.e { background-color: #e63e11; }
+.hidden
+{
+    visibility: hidden;
+}
+
+.scores-container
+{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.lost-page
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+.lost-screen
+{
+    margin: auto;
+    padding: 15px;
+    height: fit-content;
+    width: fit-content;
+    display: flex;
+    justify-content: center;
+    border: 5px solid rgba(114, 23, 23, 0.712);
+    border-radius: 25px;
+}
+.lost-screen *
+{
+    margin: 10px;
+}
+.lost-items
+{
+    text-align: center;
+}
+.rematch
+{
+    display: block;
+    margin: 15px;
+    padding: 10px;
+    background-color: #093992;
+    color: #fff;
+    border-radius: 25px;
+    text-decoration: none;
+}
