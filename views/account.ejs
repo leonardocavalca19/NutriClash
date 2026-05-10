@@ -87,6 +87,29 @@
                     </form>
                 </div>
 
+                <div class="box-request">
+                    <div class="testo">
+                        <h4>Richiedi la chiave API</h4>
+                        <p>Richiedi una chiave API personalizzata per accedere alle funzionalità avanzate.</p>
+                    </div>
+
+                    <% if (typeof apiKey !== 'undefined' && apiKey) { %>
+                        <div class="api-display-box">
+                            <strong>La tua chiave:</strong> 
+                            <code><%= apiKey %></code>
+                        </div>
+                    <% } %>
+
+                    <form action="/account/request-api-key" method="POST">
+                        <button type="submit" class="btn-api">
+                            <%= (typeof apiKey !== 'undefined' && apiKey) ? 'Rigenera Chiave' : 'Richiedi Chiave' %>
+                        </button>
+                    </form>
+                </div>
+
+
+
+
             </section>
         </main>
     </div>

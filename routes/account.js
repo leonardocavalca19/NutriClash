@@ -1,8 +1,10 @@
 var express = require('express');
 var router = express.Router();
 const db = require('../db/database');
+const crypto = require('crypto');
 
 const sql = `DELETE FROM utenti WHERE username = ? OR email = ?`;
+const sqlApiKey = `UPDATE utenti SET apiKey = ? WHERE username = ? OR email = ?`;
 
 function requireLogin(req, res, next) {
 
@@ -22,8 +24,10 @@ router.get('/', requireLogin, function(req, res) {
         email: req.session.user.email,
         data_nascita: req.session.user.dataNascita,
         sesso: req.session.user.sesso,
-        apiKey: ""
+        apiKey: req.session.user.apiKey
     };
+
+    console.log(`Accesso alla pagina account di ${user.apiKey}`);
 
     res.render('account', {
         title: 'Account',
@@ -65,5 +69,39 @@ router.post('/delete', requireLogin, (req, res) => {
         });
     }
 });
+
+
+router.post('/request-api-key', requireLogin, (req, res) => {
+    
+    try {
+        const newApiKey = crypto.randomBytes(32).toString('hex');      //Genera una stringa casuale di 32 byte in formato esadecimale
+        
+        const stmt1 = db.prepare(sqlApiKey);
+        stmt1.run(newApiKey, req.session.user.username, req.session.user.email);
+
+        req.session.user.apiKey = newApiKey;
+
+        console.log(`Nuova API Key generata per ${req.session.user.username}: ${newApiKey}`);
+
+        return res.render('account', {
+            title: 'Account',
+            user: req.session.user,
+            success: 'Chiave API generata con successo!',
+            apiKey: newApiKey
+        });
+
+    } catch (err) {
+        console.error("Errore generazione API Key:", err);
+        return res.render('account', {
+            title: 'Account',
+            user: req.session.user,
+            error: 'Errore interno durante la generazione della chiave'
+        });
+    }
+});
+
+
+
+
 
 module.exports = router;

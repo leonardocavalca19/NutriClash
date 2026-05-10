@@ -56,7 +56,8 @@ router.post('/', async function(req, res) {
             cognome: row.cognome,
             email: row.email,
             dataNascita: row.dataNascita,
-            sesso: row.sesso
+            sesso: row.sesso,
+            apiKey: row.api_key
         };
         return res.redirect('/account');
     }

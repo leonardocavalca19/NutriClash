@@ -140,6 +140,66 @@
 
 .btn-elimina:hover { background: #c0392b; }
 
+
+.box-request {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    margin-top: 20px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.box-request h4 {
+    color: #333;
+    margin: 0 0 5px 0;
+}
+
+.box-request p {
+    color: #666;
+    font-size: 0.9em;
+    margin-bottom: 20px;
+}
+
+/* Il box grigio della chiave */
+.api-display-box {
+    background: #f8f9fa;
+    border: 1px solid #e0e0e0;
+    padding: 12px 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.api-display-box strong {
+    color: #555;
+    margin-right: 10px;
+    white-space: nowrap;
+}
+
+.api-display-box code {
+    color: #d63384; /* Colore tipico per i codici */
+    font-family: monospace;
+    word-break: break-all;
+    font-weight: 600;
+}
+
+/* Bottone Rigenera (usiamo lo stesso stile del Logout/Elimina) */
+.btn-api {
+    background-color: #f05442; /* Rosso come il tasto elimina */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.btn-api:hover {
+    background-color: #d63d2d;
+}
+
 /* =========================================
    5. RESPONSIVE DESIGN
    ========================================= */

@@ -25,8 +25,8 @@ function createTabella()
             cognome TEXT NOT NULL,
             dataNascita DATE NOT NULL,
             sesso TEXT NOT NULL,
-            password TEXT NOT NULL
-            
+            password TEXT NOT NULL,
+            apiKey TEXT
         )
     `;
 

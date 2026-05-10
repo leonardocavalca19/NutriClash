@@ -7,16 +7,27 @@ const sql = `SELECT barcode, product_name_it, nutriscore_grade FROM prodotti WHE
 
 //Middleware per controllare la chiave API
 const controllaApiKey = (req, res, next) => {
-    const API_KEY_SEGRETA = "clash2026";
     const chiaveFornita = req.query.key;
 
     if (!chiaveFornita) {
         return res.status(401).json({ error: "Accesso negato. Manca la chiave." });
     }
-    if (chiaveFornita !== API_KEY_SEGRETA) {
-        return res.status(403).json({ error: "API Key non valida." });
+
+    try {
+        const sql = "SELECT * FROM utenti WHERE apiKey = ?";
+        const user = db.prepare(sql).get(chiaveFornita);
+
+        if (!user) {
+            return res.status(403).json({ error: "API Key non valida o inesistente." });
+        }
+
+        req.session.user.apiKey = newApiKey;
+        next();
+        
+    } catch (err) {
+        console.error("Errore validazione API Key:", err);
+        return res.status(500).json({ error: "Errore interno del server." });
     }
-    next();
 };
 
 //Middleware per limitare le richieste (rate limiting) manuale
@@ -26,6 +37,8 @@ const rateLimiterManuale = (req, res, next) => {
     const ORA_ATTUALE = Date.now();
     const LIMITE_TEMPO = 60000; 
     const MAX_RICHIESTE = 10;   
+
+    console.log(`IP ${ip} ha fatto una richiesta. Conteggio attuale: ${memoriaAccessi[ip]?.conteggio || 0}`);
 
     if (!memoriaAccessi[ip]) {
         
