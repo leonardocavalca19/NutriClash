@@ -6,6 +6,10 @@ const db = require("../db/database");
 const router = express.Router();
 
 const CACHE_DIR = path.join(__dirname, "../cache/images");
+if(!fs.existsSync(CACHE_DIR))
+{
+    fs.mkdirSync(CACHE_DIR, {recursive: true});
+}
 
 router.get("/:barcode", async (req, res) => {
     const barcode = req.params.barcode;
