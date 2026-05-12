@@ -11,6 +11,12 @@
 <body>
 
     <div class="app"> 
+        <input type="checkbox" id="menu-toggle" class="menu-toggle">
+        <label for="menu-toggle" class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </label>
         <aside class="sidebar" id="nav">
             <div class="logo">
                 <img src="/logo.png" alt="LOGO">
@@ -39,7 +45,7 @@
             <header class="topbar">
                 <div class="topbar-logo">NUTRICLASH</div>
                 <% if (user) { %>
-                    <a href="/account" class="topbar-auth">👤[ <%= user.username %> ]</a>
+                    <a href="/account" class="topbar-auth">[👤 <%= user.username %> ]</a>
                 <% } else { %>
                     <a href="/login" class="topbar-auth">[ ACCEDI ]</a>
                 <% } %>
