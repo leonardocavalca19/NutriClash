@@ -1,0 +1,24 @@
+[
+    {
+        "username": "leonardocavalca",
+        "email": "leonardocavalca.admin@nutriclash.it",
+        "nome": "Leonardo",
+        "cognome": "Cavalca",
+        "dataNascita": "01/04/2007",
+        "sesso": "M",
+        "password": "Amministratore1",
+        "apikey": null,
+        "ruolo": "owner"
+    },
+    {
+        "username": "mattiasozzi",
+        "email": "mattiasozzi.admin@nutriclash.it",
+        "nome": "Mattia",
+        "cognome": "Sozzi",
+        "dataNascita": "31/07/2007",
+        "sesso": "F",
+        "password": "Amministratore1",
+        "apikey": null,
+        "ruolo": "owner"
+    }
+]

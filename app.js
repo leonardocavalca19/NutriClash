@@ -6,11 +6,13 @@ var logger = require('morgan');
 const fs = require("fs");
 const session = require("express-session");
 const seedDatabase = require("./db/seed");
+const seedUsers = require("./db/seed");
 
 if(!fs.existsSync("db/database.js"))
 {
   console.log("Database non trovato. Creazione database");
   seedDatabase();
+  seedUsers();
 }
 else
 {
@@ -34,6 +36,7 @@ var accountRouter = require('./routes/account');
 var classificaRouter = require('./routes/classifica');
 var apiRouter = require('./routes/api');
 var imageCacheRouter = require('./routes/imageCache');
+var adminRouter = require('./routes/admin');
 
 var app = express();
 
@@ -74,6 +77,7 @@ app.use('/account', accountRouter);
 app.use('/classifica', classificaRouter);
 app.use('/api', apiRouter);
 app.use("/cached-images", imageCacheRouter);
+app.use("/admin", adminRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

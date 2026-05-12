@@ -3,7 +3,7 @@ var router = express.Router();
 const db = require('../db/database');
 const crypto = require('node:crypto');
 
-const sql = `INSERT INTO utenti (username, email, nome, cognome, dataNascita, sesso, password) VALUES (?, ?, ?, ?, ?, ?, ?)`;
+const sql = `INSERT INTO utenti (username, email, nome, cognome, dataNascita, sesso, password, ruolo) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
 
 //funzione per hashare la password con scrypt e salt univoco
 function hashPassword(password) {
@@ -29,7 +29,8 @@ router.post('/', function(req, res) {
             cognome,
             dataNascita,
             sesso,
-            passwordHash
+            passwordHash,
+            "user" //ruolo
         );
         console.log("Utente registrato con successo");
         return res.redirect('/login');

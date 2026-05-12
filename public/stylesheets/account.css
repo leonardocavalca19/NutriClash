@@ -95,7 +95,7 @@
 /* =========================================
    4. AZIONI ACCOUNT (LOGOUT & DANGER ZONE)
    ========================================= */
-.box-logout, .box-danger {
+.box-admin, .box-logout, .box-danger {
     margin-top: 30px;
     background: #fff;
     border: 1px solid #fadbd8;
@@ -105,6 +105,23 @@
     justify-content: space-between;
     align-items: center;
 }
+
+/* Logout Styles */
+.box-admin h4 { margin: 0; color: #1904da; }
+.box-admin p { margin: 5px 0 0 0; font-size: 0.9rem; color: #7f8c8d; }
+
+.btn-admin {
+    background: #1904da;
+    color: white;
+    border: none;
+    padding: 10px 25px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-admin:hover { background: #3423ce; }
 
 /* Logout Styles */
 .box-logout h4 { margin: 0; color: #6495ed; }

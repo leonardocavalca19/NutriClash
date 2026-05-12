@@ -16,7 +16,6 @@ function requireLogin(req, res, next) {
 }
 
 router.get('/', requireLogin, function(req, res) {
-
     const user = {
         nome: req.session.user.nome,
         cognome: req.session.user.cognome,
@@ -24,7 +23,8 @@ router.get('/', requireLogin, function(req, res) {
         email: req.session.user.email,
         data_nascita: req.session.user.dataNascita,
         sesso: req.session.user.sesso,
-        apiKey: req.session.user.apiKey
+        apiKey: req.session.user.apiKey,
+        ruolo: req.session.user.ruolo
     };
 
     console.log(`Accesso alla pagina account di ${user.apiKey}`);
@@ -99,9 +99,5 @@ router.post('/request-api-key', requireLogin, (req, res) => {
         });
     }
 });
-
-
-
-
 
 module.exports = router;

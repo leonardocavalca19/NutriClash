@@ -3,7 +3,7 @@ var router = express.Router();
 const db = require('../db/database');
 const crypto = require('node:crypto');
 
-const sql = `SELECT username, password, nome, cognome, email, dataNascita, sesso FROM utenti WHERE username = ? OR email = ?`;
+const sql = `SELECT username, password, nome, cognome, email, dataNascita, sesso, ruolo FROM utenti WHERE username = ? OR email = ?`;
 
 // Funzione per verificare la password inserita confrontandola con l'hash salvato nel DB
 function verifyPassword(passwordInserita, stringaDalDB) {
@@ -57,7 +57,8 @@ router.post('/', async function(req, res) {
             email: row.email,
             dataNascita: row.dataNascita,
             sesso: row.sesso,
-            apiKey: row.api_key
+            apiKey: row.api_key,
+            ruolo: row.ruolo
         };
         return res.redirect('/account');
     }

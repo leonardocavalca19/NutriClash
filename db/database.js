@@ -19,14 +19,15 @@ function createTabella()
 
     const sqlUtenti = `
         CREATE TABLE IF NOT EXISTS utenti (
-            username TEXT PRIMARY KEY,
+            username TEXT PRIMARY KEY NOT NULL,
             email TEXT UNIQUE NOT NULL,
             nome TEXT NOT NULL,
             cognome TEXT NOT NULL,
             dataNascita DATE NOT NULL,
             sesso TEXT NOT NULL,
             password TEXT NOT NULL,
-            apiKey TEXT
+            apiKey TEXT,
+            ruolo TEXT NOT NULL
         )
     `;
 

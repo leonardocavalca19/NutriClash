@@ -67,6 +67,18 @@
                     </div>
                 </div>
 
+                <% if(user.ruolo === "owner") { %>
+                    <div class="box-admin">
+                        <div class="testo">
+                            <h4>Amministratore</h4>
+                            <p>Passa al pannello amministratore</p>
+                        </div>
+                        <form action="/admin" method="GET">
+                            <button type="submit" class="btn-admin">Admin</button>
+                        </form>
+                    </div>
+                <% } %>
+
                 <div class="box-logout">
                     <div class="testo">
                         <h4>Esci</h4>
