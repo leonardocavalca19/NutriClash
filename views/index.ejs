@@ -5,76 +5,116 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= title %></title>
     <script src="/javascripts/resize.js"></script>
-    <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
-
     <link rel="stylesheet" href="/stylesheets/style.css">
 </head>
-    <body>
+<body>
 
-        <div class="app">
-            <input type="checkbox" id="menu-toggle" class="menu-toggle">
-            <label for="menu-toggle" class="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
-            </label>
-            <!-- SIDEBAR -->
-            <aside class="sidebar" id="nav">
-                <div class="logo">
-                    <img src="/logo.png" alt="LOGO">
-                </div>
+    <div class="app"> 
+        <aside class="sidebar" id="nav">
+            <div class="logo">
+                <img src="/logo.png" alt="LOGO">
+            </div>
+            <nav>
+                <a href="/" class="active">Home</a>
+                <a href="/game">Gioca</a>
+                <a href="/classifica">Classifica</a>
+                <a href="/obiettivo">Il nostro obiettivo</a>
+                <a href="/nutriscore">Nutri-score</a>
+                <a href="/scontro">Scontro tra Prodotti</a>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="/api">API Docs</a>
+                <a href="/contatti">Contatti</a>
+                <a href="/privacy">Privacy</a>
+                <% if(!user) { %> 
+                    <a href="/login">Accedi</a> 
+                <% } else { %>
+                    <a href="/account">Il mio account</a>
+                <% } %>
+            </div>
+        </aside>
 
-                <nav>
-                    <a href="/" class="active">Home</a>
-                    <a href="/game">Gioca</a>
-                    <a href="/classifica">Classifica</a>
-                    <a href="/obiettivo">Il nostro obiettivo</a>
-                    <a href="/nutriscore">Nutri-score</a>
-                    <a href="/scontro">Scontro tra Prodotti</a>
-                </nav>
+        <main class="main">
+            <header class="topbar">
+                <div class="topbar-logo">NUTRICLASH</div>
+                <% if (user) { %>
+                    <a href="/account" class="topbar-auth">👤[ <%= user.username %> ]</a>
+                <% } else { %>
+                    <a href="/login" class="topbar-auth">[ ACCEDI ]</a>
+                <% } %>
+            </header>
 
-                <div class="sidebar-footer">
-                    <a href="/api">API Docs</a>
-                    <a href="/contatti">Contatti</a>
-                    <a href="/privacy">Privacy</a>
-                    <% if(!user) { %> <a href="/login">Accedi</a> <% }  else {%><a href="/account">Il mio account</a><% } %>
-                </div>
-            </aside>
-            <div class="chat-divider" id="chat-divider"></div>
-            <!-- MAIN -->
-            <main class="main" id="main">
-
-                <!-- HEADER -->
-                <header class="topbar">
-                    <h1>NutriClash</h1>
-                    <% if (user) { %>
-                            <div class="user-info">
-                                <a href="/account" class="play-btn"><strong>👤 <%= user.username %></strong></a>
-                            </div>
-                        <% } else { %>
-                            <a class="play-btn" href="/login">Accedi</a>
-                        <% } %>
-                </header>
-
-                <!-- HERO -->
-                <section class="hero">
-                    <div class="hero-text">
-                        <h2>Qual è più <span class="highlight">salutare?</span></h2>
-                        <p>
-                            Metti alla prova il tuo intuito: quale tra qeusti due cibi è più salutare?
-                        </p>
-                        <a class="cta" href="/game">Inizia subito</a>
+            <section class="hero">
+                <div>
+                    <h1>EAT<br><span>SMART.</span><br>NOT FAST.</h1>
+                    <div class="hero-info">
+                        <p>Le strategie di marketing sono spesso studiate per generare confusione. NutriClash analizza la realtà dei prodotti per restituire ai consumatori il controllo sulle proprie scelte alimentari.</p>
+                        <a href="/game" class="btn-primary">GIOCA ORA</a>
                     </div>
+                </div>
+                <div class="hero-img">
+                    <img src="<%= img_url %>" alt="Product Preview">
+                </div>
+            </section>
 
-                    <div class="hero-image">
-                        <img src="<%= img_url %>" alt="Preview">
+            <section class="stats-bar">
+                <div class="stat-item"><h4>+10k</h4><p>Prodotti Analizzati</p></div>
+                <div class="stat-item"><h4>92%</h4><p>Accuratezza dei dati</p></div>
+                <div class="stat-item"><h4>-40%</h4><p>Consumo di Zuccheri Liberi</p></div>
+            </section>
+
+            <section class="mission">
+                <span class="section-label">Il nostro Manifesto</span>
+                <div class="mission-grid">
+                    <div class="mission-text">
+                        <h2>Semplificare la verità alimentare.</h2>
+                        <p>Spesso le etichette prediligono l'estetica a scapito della chiarezza, rendendo difficile identificare l'effettivo contenuto di zuccheri o additivi.</p>
+                        <p>NutriClash nasce per offrire a tutti la capacità di guardare oltre la confezione. L'obiettivo è diffondere la cultura della lettura critica per promuovere un benessere autentico.</p>
                     </div>
-                </section>
+                    <div class="mission-quote">
+                        <p>L'UNICA DIFESA È<br><span>LA CONSAPEVOLEZZA.</span></p>
+                    </div>
+                </div>
+            </section>
 
-            </main>
+            <section class="features">
+                <span class="section-label" style="text-align: center;">Come funziona il sistema</span>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">🧠</div>
+                        <h3>Educazione Nutrizionale</h3>
+                        <p>Nessuna imposizione, solo strumenti di analisi. Si promuove l'autonomia decisionale attraverso la conoscenza.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🎮</div>
+                        <h3>Apprendimento Interattivo</h3>
+                        <p>Attraverso un'esperienza dinamica, la comprensione delle tabelle nutrizionali diventa un percorso accessibile e stimolante.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🔍</div>
+                        <h3>Senso Critico</h3>
+                        <p>Individuare gli ingredienti nascosti e comprendere le logiche commerciali per una spesa più informata.</p>
+                    </div>
+                </div>
+            </section>
 
-        </div>
+            <section class="visual-break">
+                <span class="section-label">La nostra Visione</span>
+                <h2>DISTINGUERE LA REALTÀ DAL MARKETING.</h2>
+            </section>
 
-    </body>
+            <section class="final-cta">
+                <span class="section-label">Pronto per la sfida?</span>
+                <a href="/game" class="btn-massive">ENTRA NELL'ARENA</a>
+                <p class="cta-subtext">DIVENTA PARTE DELLA RIVOLUZIONE NUTRICLASH</p>
+            </section>
+
+            <footer>
+                <p>&copy; 2026 NutriClash Project. Tutti i diritti riservati.</p>
+            </footer>
+        </main>
+    </div>
+
+</body>
 </html>
