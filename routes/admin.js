@@ -8,8 +8,9 @@ const sql = `
 
 function requireLogin(req, res, next) {
 
-    if (!req.session && req.session.user.ruolo === "user") {
-        return res.redirect('/login');
+    console.log(req.session.user.ruolo);
+    if (!req.session || req.session.user.ruolo === "user") {
+        return res.redirect('/');
     }
 
     next();
