@@ -24,7 +24,8 @@ router.get('/', function(req, res) {
                 title: 'Classifica - NutriClash',
                 classifica: rows,
                 userRow: null,
-                MAX_LENGTH: MAX_LENGTH
+                MAX_LENGTH: MAX_LENGTH,
+                user: req.session?.user
             });
         }
         // se l'utente non è loggato, quety per ottenere il suo punteggio migliore e poi query per la sua relativa posizione

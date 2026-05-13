@@ -33,7 +33,10 @@
                 <a href="/api">API Docs</a>
                 <a href="/contatti">Contatti</a>
                 <a href="/privacy">Privacy</a>
-                <a href="/account" class="active">Il mio account</a>
+                <a href="/account">Il mio account</a>
+                <% if(user && user.ruolo !== "user") {%>
+                    <a href="/admin" class="active">Amministratore</a>
+                <% } %>
             </div>
         </aside>
         <div class="chat-divider" id="chat-divider"></div>
