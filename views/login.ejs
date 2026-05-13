@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= title %></title>
     <link rel="stylesheet" href="/stylesheets/registrati.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
 
@@ -27,7 +28,10 @@
 
                 <section>
                     <label for="password">Password</label>
-                    <input type="password" id="password" name="password" placeholder="••••••••">
+                    <div class="password-wrapper">
+                        <input type="password" id="password" name="password" placeholder="••••••••">
+                        <i class="fa-regular fa-eye" id="togglePassword"></i>
+                    </div>
                 </section>
 
                 <button type="submit" class="login-button">Accedi</button>
@@ -38,6 +42,7 @@
             </footer>
         </div>
     </div>
+    <script src="/javascripts/login.js"></script>
 
 </body>
 </html>
