@@ -77,8 +77,16 @@
                     <input type="text" id="username" name="username" placeholder="mariorossi2000" value="<%= locals.dati ? dati.username : '' %>">
                 </section>
 
+                <div class="privacy-container">
+                    <input type="checkbox" id="privacy_accept" name="privacy_accept">
+                    <label for="privacy_accept">
+                        Ho letto e accetto l' <a href="/privacy" target="_blank">Informativa sulla Privacy</a> di NutriClash.
+                    </label>
+                </div>
                 <button type="submit" class="login-button">Registrati</button>
             </form>
+
+
 
             <footer>
                 <p>Hai già un account? <a href="/login">Accedi qui</a></p>

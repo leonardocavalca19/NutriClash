@@ -34,6 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!regexPassword.test(password.value)) errori.push("La password deve avere almeno 8 caratteri, lettere e numeri.");
         if (password.value !== confermaPassword.value) errori.push("Le password non coincidono.");
         if (!regexUsername.test(username.value)) errori.push("Lo username non è valido, deve contenere 3-20 caratteri senza spazi.");
+        if (!document.getElementById('privacy_accept').checked) errori.push("Devi accettare l'informativa sulla privacy.");
 
 
         const sessoSelezionato = document.querySelector('input[name="sesso"]:checked');
