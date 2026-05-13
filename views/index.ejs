@@ -11,6 +11,12 @@
 <body>
 
     <div class="app"> 
+        <input type="checkbox" id="menu-toggle" class="menu-toggle">
+        <label for="menu-toggle" class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </label>
         <aside class="sidebar" id="nav">
             <div class="logo">
                 <img src="/logo.png" alt="LOGO">
@@ -19,7 +25,6 @@
                 <a href="/" class="active">Home</a>
                 <a href="/game">Gioca</a>
                 <a href="/classifica">Classifica</a>
-                <a href="/obiettivo">Il nostro obiettivo</a>
                 <a href="/nutriscore">Nutri-score</a>
                 <a href="/scontro">Scontro tra Prodotti</a>
             </nav>
@@ -42,7 +47,7 @@
             <header class="topbar">
                 <div class="topbar-logo">NUTRICLASH</div>
                 <% if (user) { %>
-                    <a href="/account" class="topbar-auth">👤[ <%= user.username %> ]</a>
+                    <a href="/account" class="topbar-auth">[👤 <%= user.username %> ]</a>
                 <% } else { %>
                     <a href="/login" class="topbar-auth">[ ACCEDI ]</a>
                 <% } %>
@@ -108,7 +113,7 @@
 
             <section class="final-cta">
                 <span class="section-label">Pronto per la sfida?</span>
-                <a href="/game" class="btn-massive">ENTRA NELL'ARENA</a>
+                <a href="/game" class="btn-massive" style="text-align: center;">ENTRA NELL'ARENA</a>
                 <p class="cta-subtext">DIVENTA PARTE DELLA RIVOLUZIONE NUTRICLASH</p>
             </section>
 

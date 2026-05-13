@@ -109,7 +109,6 @@ router.post('/delete', requireLogin, (req, res) => {
 router.post('/request-api-key', rateLimiterManuale, requireLogin, (req, res) => {
     
     //TODO: aggiungere un controllo per evitare di generare una nuova chiave se l'utente ne ha già una valida a meno che non voglia esplicitamente rigenerarla
-    
 
     try {
 
