@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="/stylesheets/style.css">
     <link rel="stylesheet" href="/stylesheets/admin.css">
     <script src="/javascripts/resize.js"></script>
+    <script src="/javascripts/admin.js"></script>
     <title><%= title %></title>
 </head>
 <body>
@@ -49,22 +50,28 @@
                         <p class="username"><strong>Email:</strong> <%= users[i].email %></p>
                         <div class="ruolo">
                             <p><strong>Ruolo:</strong> </p>
-                            <select <%= (user.ruolo !== "Owner" && users[i].ruolo === "Owner") || (user.username === users[i].username) ? "disabled" : "" %>>
+                            <select
+                                class="ruolo-select"
+                                data-username="<%= users[i].username %>"
+                                <%= (
+                                        (user.ruolo !== "owner" && users[i].ruolo === "owner") || (user.username === users[i].username)
+                                    ) ? "disabled" : "" %>
+                            >
                                 <option
-                                    value="User"
+                                    value="user"
                                     <%= users[i].ruolo === "user" ? "selected" : "" %>
                                 >
                                     User
                                 </option>
                                 <option
-                                    value="Admin"
+                                    value="admin"
                                     <%= users[i].ruolo === "admin" ? "selected" : "" %>
                                 >
                                     Admin
                                 </option>
                                 <% if(user.ruolo === "owner" || users[i].ruolo === "owner") { %>
                                     <option
-                                        value="Owner"
+                                        value="owner"
                                         <%= users[i].ruolo === "owner" ? "selected" : "" %>
                                     >
                                         Owner
