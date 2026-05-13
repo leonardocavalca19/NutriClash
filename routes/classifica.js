@@ -21,7 +21,7 @@ router.get('/', function(req, res) {
         // se l'utente non è loggato o è in top
         if (!loggedUser || isInTop) {
             return res.render('classifica', {
-                title: 'Classifica',
+                title: 'Classifica - NutriClash',
                 classifica: rows,
                 userRow: null,
                 MAX_LENGTH: MAX_LENGTH
@@ -39,7 +39,7 @@ router.get('/', function(req, res) {
         const userRow = userStmt.get(loggedUser);
         if (!userRow) {
             return res.render('classifica', {
-                title: 'Classifica',
+                title: 'Classifica - NutriClash',
                 classifica: rows,
                 userRow: null,
                 MAX_LENGTH: MAX_LENGTH
@@ -58,7 +58,7 @@ router.get('/', function(req, res) {
             userRow.tempo
         );
         return res.render('classifica', {
-            title: 'Classifica',
+            title: 'Classifica - NutriClash',
             classifica: rows,
             userRow: userRow,
             posizione: posRow.posizione,

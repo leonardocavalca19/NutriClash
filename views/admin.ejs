@@ -4,11 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/stylesheets/style.css">
+    <link rel="stylesheet" href="/stylesheets/admin.css">
     <script src="/javascripts/resize.js"></script>
     <title><%= title %></title>
 </head>
 <body>
     <div class="app">
+        <input type="checkbox" id="menu-toggle" class="menu-toggle">
+        <label for="menu-toggle" class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </label>
         <aside class="sidebar" id="nav">
             <div class="logo">
                 <img src="/logo.png" alt="LOGO">
@@ -33,7 +40,41 @@
             <header class="topbar">
                 <h1>Pannello amministratore</h1>
             </header>
-            <div class="users-grid"></div>
+            <div class="users-grid">
+                <% for(let i=0; i<users.length; i++) { %>
+                    <div class="user-box">
+                        <p class="username"><strong>Username:</strong> <%= users[i].username %></p>
+                        <p class="username"><strong>Nome:</strong> <%= users[i].nome %></p>
+                        <p class="username"><strong>Cognome:</strong> <%= users[i].cognome %></p>
+                        <p class="username"><strong>Email:</strong> <%= users[i].email %></p>
+                        <div class="ruolo">
+                            <p><strong>Ruolo:</strong> </p>
+                            <select <%= (user.ruolo !== "Owner" && users[i].ruolo === "Owner") || (user.username === users[i].username) ? "disabled" : "" %>>
+                                <option
+                                    value="User"
+                                    <%= users[i].ruolo === "user" ? "selected" : "" %>
+                                >
+                                    User
+                                </option>
+                                <option
+                                    value="Admin"
+                                    <%= users[i].ruolo === "admin" ? "selected" : "" %>
+                                >
+                                    Admin
+                                </option>
+                                <% if(user.ruolo === "owner" || users[i].ruolo === "owner") { %>
+                                    <option
+                                        value="Owner"
+                                        <%= users[i].ruolo === "owner" ? "selected" : "" %>
+                                    >
+                                        Owner
+                                    </option>
+                                <% } %>
+                            </select>
+                        </div>
+                    </div>
+                <% } %>
+            </div>
         </main>
     </div>
 </body>

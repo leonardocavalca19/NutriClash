@@ -1,0 +1,126 @@
+.users-grid
+{
+    display: grid;
+    grid-template-columns: 25% 25% 25% 25%;
+}
+@media (max-width: 1500px)
+{
+    .users-grid
+    {
+        display: grid;
+        grid-template-columns: 50% 50%;
+    }
+}
+.menu-toggle, .hamburger { display: none; }
+@media ( max-width: 768px )
+{
+    .users-grid
+    {
+        display: grid;
+        grid-template-columns: 100%;
+    }
+    .hamburger {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        z-index: 2000;
+        cursor: pointer;
+        padding: 10px;
+        background: rgba(34, 197, 94, 0.1);
+        border-radius: 8px;
+    }
+
+    .hamburger span {
+        display: block;
+        width: 25px;
+        height: 3px;
+        background: #22c55e;
+        border-radius: 3px;
+    }
+
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        width: 260px;
+        height: 100vh;
+        z-index: 1500;
+        transition: 0.4s ease;
+        background: #020617;
+    }
+
+    .menu-toggle:checked ~ .app .sidebar { left: 0; }
+
+    /* Layout Content */
+    .app { display: block; }
+    .main { padding: 15px; padding-top: 80px; }
+}
+.user-box
+{
+    margin: 10px;
+    padding: 20px;
+    border-radius: 15px;
+    background-color: #fff;
+    color: #0f172a;
+    border: 1px solid;
+}
+.user-box *
+{
+    margin: 5px;
+}
+/* Container select */
+select
+{
+    width: 50%;
+    padding: 10px 14px;
+    border: 1px solid #d0d7de;
+    border-radius: 10px;
+    background-color: #ffffff;
+    color: #222;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    outline: none;
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background-color 0.2s ease;
+}
+
+/* Hover */
+select:hover
+{
+    border-color: #4f8cff;
+}
+
+/* Focus */
+select:focus
+{
+    border-color: #4f8cff;
+    box-shadow:
+        0 0 0 3px rgba(79, 140, 255, 0.15);
+}
+
+/* Disabled */
+select:disabled
+{
+    background-color: #f3f4f6;
+    color: #777;
+    cursor: not-allowed;
+    opacity: 0.85;
+}
+
+/* Option */
+select option
+{
+    font-size: 14px;
+}
+.ruolo
+{
+    margin: auto;
+    display: flex;
+    justify-content: start;
+}

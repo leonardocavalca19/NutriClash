@@ -32,9 +32,12 @@
                 <% } else { %>
                     <a href="/account">Il mio account</a>
                 <% } %>
+                <% if(user && user.ruolo !== "user") {%>
+                    <a href="/admin">Amministratore</a>
+                <% } %>
             </div>
         </aside>
-
+        <div class="chat-divider" id="chat-divider"></div>
         <main class="main">
             <header class="topbar">
                 <div class="topbar-logo">NUTRICLASH</div>
@@ -44,7 +47,6 @@
                     <a href="/login" class="topbar-auth">[ ACCEDI ]</a>
                 <% } %>
             </header>
-
             <section class="hero">
                 <div>
                     <h1>EAT<br><span>SMART.</span><br>NOT FAST.</h1>

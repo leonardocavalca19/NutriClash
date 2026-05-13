@@ -4,8 +4,8 @@
         "email": "leonardocavalca.admin@nutriclash.it",
         "nome": "Leonardo",
         "cognome": "Cavalca",
-        "dataNascita": "01/04/2007",
-        "sesso": "M",
+        "dataNascita": "2007-04-1",
+        "sesso": "maschio",
         "password": "Amministratore1",
         "apikey": null,
         "ruolo": "owner"
@@ -15,8 +15,8 @@
         "email": "mattiasozzi.admin@nutriclash.it",
         "nome": "Mattia",
         "cognome": "Sozzi",
-        "dataNascita": "31/07/2007",
-        "sesso": "F",
+        "dataNascita": "2007-07-31",
+        "sesso": "femmina",
         "password": "Amministratore1",
         "apikey": null,
         "ruolo": "owner"
