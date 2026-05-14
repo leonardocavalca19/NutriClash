@@ -42,7 +42,7 @@ const rateLimiterManuale = (req, res, next) => {
         return res.render('account', {
             title: 'Account',
             user: req.session.user,
-            apiKey: 'Troppe richieste. Riprova tra un minuto.'
+            apiKey: 'Troppe richieste. Riprova tra un minuto. La tua chiave API attuale è: ' + req.session.user.apiKey
         });
     }
 

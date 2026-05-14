@@ -45,13 +45,16 @@
                 <section>
                     <label>Sesso</label>
                     <div class="radio-group">
-                        <input type="radio" id="maschio" name="sesso" value="maschio">
+                        <input type="radio" id="maschio" name="sesso" value="maschio" 
+                            <%= (locals.dati && dati.sesso === 'maschio') ? 'checked' : '' %> required>
                         <label for="maschio">Maschio</label>
                         
-                        <input type="radio" id="femmina" name="sesso" value="femmina">
+                        <input type="radio" id="femmina" name="sesso" value="femmina" 
+                            <%= (locals.dati && dati.sesso === 'femmina') ? 'checked' : '' %> required>
                         <label for="femmina">Femmina</label>
                         
-                        <input type="radio" id="altro" name="sesso" value="altro">
+                        <input type="radio" id="altro" name="sesso" value="altro" 
+                            <%= (locals.dati && dati.sesso === 'altro') ? 'checked' : '' %> required>
                         <label for="altro">Altro</label>
                     </div>
                 </section>
@@ -67,7 +70,7 @@
                 <section>
                     <label for="confirm_password">Conferma Password</label>
                     <div class="password-wrapper">
-                        <input type="password" id="confirm_password" name="confirm_password" placeholder="Ripeti la password">
+                        <input type="password" id="confermaPassword" name="confermaPassword" placeholder="Ripeti la password">
                         <i class="fa-regular fa-eye toggle-password-reg"></i>
                     </div>
                 </section>
@@ -93,6 +96,7 @@
             </footer>
         </div>
     </div>
-    <script src="/javascripts/login.js"></script>
+    <script src="/javascripts/registrati.js"></script>
+    <script src="/javascripts/occhio.js"></script>
 </body>
 </html>

@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const dataNascita = document.getElementById('dataNascita');
     const email = document.getElementById('email');
     const password = document.getElementById('password');
-    const confermaPassword = document.getElementById('confermaPassword'); 
+    const confermaPassword = document.getElementById('confermaPassword');  
     const username = document.getElementById('username');
 
     // Regex

@@ -17,6 +17,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/', function(req, res) {
+    console.log("Dati ricevuti:", req.body);
     const { username, nome, cognome, sesso, dataNascita, email, password } = req.body;
     try
     {
@@ -37,7 +38,7 @@ router.post('/', function(req, res) {
     }
     catch (err)
     {
-        let messaggioErrore = "Errore durante la registrazione.";
+        let messaggioErrore = "Errore durante la registrazione."; 
         // gestione errori UNIQUE
         if (err.message && err.message.includes('UNIQUE')) {
             if (err.message.includes('username')) {
@@ -46,6 +47,7 @@ router.post('/', function(req, res) {
                 messaggioErrore = "L'email è già registrata.";
             }
         } else {
+            console.log("Errore sconosciuto durante la registrazione:", err);
             console.error("Errore DB:", err.message);
         }
         return res.render('registrati', {
