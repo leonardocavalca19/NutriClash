@@ -7,6 +7,9 @@ import logger from 'morgan';
 import fs from "fs";
 import session from "express-session";
 import { supabase } from "./db/supabase.js";
+import dotenv from "dotenv";
+
+if(!process.env.RENDER) dotenv.config();
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -31,7 +34,7 @@ import adminRouter from './routes/admin.js';
 const app = express();
 
 app.use(session({
-    secret: 'supersegreto',
+    secret: process.env.SESSION_KEY,
     resave: false,
     saveUninitialized: false,
     cookie: { secure: false }
