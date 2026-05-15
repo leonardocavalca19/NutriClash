@@ -58,46 +58,32 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <% 
-                                    const top10 = classifica.slice(0, MAX_LENGTH);
-                                    let rankCorrente = 1;       //Campo per aumentare man mano il rank
-                                    let utentiInTop10 = false;  //Campo per vedere se l'utente loggato è già visualizzato
-                                    
-                                    
-                                    top10.forEach((player, index) => {      // Ciclo per visualizzare la top 10 con gestione dei pari merito
-                                        if (index > 0) {            
-                                            const precPlayer = top10[index - 1];       
-                                            if (!(player.punteggio === precPlayer.punteggio && player.tempo === precPlayer.tempo)) {
-                                                rankCorrente = index + 1;
-                                            }
-                                        }
-                                        
-                                        if (user && player.username === user.username) { utentiInTop10 = true; }    //Controllo se l'utente loggato è presente nella top 10 per evitare di visualizzarlo due volte
-                                %>
+                                <% classifica.forEach((player, index) => { %>
                                     <tr class="<%= (user && player.username === user.username) ? 'riga-utente' : '' %>">
-                                        <td class="col-rank"><%= rankCorrente %>°</td>
+                                        <td><%= index + 1 %>°</td>
                                         <td>
-                                            <% if(user && player.username === user.username) {%>
-                                                <strong>@<%= player.username %></strong>
-                                            <% } else { %>
-                                                @<%= player.username %>
-                                            <% } %>
+                                            @<%= player.username %>
                                         </td>
-                                        <td><strong><%= player.punteggio %></strong> pts</td>
-                                        <td><span class="tempo-badge"><%= Math.floor(player.tempo/60) + ":" + (player.tempo%60<10?0:"") + player.tempo%60 %></span></td>
+                                        <td><strong><%= player.punteggio %></strong></td>
+                                        <td>
+                                            <%= Math.floor(player.tempo / 60) %>:
+                                            <%= (player.tempo % 60 < 10 ? "0" : "") + (player.tempo % 60) %>
+                                        </td>
                                     </tr>
-                                <% }); %>
-
-                                <!-- se l'utente è loggato ma non era nella top 10 -->
-                                <% if (userRow) { %>
+                                <% }) %>
+                                <!-- UTENTE FUORI TOP -->
+                                <% if (userRow && posizione > MAX_LENGTH) { %>
                                     <tr>
                                         <td colspan="4" class="separatore">...</td>
                                     </tr>
                                     <tr class="riga-utente">
-                                        <td class="col-rank"><%= posizione %>°</td>
+                                        <td><%= posizione %>°</td>
                                         <td><strong>@<%= userRow.username %></strong></td>
-                                        <td><strong><%= userRow.punteggio %></strong> pts</td>
-                                        <td><span class="tempo-badge"><%= Math.floor(userRow.tempo/60) + ":" + (userRow.tempo%60<10?0:"") + userRow.tempo%60 %></span></td>
+                                        <td><strong><%= userRow.punteggio %></strong></td>
+                                        <td>
+                                            <%= Math.floor(userRow.tempo / 60) %>:
+                                            <%= (userRow.tempo % 60 < 10 ? "0" : "") + (userRow.tempo % 60) %>
+                                        </td>
                                     </tr>
                                 <% } %>
                             </tbody>

@@ -67,12 +67,12 @@ async function setItems()
     if (!p1.image_url) {
         img_element1.src = "/images/not-available.png";
     } else {
-        img_element1.src = `/cached-images/${p1.barcode}`;
+        img_element1.src = p1.image_url;
     }
     if (!p2.image_url) {
         img_element2.src = "/images/not-available.png";
     } else {
-        img_element2.src = `/cached-images/${p2.barcode}`;
+        img_element2.src = p2.image_url;
     }
 
     name_element1.innerText = p1.product_name_it ?? p1.product_name;

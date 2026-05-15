@@ -1,21 +1,34 @@
-var express = require('express');
-var router = express.Router();
-const db = require('../db/database');
-
-const sql = `
-    SELECT barcode, image_url FROM prodotti ORDER BY RANDOM() LIMIT 1
-`;
+import express from 'express';
+const router = express.Router();
+import { supabase } from "../db/supabase.js";
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
+router.get('/', async function(req, res, next) {
     try
     {
-        const stmt = db.prepare(sql);
-        const row = stmt.get();
-        const img_url = row
-            ? `/cached-images/${row.barcode}`
-            : "/images/not-available.png";
-        res.render('index', {
+        const { data, error } = await supabase
+            .from("prodotti")
+            .select("barcode, image_url")
+            .limit(100); // puoi aumentare o diminuire
+
+    if (error) throw error;
+
+    if (!data || data.length === 0) {
+        return res.render("index", {
+            title: "Home",
+            user: req.session?.user || null,
+            img_url: "/images/not-available.png"
+        });
+    }
+
+    const index = Math.floor(Math.random() * data.length);
+    const product = data[index];
+
+    const img_url = product
+        ? product.image_url
+        : "/images/not-available.png";
+
+        return res.render('index', {
             title: 'Home',
             user: req.session?.user || null,
             img_url
@@ -32,4 +45,4 @@ router.get('/', function(req, res, next) {
     }
 });
 
-module.exports = router;
+export default router;

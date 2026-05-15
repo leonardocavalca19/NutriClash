@@ -1,9 +1,11 @@
-const express = require("express");
-const fs = require("fs");
-const path = require("path");
-const https = require("https");
-const db = require("../db/database");
+import express from 'express';
+import fs from "fs";
+import path, { dirname } from "path";
+import { fileURLToPath } from "url";
+import https from "https";
+import { supabase } from "../db/supabase.js";
 const router = express.Router();
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const CACHE_DIR = path.join(__dirname, "../cache/images");
 if(!fs.existsSync(CACHE_DIR))
@@ -23,10 +25,14 @@ router.get("/:barcode", async (req, res) => {
 
     try
     {
-        const stmt = db.prepare(
-            "SELECT image_url FROM prodotti WHERE barcode = ?"
-        );
-        const row = stmt.get(barcode);
+        const { data: row, error } = await supabase
+            .from("prodotti")
+            .select("image_url")
+            .eq("barcode", barcode)
+            .maybeSingle();
+
+        if (error) throw error;
+
         if (!row || !row.image_url) {
             return res.status(404).send("Immagine non trovata");
         }
@@ -59,4 +65,4 @@ router.get("/:barcode", async (req, res) => {
     }
 });
 
-module.exports = router;
+export default router;

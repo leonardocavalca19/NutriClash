@@ -1,9 +1,7 @@
-var express = require('express');
-var router = express.Router();
-const db = require('../db/database');
-const crypto = require('node:crypto');
-
-const sql = `INSERT INTO utenti (username, email, nome, cognome, dataNascita, sesso, password, ruolo) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
+import express from 'express';
+const router = express.Router();
+import { supabase } from "../db/supabase.js";
+import crypto from 'node:crypto';
 
 //funzione per hashare la password con scrypt e salt univoco
 function hashPassword(password) {
@@ -16,23 +14,25 @@ router.get('/', function(req, res, next) {
     res.render('registrati', { title: 'Registrazione' });
 });
 
-router.post('/', function(req, res) {
+router.post('/', async function(req, res) {
     console.log("Dati ricevuti:", req.body);
     const { username, nome, cognome, sesso, dataNascita, email, password } = req.body;
     try
     {
         const passwordHash = hashPassword(password);
-        const stmt = db.prepare(sql);
-        stmt.run(
+        const { error } = await supabase
+        .from("utenti")
+        .insert({
             username,
             email,
             nome,
             cognome,
-            dataNascita,
+            dataNascita: dataNascita,
             sesso,
-            passwordHash,
-            "user" //ruolo
-        );
+            password: passwordHash,
+            ruolo: "user"
+        });
+        if(error) throw error;
         console.log("Utente registrato con successo");
         return res.redirect('/login');
     }
@@ -40,15 +40,15 @@ router.post('/', function(req, res) {
     {
         let messaggioErrore = "Errore durante la registrazione."; 
         // gestione errori UNIQUE
-        if (err.message && err.message.includes('UNIQUE')) {
-            if (err.message.includes('username')) {
+        if(err.code === "23505") {
+            if(err.message.includes("username"))
+            {
                 messaggioErrore = "Lo username è già occupato.";
-            } else if (err.message.includes('email')) {
+            }
+            else if(err.message.includes("email"))
+            {
                 messaggioErrore = "L'email è già registrata.";
             }
-        } else {
-            console.log("Errore sconosciuto durante la registrazione:", err);
-            console.error("Errore DB:", err.message);
         }
         return res.render('registrati', {
             title: 'Registrazione',
@@ -57,4 +57,4 @@ router.post('/', function(req, res) {
         });
     }
 });
-module.exports = router;
+export default router;

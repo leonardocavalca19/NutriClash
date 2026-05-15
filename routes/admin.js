@@ -1,10 +1,6 @@
-var express = require('express');
-var router = express.Router();
-const db = require('../db/database');
-
-const sql = `
-    SELECT username, nome, cognome, email, dataNascita, sesso, ruolo FROM utenti
-`
+import express from 'express';
+const router = express.Router();
+import { supabase } from "../db/supabase.js";
 
 function requireLogin(req, res, next) {
 
@@ -17,13 +13,14 @@ function requireLogin(req, res, next) {
 }
 
 /* GET home page. */
-router.get('/', requireLogin, function(req, res, next) {
-
-    const stmt = db.prepare(sql);
-    const rows = stmt.all();
-
+router.get('/', requireLogin, async function(req, res, next) {
     try
     {
+        const { data: rows, error } = await supabase
+        .from("utenti")
+        .select("username, nome, cognome, email, dataNascita, sesso, ruolo")
+        if(error) throw error;
+
         res.render("admin", { title: "Amministratore", user: req.session.user, users: rows });
     }
     catch (error)
@@ -36,7 +33,7 @@ router.get('/', requireLogin, function(req, res, next) {
         });
     }
 });
-router.post("/cambia-ruolo", express.json(), (req, res) => {
+router.post("/cambia-ruolo", express.json(), async (req, res) => {
     try
     {
         const currentUser = req.session.user;
@@ -48,9 +45,13 @@ router.post("/cambia-ruolo", express.json(), (req, res) => {
         }
 
         const { username, ruolo } = req.body;
-        const targetUser = db.prepare(`SELECT username, ruolo FROM utenti WHERE username = ?`).get(username);
+        const { data: targetUser, error } = await supabase
+        .from("utenti")
+        .select("username, ruolo")
+        .eq("username", username)
+        .maybeSingle();
 
-        if(!targetUser)
+        if(error || !targetUser)
         {
             return res.status(404).json({
                 success: false,
@@ -73,7 +74,12 @@ router.post("/cambia-ruolo", express.json(), (req, res) => {
                 error: "Non puoi modificare il tuo ruolo"
             });
         }
-        db.prepare(`UPDATE utenti SET ruolo = ? WHERE username = ?`).run(ruolo, username);
+        const { error: updateError } = await supabase
+        .from("utenti")
+        .update({ ruolo })
+        .eq("username", username);
+        if(updateError) throw updateError;
+
         res.json({
             success: true
         });
@@ -88,4 +94,4 @@ router.post("/cambia-ruolo", express.json(), (req, res) => {
     }
 });
 
-module.exports = router;
+export default router;

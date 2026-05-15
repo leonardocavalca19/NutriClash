@@ -1,9 +1,7 @@
-var express = require('express');
-var router = express.Router();
-const db = require('../db/database');
-const crypto = require('node:crypto');
-
-const sql = `SELECT username, password, nome, cognome, email, dataNascita, sesso, ruolo FROM utenti WHERE username = ? OR email = ?`;
+import express from 'express';
+const router = express.Router();
+import { supabase } from "../db/supabase.js";
+import crypto from 'node:crypto';
 
 // Funzione per verificare la password inserita confrontandola con l'hash salvato nel DB
 function verifyPassword(passwordInserita, stringaDalDB) {
@@ -34,9 +32,21 @@ router.post('/', async function(req, res) {
     const { email_username, password } = req.body;
     try
     {
-        const stmt = db.prepare(sql);
-        const row = stmt.get(email_username, email_username);
-        if (!row) {
+        const { data: row, error } = await supabase
+        .from("utenti")
+        .select(`
+            username,
+            password,
+            nome,
+            cognome,
+            email,
+            dataNascita,
+            sesso,
+            ruolo
+        `)
+        .or(`username.eq.${email_username}, email.eq.${email_username}`)
+        .single();
+        if (error || !row) {
             return res.render('login', {
                 title: 'Login',
                 error: 'Credenziali non valide'
@@ -79,4 +89,4 @@ router.post('/logout', (req, res) => {
     });
 });
 
-module.exports = router;
+export default router;

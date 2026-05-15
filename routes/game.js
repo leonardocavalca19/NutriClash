@@ -1,6 +1,6 @@
-var express = require('express');
-const db = require("../db/database");
-var router = express.Router();
+import express from 'express';
+import { supabase } from "../db/supabase.js";
+const router = express.Router();
 
 function requireLogin(req, res, next) {
     if (!req.session.user) {
@@ -15,14 +15,27 @@ router.get('/', function(req, res, next) {
 });
 
 /* GET products array */
-router.get('/call', function(req, res, next){
-    const sql = 'SELECT * FROM prodotti ORDER BY RANDOM() LIMIT 100';
+router.get('/call', async function(req, res, next){
 
     try
     {
-        const stmt = db.prepare(sql);
-        const rows = stmt.all();
-        const list = rows.map(row => ({
+        const { data, error } = await supabase
+        .from("prodotti")
+        .select(`
+            barcode,
+            image_url,
+            product_name,
+            product_name_it,
+            nutriscore_grade
+        `)
+        .limit(200);
+
+    if (error) throw error;
+
+        const shuffled = data
+            .sort(() => 0.5 - Math.random())
+            .slice(0, 100);
+        const list = shuffled.map(row => ({
             barcode: row.barcode,
             image_url: row.image_url,
             product_name: row.product_name,
@@ -41,20 +54,26 @@ router.get('/call', function(req, res, next){
 /* POST loads defeat screen */
 router.post('/lost', function(req, res, next){ res.render("lost", {data: req.body}); });
 
-/* GET SAVE GAME ON DB */
-router.get('/save', function(res, req, next){});
-
 /* POST checks the click of the user */
-router.post('/check', express.json(), (req, res) => {
+router.post('/check', express.json(), async (req, res) => {
     const { p1, p2, scelta } = req.body;
-
-    const sql = `SELECT barcode, nutriscore_grade FROM prodotti WHERE barcode IN (?, ?)`;
 
     try
     {
-        const stmt = db.prepare(sql);
-        const rows = stmt.all(p1, p2);
-        const valoriNScore = { e: 0, d: 1, c: 2, b: 3, a: 4 };
+        const { data: rows, error } = await supabase
+            .from("prodotti")
+            .select("barcode, nutriscore_grade")
+            .in("barcode", [p1, p2]);
+
+        if (error) throw error;
+
+        const valoriNScore = {
+            e: 0,
+            d: 1,
+            c: 2,
+            b: 3,
+            a: 4
+        };
         const prod1 = rows.find(r => r.barcode === p1);
         const prod2 = rows.find(r => r.barcode === p2);
         const scores = [
@@ -63,15 +82,8 @@ router.post('/check', express.json(), (req, res) => {
         ];
         const otherIndex = scelta === 0 ? 1 : 0;
         const win = scores[scelta] >= scores[otherIndex];
-        if (!req.session.punteggio) {
-            req.session.punteggio = 0;
-        }
-        if (win) {
-            req.session.punteggio++;
-        }
         res.json({
             win,
-            punteggio: req.session.punteggio,
             logged: !!req.session.user
         });
     }
@@ -82,31 +94,55 @@ router.post('/check', express.json(), (req, res) => {
     }
 });
 
-router.post('/finish', (req, res) => {
-    const punteggio = req.body.punteggio || 0;
-    const tempo = req.body.tempo || 0;
+router.post('/finish', async (req, res) => {
     const username = req.session?.user?.username;
-
     if (!username) {
-        return res.json({ saved: false, newRecord: false });
+        return res.json({ saved: false });
     }
 
-    const sqlSetScores = `INSERT INTO partita (punteggio, tempo, username) VALUES (?, ?, ?)`;
+    const punteggio = Number(req.body.punteggio) || 0;
+    const tempo = Number(req.body.tempo) || 0;
 
-    try
-    {
-        const stmt = db.prepare(sqlSetScores);
-        stmt.run(punteggio, tempo, username);
-        res.json({
-            saved: true,
-            newRecord: true
-        });
-    }
-    catch (err)
-    {
-        console.error("DB error:", err.message);
-        res.status(500).json({ error: "DB error" });
+    try {
+        const { data: existing, error } = await supabase
+            .from("partita")
+            .select("punteggio, tempo")
+            .eq("username", username)
+            .maybeSingle();
+
+        if (error) throw error;
+
+        if (!existing) {
+            await supabase
+                .from("partita")
+                .insert({
+                    username,
+                    punteggio,
+                    tempo
+                });
+
+            return res.json({ saved: true, newRecord: true });
+        }
+
+        const isBetter =
+            punteggio > existing.punteggio ||
+            (punteggio === existing.punteggio && tempo < existing.tempo);
+
+        if (!isBetter) {
+            return res.json({ saved: true, newRecord: false });
+        }
+
+        await supabase
+            .from("partita")
+            .update({ punteggio, tempo })
+            .eq("username", username);
+
+        return res.json({ saved: true, newRecord: true });
+
+    } catch (err) {
+        console.error(err);
+        return res.status(500).json({ error: "DB error" });
     }
 });
 
-module.exports = router;
+export default router;

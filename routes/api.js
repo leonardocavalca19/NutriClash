@@ -1,12 +1,9 @@
-var express = require('express');
-var router = express.Router();
-const db = require('../db/database');
-
-const sql = `SELECT barcode, product_name_it, nutriscore_grade FROM prodotti WHERE barcode = ?`;
-
+import express from 'express';
+const router = express.Router();
+import { supabase } from "../db/supabase.js";
 
 //Middleware per controllare la chiave API
-const controllaApiKey = (req, res, next) => {
+async function controllaApiKey (req, res, next) {
     const chiaveFornita = req.query.key;
 
     if (!chiaveFornita) {
@@ -14,14 +11,16 @@ const controllaApiKey = (req, res, next) => {
     }
 
     try {
-        const sql = "SELECT * FROM utenti WHERE apiKey = ?";
-        const user = db.prepare(sql).get(chiaveFornita);
+        const { data: user, error } = await supabase
+        .from("utenti")
+        .select("*")
+        .eq("apikey", chiaveFornita)
+        .maybeSingle();
 
-        if (!user) {
+        if (error || !user) {
             return res.status(403).json({ error: "API Key non valida o inesistente." });
         }
 
-        req.session.user.apiKey = newApiKey;
         next();
         
     } catch (err) {
@@ -68,7 +67,7 @@ router.get('/', function(req, res, next) {
 });
 
 // Risponde a: GET /api/compara?code1=...&code2=...&key=...
-router.get('/compara', rateLimiterManuale, controllaApiKey, (req, res) => {
+router.get('/compara', rateLimiterManuale, controllaApiKey, async (req, res) => {
 
     const { code1, code2 } = req.query;
 
@@ -80,9 +79,16 @@ router.get('/compara', rateLimiterManuale, controllaApiKey, (req, res) => {
 
     try
     {
-        const stmt = db.prepare(sql);
-        const row1 = stmt.get(code1);
-        const row2 = stmt.get(code2);
+        const { data: prodotti, error } = await supabase
+        .from("prodotti")
+        .select("barcode, product_name_it, nutriscore_grade")
+        .in("barcode", [code1, code2]);
+
+        if (error) throw error;
+
+        const row1 = prodotti.find(p => p.barcode === code1);
+        const row2 = prodotti.find(p => p.barcode === code2);
+
         if (!row1) {
             return res.status(404).json({
                 error: `Prodotto ${code1} non trovato`
@@ -124,4 +130,4 @@ router.get('/compara', rateLimiterManuale, controllaApiKey, (req, res) => {
     }
 });
 
-module.exports = router;
+export default router;

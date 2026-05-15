@@ -1,7 +1,7 @@
-var express = require('express');
-var router = express.Router();
-const db = require('../db/database');
-const crypto = require('crypto');
+import express from 'express';
+const router = express.Router();
+import { supabase } from "../db/supabase.js";
+import crypto from 'crypto';
 
 const sql = `DELETE FROM utenti WHERE username = ? OR email = ?`;
 const sqlApiKey = `UPDATE utenti SET apiKey = ? WHERE username = ? OR email = ?`;
@@ -69,29 +69,21 @@ router.get('/', requireLogin, function(req, res) {
     });
 });
 
-router.post('/delete', requireLogin, (req, res) => {
+router.post('/delete', requireLogin, async (req, res) => {
 
     try {
+        const username = req.session.user.username;
+        const email = req.session.user.email;
 
-        const stmt = db.prepare(sql);
-        const result = stmt.run(
-            req.session.user.username,
-            req.session.user.email
-        );
-
-        // opzionale: controlla se ha eliminato qualcosa
-        if (result.changes === 0) {
-            return res.render('account', {
-                title: 'Account',
-                user: req.session.user,
-                error: 'Utente non trovato'
-            });
-        }
+        const { error } = await supabase
+        .from("utenti")
+        .delete()
+        .or(`username.eq.${username},email.eq.${email}`)
+        if(error) throw error;
 
         req.session.destroy(() => {
             res.redirect("/");
         });
-
     } catch (err) {
 
         console.error('Errore eliminazione account:', err.message);
@@ -106,7 +98,7 @@ router.post('/delete', requireLogin, (req, res) => {
 
 
 
-router.post('/request-api-key', rateLimiterManuale, requireLogin, (req, res) => {
+router.post('/request-api-key', rateLimiterManuale, requireLogin, async (req, res) => {
     
     //TODO: aggiungere un controllo per evitare di generare una nuova chiave se l'utente ne ha già una valida a meno che non voglia esplicitamente rigenerarla
 
@@ -114,8 +106,12 @@ router.post('/request-api-key', rateLimiterManuale, requireLogin, (req, res) => 
 
         const newApiKey = crypto.randomBytes(32).toString('hex');      //Genera una stringa casuale di 32 byte in formato esadecimale
         
-        const stmt1 = db.prepare(sqlApiKey);
-        stmt1.run(newApiKey, req.session.user.username, req.session.user.email);
+        const username = req.session.user.username;
+
+        const { error } = await supabase
+            .from("utenti")
+            .update({ apiKey: newApiKey })
+            .eq("username", username);
 
         req.session.user.apiKey = newApiKey;
 
@@ -138,4 +134,4 @@ router.post('/request-api-key', rateLimiterManuale, requireLogin, (req, res) => 
     }
 });
 
-module.exports = router;
+export default router;

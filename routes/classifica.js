@@ -1,76 +1,71 @@
-var express = require('express');
-var router = express.Router();
-const db = require('../db/database');
+import express from "express";
+const router = express.Router();
+import { supabase } from "../db/supabase.js";
 const MAX_LENGTH = 20;
 
-const sql = `
-    SELECT username, punteggio, tempo
-    FROM partita
-    ORDER BY punteggio DESC, tempo ASC
-    LIMIT ?
-`;
+router.get("/", async function (req, res) {
 
-router.get('/', function(req, res) {
+    try {
+        const { data: allScores, error } = await supabase
+            .from("partita")
+            .select("username, punteggio, tempo");
 
-    try
-    {
-        const topStmt = db.prepare(sql);
-        const rows = topStmt.all(MAX_LENGTH);
-        const loggedUser = req.session?.user?.username;
-        const isInTop = rows.some(r => r.username === loggedUser);
-        // se l'utente non è loggato o è in top
-        if (!loggedUser || isInTop) {
-            return res.render('classifica', {
-                title: 'Classifica - NutriClash',
-                classifica: rows,
+        if (error) throw error;
+
+        if (!allScores) {
+            return res.render("classifica", {
+                title: "Classifica",
+                classifica: [],
                 userRow: null,
-                MAX_LENGTH: MAX_LENGTH,
+                posizione: null,
+                MAX_LENGTH,
                 user: req.session?.user
             });
         }
-        // se l'utente non è loggato, quety per ottenere il suo punteggio migliore e poi query per la sua relativa posizione
-        const sqlUserBest = `
-            SELECT username, punteggio, tempo
-            FROM partita
-            WHERE username = ?
-            ORDER BY punteggio DESC, tempo ASC
-            LIMIT 1
-        `;
-        const userStmt = db.prepare(sqlUserBest);
-        const userRow = userStmt.get(loggedUser);
-        if (!userRow) {
-            return res.render('classifica', {
-                title: 'Classifica - NutriClash',
-                classifica: rows,
-                userRow: null,
-                MAX_LENGTH: MAX_LENGTH
-            });
-        }
-        const sqlPosition = `
-            SELECT COUNT(*) + 1 AS posizione
-            FROM partita
-            WHERE punteggio > ?
-            OR (punteggio = ? AND tempo < ?)
-        `;
-        const posStmt = db.prepare(sqlPosition);
-        const posRow = posStmt.get(
-            userRow.punteggio,
-            userRow.punteggio,
-            userRow.tempo
-        );
-        return res.render('classifica', {
-            title: 'Classifica - NutriClash',
-            classifica: rows,
-            userRow: userRow,
-            posizione: posRow.posizione,
-            MAX_LENGTH: MAX_LENGTH
+
+        const sorted = allScores.sort((a, b) => {
+
+            if (b.punteggio !== a.punteggio) {
+                return b.punteggio - a.punteggio;
+            }
+
+            return a.tempo - b.tempo;
         });
-    }
-    catch (err)
-    {
+
+        const top = sorted.slice(0, MAX_LENGTH);
+
+        const loggedUser = req.session?.user?.username;
+
+        // 4. utente loggato
+        let userRow = null;
+        let posizione = null;
+
+        if (loggedUser) {
+
+            const index = sorted.findIndex(
+                p => p.username === loggedUser
+            );
+
+            if (index !== -1) {
+                userRow = sorted[index];
+                posizione = index + 1;
+            }
+        }
+
+        return res.render("classifica", {
+            title: "Classifica - NutriClash",
+            classifica: top,
+            userRow,
+            posizione,
+            MAX_LENGTH,
+            user: req.session?.user
+        });
+
+    } catch (err) {
         console.error("Errore classifica:", err.message);
-        return res.status(500).send("Errore del server");
+
+        return res.status(500).send("Errore server");
     }
 });
 
-module.exports = router;
+export default router;

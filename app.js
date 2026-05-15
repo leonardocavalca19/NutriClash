@@ -1,43 +1,34 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-const fs = require("fs");
-const session = require("express-session");
-const seedDatabase = require("./db/seed");
-const seedUsers = require("./db/seed");
+import createError from 'http-errors';
+import express from 'express';
+import path, { dirname } from "path";
+import { fileURLToPath } from "url";
+import cookieParser from 'cookie-parser';
+import logger from 'morgan';
+import fs from "fs";
+import session from "express-session";
+import { supabase } from "./db/supabase.js";
 
-if(!fs.existsSync("db/database.js"))
-{
-  console.log("Database non trovato. Creazione database");
-  seedDatabase();
-  seedUsers();
-}
-else
-{
-  console.log("Database trovato");
-}
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const hostname = '127.0.0.1';
 const port = 3000;
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var registratiRouter = require('./routes/registrati');
-var loginRouter = require('./routes/login');
-var nutriscoreRouter = require('./routes/nutriscore');
-var gameRouter = require('./routes/game');
-var scontroRouter = require('./routes/scontro');
-var contattiRouter = require('./routes/contatti');
-var privacyRouter = require('./routes/privacy');
-var accountRouter = require('./routes/account');
-var classificaRouter = require('./routes/classifica');
-var apiRouter = require('./routes/api');
-var imageCacheRouter = require('./routes/imageCache');
-var adminRouter = require('./routes/admin');
+import indexRouter from './routes/index.js';
+import usersRouter from './routes/users.js';
+import registratiRouter from './routes/registrati.js';
+import loginRouter from './routes/login.js';
+import nutriscoreRouter from './routes/nutriscore.js';
+import gameRouter from './routes/game.js';
+import scontroRouter from './routes/scontro.js';
+import contattiRouter from './routes/contatti.js';
+import privacyRouter from './routes/privacy.js';
+import accountRouter from './routes/account.js';
+import classificaRouter from './routes/classifica.js';
+import apiRouter from './routes/api.js';
+import imageCacheRouter from './routes/imageCache.js';
+import adminRouter from './routes/admin.js';
 
-var app = express();
+const app = express();
 
 app.use(session({
     secret: 'supersegreto',
@@ -47,9 +38,8 @@ app.use(session({
 }));
 
 app.use(function(req, res, next) {
-  
-  res.locals.user = req.session.user || null; // Questo rende la variabile "user" disponibile in tutti i file .ejs
-  next();
+ 	res.locals.user = req.session.user || null; // Questo rende la variabile "user" disponibile in tutti i file .ejs
+	next();
 });
 
 // view engine setup
@@ -79,23 +69,18 @@ app.use("/admin", adminRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  next(createError(404));
+	next(createError(404));
 });
 
 // error handler
 app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+	// set locals, only providing error in development
+	res.locals.message = err.message;
+	res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
+	// render the error page
+	res.status(err.status || 500);
+	res.render('error');
 });
 
-
-var server = app.listen(port, hostname, () => {
-  console.log(`Server in esecuzione su http://${hostname}:${port}/`);
-});
-
-module.exports = app;
+export default app;
