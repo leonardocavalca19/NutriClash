@@ -47,6 +47,17 @@
 
             <section class="contenuto-principale">
                 
+                <% if (locals.success) { %>
+                    <div class="alert alert-success" style="background-color: #d4edda; color: #155724; padding: 10px; border-radius: 5px; margin-bottom: 15px; border: 1px solid #c3e6cb;">
+                        <%= success %>
+                    </div>
+                <% } %>
+                <% if (locals.error) { %>
+                    <div class="alert alert-danger" style="background-color: #f8d7da; color: #721c24; padding: 10px; border-radius: 5px; margin-bottom: 15px; border: 1px solid #f5c6cb;">
+                        <%= error %>
+                    </div>
+                <% } %>
+                
                 <div class="scheda-profilo">
                     <div class="sezione-avatar">
                         <div class="avatar-circle">
@@ -107,28 +118,54 @@
                     </form>
                 </div>
 
-                <div class="box-request">
-                    <div class="testo">
-                        <h4>Richiedi la chiave API</h4>
-                        <p>Richiedi una chiave API personalizzata per accedere alle funzionalità avanzate.</p>
+                <div class="api-section">
+                    <div class="api-header">
+                        <h4 class="api-title">Gestione Chiavi API</h4>
+                        <p class="api-subtitle">Genera e amministra le tue chiavi di accesso per le funzionalità esterne avanzate.</p>
                     </div>
 
-                    <% if (typeof apiKey !== 'undefined' && apiKey) { %>
-                        <div class="api-display-box">
-                            <strong>La tua chiave:</strong> 
-                            <code><%= apiKey %></code>
-                        </div>
-                    <% } %> 
-
-                    <form action="/account/request-api-key" method="POST">
-                        <button type="submit" class="btn-api">
-                            <%= (typeof apiKey !== 'undefined' && apiKey) ? 'Rigenera Chiave' : 'Richiedi Chiave' %>
-                        </button>
+                    <form action="/account/request-api-key" method="POST" style="margin-bottom: 20px;">
+                        <button type="submit" class="btn-api">Genera Nuova Chiave API</button>
                     </form>
+
+                    <% if (locals.apiKeys && apiKeys.length > 0) { %>
+                        <div class="api-container">
+                            
+                            <% apiKeys.forEach(function(item) { %>
+                                <div class="api-row <%= item.attiva ? 'stato-attiva' : 'stato-disattivata' %>">
+                                    
+                                    <div class="api-info">
+                                        <code class="api-key-code"><%= item.key %></code>
+                                        <span class="status-badge <%= item.attiva ? 'attiva' : 'disattivata' %>">
+                                            <%= item.attiva ? '● Attiva' : '○ Disattivata' %>
+                                        </span>
+                                    </div>
+
+                                    <div class="api-actions">
+                                        <form action="/account/toggle-api-key" method="POST">
+                                            <input type="hidden" name="apiKey" value="<%= item.key %>">
+                                            <input type="hidden" name="statoAttuale" value="<%= item.attiva %>">
+                                            <button type="submit" class="btn-toggle-state">
+                                                <%= item.attiva ? 'Disattiva' : 'Attiva' %>
+                                            </button>
+                                        </form>
+
+                                        <form action="/account/delete-api-key" method="POST" onsubmit="return confirm('Sei sicuro di voler eliminare permanentemente questa chiave API?');">
+                                            <input type="hidden" name="apiKey" value="<%= item.key %>">
+                                            <button type="submit" class="btn-delete-key">
+                                                Elimina
+                                            </button>
+                                        </form>
+                                    </div>
+
+                                </div>
+                            <% }); %>
+                            
+                        </div>
+                    <% } else { %>
+                        <p style="color: #666; font-style: italic; font-size: 0.9rem;">Non hai ancora generato nessuna chiave API.</p>
+                    <% } %>
                 </div>
-
-
-
 
             </section>
         </main>

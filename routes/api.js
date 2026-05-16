@@ -2,7 +2,7 @@ import express from 'express';
 const router = express.Router();
 import { supabase } from "../db/supabase.js";
 
-//Middleware per controllare la chiave API
+// --- MIDDLEWARE PER IL CONTROLLO DELLA CHIAVE API ---
 async function controllaApiKey (req, res, next) {
     const chiaveFornita = req.query.key;
 
@@ -11,25 +11,34 @@ async function controllaApiKey (req, res, next) {
     }
 
     try {
-        const { data: user, error } = await supabase
-        .from("utenti")
-        .select("*")
-        .eq("apikey", chiaveFornita)
-        .maybeSingle();
+        console.log("2. INVIO QUERY A SUPABASE...");
+        const { data: apiKeyRecord, error } = await supabase
+            .from("APIkey") 
+            .select("key, attiva")
+            .eq("key", chiaveFornita)
+            .maybeSingle();
 
-        if (error || !user) {
+        if (error) console.error("ERR. ERRORE DI SUPABASE:", error.message);
+
+        if (error || !apiKeyRecord) {
             return res.status(403).json({ error: "API Key non valida o inesistente." });
+        }
+
+        console.log("4. STATO CHIAVE NEL DB:", apiKeyRecord.attiva);
+        if (apiKeyRecord.attiva !== true) {
+            console.log("X. BLOCCO: La chiave è registrata ma DISATTIVATA");
+            return res.status(403).json({ error: "Questa API Key è stata disattivata dall'utente." });
         }
 
         next();
         
     } catch (err) {
-        console.error("Errore validazione API Key:", err);
+        console.error("ERRORE GRAVE NEL MIDDLEWARE:", err);
         return res.status(500).json({ error: "Errore interno del server." });
     }
-};
+}
 
-//Middleware per limitare le richieste (rate limiting) manuale
+// --- MIDDLEWARE RATE LIMITING MANUALE ---
 const memoriaAccessi = {};
 const rateLimiterManuale = (req, res, next) => {
     const ip = req.ip; 
@@ -40,11 +49,9 @@ const rateLimiterManuale = (req, res, next) => {
     console.log(`IP ${ip} ha fatto una richiesta. Conteggio attuale: ${memoriaAccessi[ip]?.conteggio || 0}`);
 
     if (!memoriaAccessi[ip]) {
-        
-        memoriaAccessi[ip] = { conteggio: 1, inizioFinestra: ORA_ATTUALE }; //Primo accesso dell'IP
+        memoriaAccessi[ip] = { conteggio: 1, inizioFinestra: ORA_ATTUALE }; 
     } else {
-
-        if (ORA_ATTUALE - memoriaAccessi[ip].inizioFinestra > LIMITE_TEMPO) {           //Se è pssato più di un minuto, resetta il conteggio
+        if (ORA_ATTUALE - memoriaAccessi[ip].inizioFinestra > LIMITE_TEMPO) { 
             memoriaAccessi[ip].conteggio = 1;
             memoriaAccessi[ip].inizioFinestra = ORA_ATTUALE;
         } else {
@@ -61,6 +68,7 @@ const rateLimiterManuale = (req, res, next) => {
     next();
 };
 
+// --- ROTTE ---
 
 router.get('/', function(req, res, next) {
     res.render('api', { title: 'API Docs', user: req.session?.user || null });
@@ -68,7 +76,6 @@ router.get('/', function(req, res, next) {
 
 // Risponde a: GET /api/compara?code1=...&code2=...&key=...
 router.get('/compara', rateLimiterManuale, controllaApiKey, async (req, res) => {
-
     const { code1, code2 } = req.query;
 
     if (!code1 || !code2) {
@@ -77,12 +84,11 @@ router.get('/compara', rateLimiterManuale, controllaApiKey, async (req, res) => 
         });
     }
 
-    try
-    {
+    try {
         const { data: prodotti, error } = await supabase
-        .from("prodotti")
-        .select("barcode, product_name_it, nutriscore_grade")
-        .in("barcode", [code1, code2]);
+            .from("prodotti")
+            .select("barcode, product_name_it, nutriscore_grade")
+            .in("barcode", [code1, code2]);
 
         if (error) throw error;
 
@@ -99,9 +105,11 @@ router.get('/compara', rateLimiterManuale, controllaApiKey, async (req, res) => 
                 error: `Prodotto ${code2} non trovato`
             });
         }
+        
         const punteggio1 = row1.nutriscore_grade;
         const punteggio2 = row2.nutriscore_grade;
         let vincitore;
+        
         if (punteggio1 === punteggio2) {
             vincitore = "Pareggio";
         } else {
@@ -109,6 +117,7 @@ router.get('/compara', rateLimiterManuale, controllaApiKey, async (req, res) => 
                 ? row1.product_name_it
                 : row2.product_name_it;
         }
+        
         res.json({
             success: true,
             risultato: punteggio1 === punteggio2
@@ -121,8 +130,7 @@ router.get('/compara', rateLimiterManuale, controllaApiKey, async (req, res) => 
             }
         });
     }
-    catch (err)
-    {
+    catch (err) {
         console.error("Errore DB:", err.message);
         res.status(500).json({
             error: "Errore interno DB"

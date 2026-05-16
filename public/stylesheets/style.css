@@ -36,6 +36,10 @@ body {
     overflow-y: auto;
     position: relative;
 }
+img{
+    max-height: 600px;
+    object-fit: contain;
+}
 
 /* =========================================
    3. SIDEBAR E NAVIGAZIONE

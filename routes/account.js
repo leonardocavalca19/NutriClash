@@ -3,19 +3,15 @@ const router = express.Router();
 import { supabase } from "../db/supabase.js";
 import crypto from 'crypto';
 
-const sql = `DELETE FROM utenti WHERE username = ? OR email = ?`;
-const sqlApiKey = `UPDATE utenti SET apiKey = ? WHERE username = ? OR email = ?`;
-
+// Middleware per verificare che l'utente sia loggato
 function requireLogin(req, res, next) {
-
     if (!req.session.user) {
         return res.redirect('/login');
     }
-
     next();
 }
 
-
+// --- RATE LIMITER GENERALE (Per tutta la pagina account masimo 10 richieste al minuto) ---
 const memoriaAccessi = {};
 const rateLimiterManuale = (req, res, next) => {
     const ip = req.ip; 
@@ -23,14 +19,10 @@ const rateLimiterManuale = (req, res, next) => {
     const LIMITE_TEMPO = 60000; 
     const MAX_RICHIESTE = 10;   
 
-    console.log(`IP ${ip} ha fatto una richiesta. Conteggio attuale: ${memoriaAccessi[ip]?.conteggio || 0}`);
-
     if (!memoriaAccessi[ip]) {
-        
-        memoriaAccessi[ip] = { conteggio: 1, inizioFinestra: ORA_ATTUALE }; //Primo accesso dell'IP
+        memoriaAccessi[ip] = { conteggio: 1, inizioFinestra: ORA_ATTUALE };
     } else {
-
-        if (ORA_ATTUALE - memoriaAccessi[ip].inizioFinestra > LIMITE_TEMPO) {           //Se è pssato più di un minuto, resetta il conteggio
+        if (ORA_ATTUALE - memoriaAccessi[ip].inizioFinestra > LIMITE_TEMPO) {
             memoriaAccessi[ip].conteggio = 1;
             memoriaAccessi[ip].inizioFinestra = ORA_ATTUALE;
         } else {
@@ -39,98 +31,176 @@ const rateLimiterManuale = (req, res, next) => {
     }
 
     if (memoriaAccessi[ip].conteggio > MAX_RICHIESTE) {
-        return res.render('account', {
-            title: 'Account',
-            user: req.session.user,
-            apiKey: 'Troppe richieste. Riprova tra un minuto. La tua chiave API attuale è: ' + req.session.user.apiKey
-        });
+        req.session.errorMessage = 'Troppe richieste generali. Riprova tra un minuto.';
+        return res.redirect('/account');
     }
 
     next();
 };
 
-router.get('/', requireLogin, function(req, res) {
-    const user = {
-        nome: req.session.user.nome,
-        cognome: req.session.user.cognome,
-        username: req.session.user.username,
-        email: req.session.user.email,
-        data_nascita: req.session.user.dataNascita,
-        sesso: req.session.user.sesso,
-        apiKey: req.session.user.apiKey,
-        ruolo: req.session.user.ruolo
-    };
+// --- RATE LIMITER GENERAZIONE NUOVA CHIAVE (Massimo 2 chiavi  al minuto) ---
+const memoriaChiavi = {}; 
+const limitatoreChiaviAPI = (req, res, next) => {
+    const ip = req.ip; 
+    const ORA_ATTUALE = Date.now();
+    const LIMITE_TEMPO = 60000; // 1 minuto
+    const MAX_CHIAVI = 2;   
 
-    console.log(`Accesso alla pagina account di ${user.apiKey}`);
+    if (!memoriaChiavi[ip]) {
+        memoriaChiavi[ip] = { conteggio: 1, inizioFinestra: ORA_ATTUALE };
+    } else {
+        if (ORA_ATTUALE - memoriaChiavi[ip].inizioFinestra > LIMITE_TEMPO) {
+            memoriaChiavi[ip].conteggio = 1;
+            memoriaChiavi[ip].inizioFinestra = ORA_ATTUALE;
+        } else {
+            memoriaChiavi[ip].conteggio++;
+        }
+    }
 
-    res.render('account', {
-        title: 'Account',
-        user
-    });
+    if (memoriaChiavi[ip].conteggio > MAX_CHIAVI) {
+        req.session.errorMessage = '!!ATTENZIONE!! Puoi generare al massimo 2 chiavi API al minuto.';
+        return res.redirect('/account');
+    }
+
+    next();
+};
+
+// --- PAGINA PROFILO (Recupera l'elenco delle chiavi dell'utente) ---
+router.get('/', requireLogin, rateLimiterManuale, async function(req, res) {
+    try {
+        const username = req.session.user.username;
+
+        // Recuperiamo tutte le chiavi associate a questo utente da Supabase
+        const { data: apiKeys, error } = await supabase
+            .from("APIkey")
+            .select("key, attiva")
+            .eq("utente", username);
+
+        if (error) throw error;
+
+        const user = {
+            nome: req.session.user.nome,
+            cognome: req.session.user.cognome,
+            username: req.session.user.username,
+            email: req.session.user.email,
+            data_nascita: req.session.user.dataNascita,
+            sesso: req.session.user.sesso,
+            ruolo: req.session.user.ruolo
+        };
+
+        // Estraiamo i messaggi flash salvati temporaneamente in sessione
+        const success = req.session.successMessage;
+        const errorMsg = req.session.errorMessage;
+        delete req.session.successMessage; 
+        delete req.session.errorMessage;
+
+        res.render('account', {
+            title: 'Account',
+            user,
+            apiKeys, // Passiamo l'array delle chiavi al file EJS
+            success,
+            error: errorMsg
+        });
+
+    } catch (err) {
+        console.error('Errore nel recupero dei dati account:', err.message);
+        res.status(500).send("Errore del server");
+    }
 });
 
-router.post('/delete', requireLogin, async (req, res) => {
+// --- GENERAZIONE NUOVA CHIAVE API ---
+router.post('/request-api-key', requireLogin, limitatoreChiaviAPI, async (req, res) => {
+    try {
+        const newApiKey = crypto.randomBytes(32).toString('hex');
+        const username = req.session.user.username;
 
+
+        const { error } = await supabase
+            .from("APIkey")
+            .insert([{ key: newApiKey, attiva: true, utente: username }]);
+
+        if (error) throw error;
+
+        req.session.successMessage = 'Nuova chiave API generata con successo!';
+        res.redirect('/account');
+
+    } catch (err) {
+        console.error("Errore generazione API Key:", err);
+        req.session.errorMessage = 'Errore durante la generazione della chiave.';
+        res.redirect('/account');
+    }
+});
+
+// --- ATTIVA / DISATTIVA UNA CHIAVE ---
+router.post('/toggle-api-key', requireLogin, async (req, res) => {
+    try {
+        const { apiKey, statoAttuale } = req.body;
+        const username = req.session.user.username;
+
+        const nuovoStato = statoAttuale === 'true' ? false : true;  //Inverti stato
+
+        const { error } = await supabase
+            .from("APIkey")
+            .update({ attiva: nuovoStato })
+            .eq("key", apiKey)
+            .eq("utente", username); 
+
+        if (error) throw error;
+
+        req.session.successMessage = `Chiave API ${nuovoStato ? 'attivata' : 'disattivata'} con successo!`;
+        res.redirect('/account');
+
+    } catch (err) {
+        console.error("Errore modifica stato API Key:", err);
+        req.session.errorMessage = 'Impossibile modificare lo stato della chiave.';
+        res.redirect('/account');
+    }
+});
+
+// ---  ELIMINAZIONE DI UNA CHIAVE API SPECIFICA ---
+router.post('/delete-api-key', requireLogin, async (req, res) => {
+    try {
+        const { apiKey } = req.body;
+        const username = req.session.user.username;
+
+        const { error } = await supabase
+            .from("APIkey")
+            .delete()
+            .eq("key", apiKey)
+            .eq("utente", username);
+
+        if (error) throw error;
+
+        req.session.successMessage = 'Chiave API eliminata permanentemente.';
+        res.redirect('/account');
+
+    } catch (err) {
+        console.error("Errore eliminazione API Key:", err);
+        req.session.errorMessage = 'Errore durante l\'eliminazione della chiave.';
+        res.redirect('/account');
+    }
+});
+
+// --- ELIMINAZIONE COMPLETA DELL'ACCOUNT ---
+router.post('/delete', requireLogin, async (req, res) => {
     try {
         const username = req.session.user.username;
         const email = req.session.user.email;
 
         const { error } = await supabase
-        .from("utenti")
-        .delete()
-        .or(`username.eq.${username},email.eq.${email}`)
+            .from("utenti")
+            .delete()
+            .or(`username.eq.${username},email.eq.${email}`);
+            
         if(error) throw error;
 
         req.session.destroy(() => {
             res.redirect("/");
         });
     } catch (err) {
-
         console.error('Errore eliminazione account:', err.message);
-
-        return res.render('account', {
-            title: 'Account',
-            user: req.session.user,
-            error: 'Errore interno'
-        });
-    }
-});
-
-
-
-router.post('/request-api-key', rateLimiterManuale, requireLogin, async (req, res) => {
-    
-    //TODO: aggiungere un controllo per evitare di generare una nuova chiave se l'utente ne ha già una valida a meno che non voglia esplicitamente rigenerarla
-
-    try {
-
-        const newApiKey = crypto.randomBytes(32).toString('hex');      //Genera una stringa casuale di 32 byte in formato esadecimale
-        
-        const username = req.session.user.username;
-
-        const { error } = await supabase
-            .from("utenti")
-            .update({ apiKey: newApiKey })
-            .eq("username", username);
-
-        req.session.user.apiKey = newApiKey;
-
-        console.log(`Nuova API Key generata per ${req.session.user.username}: ${newApiKey}`);
-
-        return res.render('account', {
-            title: 'Account',
-            user: req.session.user,
-            success: 'Chiave API generata con successo!',
-            apiKey: newApiKey
-        });
-
-    } catch (err) {
-        console.error("Errore generazione API Key:", err);
-        return res.render('account', {
-            title: 'Account',
-            user: req.session.user,
-            error: 'Errore interno durante la generazione della chiave'
-        });
+        req.session.errorMessage = 'Errore interno durante l\'eliminazione dell\'account.';
+        res.redirect('/account');
     }
 });
 

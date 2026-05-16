@@ -93,7 +93,7 @@
 }
 
 /* =========================================
-   4. AZIONI ACCOUNT (LOGOUT & DANGER ZONE)
+   4. AZIONI ACCOUNT (LOGOUT, ELIMINI E API KEYS)
    ========================================= */
 .box-admin, .box-logout, .box-danger {
     margin-top: 30px;
@@ -106,7 +106,6 @@
     align-items: center;
 }
 
-/* Logout Styles */
 .box-admin h4 { margin: 0; color: #1904da; }
 .box-admin p { margin: 5px 0 0 0; font-size: 0.9rem; color: #7f8c8d; }
 
@@ -123,7 +122,6 @@
 
 .btn-admin:hover { background: #3423ce; }
 
-/* Logout Styles */
 .box-logout h4 { margin: 0; color: #6495ed; }
 .box-logout p { margin: 5px 0 0 0; font-size: 0.9rem; color: #7f8c8d; }
 
@@ -140,7 +138,6 @@
 
 .btn-logout:hover { background: #5281da; }
 
-/* Danger Zone Styles */
 .box-danger h4 { margin: 0; color: #e74c3c; }
 .box-danger p { margin: 5px 0 0 0; font-size: 0.9rem; color: #7f8c8d; }
 
@@ -161,6 +158,7 @@
 .box-request {
     background: white;
     padding: 25px;
+    text-align: left;
     border-radius: 15px;
     margin-top: 20px;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
@@ -177,7 +175,6 @@
     margin-bottom: 20px;
 }
 
-/* Il box grigio della chiave */
 .api-display-box {
     background: #f8f9fa;
     border: 1px solid #e0e0e0;
@@ -195,15 +192,15 @@
 }
 
 .api-display-box code {
-    color: #d63384; /* Colore tipico per i codici */
+    color: #d63384;
     font-family: monospace;
     word-break: break-all;
     font-weight: 600;
 }
 
-/* Bottone Rigenera (usiamo lo stesso stile del Logout/Elimina) */
+
 .btn-api {
-    background-color: #f05442; /* Rosso come il tasto elimina */
+    background-color: #f05442; 
     color: white;
     border: none;
     padding: 10px 20px;
@@ -217,11 +214,127 @@
     background-color: #d63d2d;
 }
 
+.api-section {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 20px;
+    margin-top: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.api-title {
+    color: #222222;
+    font-size: 1.3rem;
+    margin-bottom: 5px;
+}
+
+.api-subtitle {
+    color: #555555;
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+}
+
+.api-container {
+    width: 100%;
+    margin-top: 15px;
+}
+
+.api-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    border: 1px solid #e0e0e0;
+    transition: background-color 0.2s ease;
+}
+
+.api-row.stato-attiva {
+    background-color: #fcfcfc;
+}
+
+.api-row.stato-disattivata {
+    background-color: #ededed;
+    border-color: #ccc;
+}
+
+.api-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex: 1;
+    min-width: 0; 
+}
+
+.api-key-code {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.85rem;
+    font-weight: 600;
+    background-color: #ffffff;
+    padding: 6px 12px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    word-break: break-all;
+    color: #333;
+}
+
+.stato-disattivata .api-key-code {
+    color: #777;
+    background-color: #f5f5f5;
+}
+
+.status-badge {
+    font-size: 0.8rem;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.status-badge.attiva {
+    color: #1e7e34;
+}
+
+.status-badge.disattivata {
+    color: #bd2130;
+}
+
+.api-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.api-actions button {
+    cursor: pointer;
+    font-size: 0.8rem;
+    padding: 6px 12px;
+    border-radius: 4px;
+    border: none;
+    font-weight: 500;
+}
+
+.btn-toggle-state {
+    background-color: #4b5563;
+    color: white;
+}
+
+.btn-toggle-state:hover {
+    background-color: #374151;
+}
+
+.btn-delete-key {
+    background-color: #dc3545;
+    color: white;
+}
+
+.btn-delete-key:hover {
+    background-color: #bd2130;
+}
+
 /* =========================================
    5. RESPONSIVE DESIGN
    ========================================= */
 @media (max-width: 768px) {
     .scheda-profilo { flex-direction: column; }
     .sezione-avatar { border-right: none; border-bottom: 1px solid #eee; }
-    .box-danger { flex-direction: column; text-align: center; gap: 20px; }
 }
