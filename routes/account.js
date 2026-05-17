@@ -11,7 +11,7 @@ function requireLogin(req, res, next) {
     next();
 }
 
-// --- RATE LIMITER GENERALE (Per tutta la pagina account masimo 10 richieste al minuto) ---
+// Middleware per rate limit generale delle richieste  ---
 const memoriaAccessi = {};
 const rateLimiterManuale = (req, res, next) => {
     const ip = req.ip; 
@@ -38,12 +38,12 @@ const rateLimiterManuale = (req, res, next) => {
     next();
 };
 
-// --- RATE LIMITER GENERAZIONE NUOVA CHIAVE (Massimo 2 chiavi  al minuto) ---
+// --- Middleware per rate limit generazione nuova chiave---
 const memoriaChiavi = {}; 
 const limitatoreChiaviAPI = (req, res, next) => {
     const ip = req.ip; 
     const ORA_ATTUALE = Date.now();
-    const LIMITE_TEMPO = 60000; // 1 minuto
+    const LIMITE_TEMPO = 60000;
     const MAX_CHIAVI = 2;   
 
     if (!memoriaChiavi[ip]) {
@@ -70,7 +70,6 @@ router.get('/', requireLogin, rateLimiterManuale, async function(req, res) {
     try {
         const username = req.session.user.username;
 
-        // Recuperiamo tutte le chiavi associate a questo utente da Supabase
         const { data: apiKeys, error } = await supabase
             .from("APIkey")
             .select("key, attiva")
@@ -88,7 +87,6 @@ router.get('/', requireLogin, rateLimiterManuale, async function(req, res) {
             ruolo: req.session.user.ruolo
         };
 
-        // Estraiamo i messaggi flash salvati temporaneamente in sessione
         const success = req.session.successMessage;
         const errorMsg = req.session.errorMessage;
         delete req.session.successMessage; 
@@ -97,7 +95,7 @@ router.get('/', requireLogin, rateLimiterManuale, async function(req, res) {
         res.render('account', {
             title: 'Account',
             user,
-            apiKeys, // Passiamo l'array delle chiavi al file EJS
+            apiKeys,
             success,
             error: errorMsg
         });
