@@ -1,6 +1,6 @@
 /* =========================================
-   1. RESET E IMPOSTAZIONI DI BASE
-   ========================================= */
+    1. RESET E IMPOSTAZIONI DI BASE
+========================================= */
 * {
     margin: 0;
     padding: 0;
@@ -19,8 +19,8 @@ body {
 }
 
 /* =========================================
-   2. LAYOUT CONTENITORI
-   ========================================= */
+    2. LAYOUT CONTENITORI
+========================================= */
 .login-container {
     width: 100%;
     max-width: 480px;
@@ -39,8 +39,8 @@ body {
 }
 
 /* =========================================
-   3. TITOLI E TESTI
-   ========================================= */
+    3. TITOLI E TESTI
+========================================= */
 h2 {
     text-align: left; /* Allineamento a sinistra più moderno */
     margin-bottom: 0.5rem;
@@ -63,8 +63,8 @@ h2 {
 }
 
 /* =========================================
-   4. FORM E INPUT
-   ========================================= */
+    4. FORM E INPUT
+========================================= */
 section {
     margin-bottom: 1.8rem;
 }
@@ -130,8 +130,8 @@ input[type="range"] {
 }
 
 /* =========================================
-   5. BOTTONI E FEEDBACK
-   ========================================= */
+    5. BOTTONI E FEEDBACK
+========================================= */
 .login-button {
     width: 100%;
     padding: 1.2rem;
@@ -184,33 +184,33 @@ input[type="range"] {
     z-index: 10;
 }
 /* =========================================
-   6. FOOTER (Link finali)
-   ========================================= */
-footer {
+    6. FOOTER (Link finali)
+========================================= */
+.bottom {
     margin-top: 2.5rem;
     text-align: center;
 }
 
-footer p {
+.bottom p {
     color: #475569;
     font-size: 0.85rem;
 }
 
-footer a {
+.bottom a {
     color: #22c55e;
     text-decoration: none;
     font-weight: 800;
     transition: 0.2s;
 }
 
-footer a:hover {
+.bottom a:hover {
     color: #ffffff;
     text-shadow: 0 0 8px #22c55e;
 }
 
 /* =========================================
-   8. MEDIA QUERIES 
-   ========================================= */
+    7. MEDIA QUERIES 
+========================================= */
 @media (max-width: 480px) {
     .login-box {
         padding: 2.5rem 1.5rem;

@@ -1,6 +1,6 @@
 /* =========================================
-   1. CONTENUTI GENERALI (NUTRIZIONE)
-   ========================================= */
+    1. CONTENUTI GENERALI (NUTRIZIONE)
+========================================= */
 .nutri-content {
     padding: 40px;
     color: #333;
@@ -32,8 +32,8 @@ h3 {
 }
 
 /* =========================================
-   2. TABELLA VALORI NUTRIZIONALI
-   ========================================= */
+    2. TABELLA VALORI NUTRIZIONALI
+========================================= */
 .nutri-table {
     width: 100%;
     border-collapse: separate;
@@ -61,8 +61,8 @@ h3 {
 .nutri-table td:last-child { border-right: 1px solid #eee; border-radius: 0 10px 10px 0; }
 
 /* =========================================
-   3. SISTEMA NUTRI-SCORE (BADGE & COLORI)
-   ========================================= */
+    3. SISTEMA NUTRI-SCORE (BADGE & COLORI)
+========================================= */
 .badge-ns {
     display: flex;
     align-items: center;
@@ -90,8 +90,8 @@ h3 {
 .txt-E { color: #e63e11; font-weight: 700; }
 
 /* =========================================
-   4. CALCOLO & FATTORI (FORMULE)
-   ========================================= */
+    4. CALCOLO & FATTORI (FORMULE)
+========================================= */
 .formula-box {
     background: #1e272e;
     color: #0be881;
@@ -120,8 +120,8 @@ h3 {
 .factor-pos { background: #f0fff4; border-left: 5px solid #38a169; }
 
 /* =========================================
-   5. BOX EVIDENZIATI & PULSANTI
-   ========================================= */
+    5. BOX EVIDENZIATI & PULSANTI
+========================================= */
 .highlight-box {
     background: #eef2ff;
     border-radius: 15px;
@@ -224,13 +224,13 @@ h3 {
 
 
 /* =========================================
-   LOGICA MENU (Uguale alle altre pagine)
-   ========================================= */
+    LOGICA MENU (Uguale alle altre pagine)
+========================================= */
 .menu-toggle, .hamburger { display: none; }
 
 /* =========================================
-   MEDIA QUERY RESPONSIVE
-   ========================================= */
+    MEDIA QUERY RESPONSIVE
+========================================= */
 @media (max-width: 768px) {
     
     /* 1. Hamburger & Sidebar */

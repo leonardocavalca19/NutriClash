@@ -13,35 +13,7 @@
 </head>
 <body>
     <div class="app">
-        <input type="checkbox" id="menu-toggle" class="menu-toggle">
-        <label for="menu-toggle" class="hamburger">
-            <span></span>
-            <span></span>
-            <span></span>
-        </label>
-        <!-- SIDEBAR -->
-        <aside class="sidebar" id="nav">
-            <div class="logo">
-                <img src="/logo.png" alt="LOGO">
-            </div>
-    
-            <nav>
-                <a href="/" >Home</a>
-                <a href="/game" class="active">Gioca</a>
-                <a href="/classifica">Classifica</a>
-                <a href="/nutriscore">Nutri-score</a>
-                <a href="/scontro">Scontro tra Prodotti</a>
-            </nav>
-            <div class="sidebar-footer">
-                <a href="/api">API Docs</a>
-                <a href="/contatti">Contatti</a>
-                <a href="/privacy">Privacy</a>
-                <% if(!user) { %> <a href="/login">Accedi</a> <% }  else {%><a href="/account">Il mio account</a><% } %>
-                <% if(user && user.ruolo !== "user") {%>
-                    <a href="/admin">Amministratore</a>
-                <% } %>
-            </div>
-        </aside>
+        <%- include("navbar", {file: "game"} ) %>
         <div class="chat-divider" id="chat-divider"></div>
         <main class="main" id="main">
             <div class="scores-container" id="scores-container">
@@ -55,21 +27,22 @@
 
             <div class="container-game">
                 <div class="element1" id="element1">
-                    <div class="border">
+                    <div class="image-wrapper">
                         <img src="" alt="Prodotto 1" id="img-element1">
-                        <p id="name-element1"></p>
+                        <span class="nutriscore" id="score1"></span>
                     </div>
-                    <span class="nutriscore" id="score1"></span>
+                    <p id="name-element1"></p>
                 </div>
                 <p class="versus">VS</p>
                 <div class="element2" id="element2">
-                    <div class="border">
+                    <div class="image-wrapper">
                         <img src="" alt="Prodotto 2" id="img-element2">
-                        <p id="name-element2"></p>
+                        <span class="nutriscore" id="score2"></span>
                     </div>
-                    <span class="nutriscore" id="score2"></span>
+                    <p id="name-element2"></p>
                 </div>
             </div>
+            <%- include("footer") %>
         </main>
     </div>
 </body>

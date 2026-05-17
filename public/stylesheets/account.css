@@ -1,6 +1,6 @@
 /* =========================================
-   1. LAYOUT PAGINA PROFILO
-   ========================================= */
+    1. LAYOUT PAGINA PROFILO
+========================================= */
 .contenuto-principale {
     max-width: 900px;
     margin: 40px auto;
@@ -17,8 +17,8 @@
 }
 
 /* =========================================
-   2. SEZIONE AVATAR (COLONNA SINISTRA)
-   ========================================= */
+    2. SEZIONE AVATAR (COLONNA SINISTRA)
+========================================= */
 .sezione-avatar {
     flex: 1;
     background: #f9fbf9;
@@ -61,8 +61,8 @@
 }
 
 /* =========================================
-   3. SEZIONE DATI UTENTE (COLONNA DESTRA)
-   ========================================= */
+    3. SEZIONE DATI UTENTE (COLONNA DESTRA)
+========================================= */
 .sezione-dati {
     flex: 2;
     padding: 40px;
@@ -93,8 +93,8 @@
 }
 
 /* =========================================
-   4. AZIONI ACCOUNT (LOGOUT, ELIMINI E API KEYS)
-   ========================================= */
+    4. AZIONI ACCOUNT (LOGOUT, ELIMINI E API KEYS)
+========================================= */
 .box-admin, .box-logout, .box-danger {
     margin-top: 30px;
     background: #fff;
@@ -332,8 +332,8 @@
 }
 
 /* =========================================
-   5. RESPONSIVE DESIGN
-   ========================================= */
+    5. RESPONSIVE DESIGN
+========================================= */
 @media (max-width: 768px) {
     .scheda-profilo { flex-direction: column; }
     .sezione-avatar { border-right: none; border-bottom: 1px solid #eee; }

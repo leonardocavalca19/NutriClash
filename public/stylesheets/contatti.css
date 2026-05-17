@@ -1,6 +1,6 @@
 /* =========================================
-   1. LAYOUT GRIGLIA TEAM
-   ========================================= */
+    1. LAYOUT GRIGLIA TEAM
+========================================= */
 .griglia-team {
     display: flex;
     justify-content: center;
@@ -10,8 +10,8 @@
 }
 
 /* =========================================
-   2. SCHEDA MEMBRO (PROFILO)
-   ========================================= */
+    2. SCHEDA MEMBRO (PROFILO)
+========================================= */
 .scheda-membro {
     flex: 1;
     min-width: 280px;
@@ -72,8 +72,8 @@
 }
 
 /* =========================================
-   3. LINK & AZIONI DI CONTATTO
-   ========================================= */
+    3. LINK & AZIONI DI CONTATTO
+========================================= */
 .link-contatto {
     display: inline-block;
     margin-top: 20px;
@@ -103,16 +103,16 @@
 }
 
 /* =========================================
-   4. UTILITY TESTO
-   ========================================= */
+    4. UTILITY TESTO
+========================================= */
 .testo-centrato {
     text-align: center;
     margin-top: 40px;
 }
 
 /* =========================================
-   LOGICA RESPONSIVE & MENU
-   ========================================= */
+    LOGICA RESPONSIVE & MENU
+========================================= */
 .menu-toggle, .hamburger { display: none; }
 
 @media (max-width: 768px) {
@@ -166,9 +166,3 @@
         max-width: none;
     }
 }
-
-
-
-
-
-

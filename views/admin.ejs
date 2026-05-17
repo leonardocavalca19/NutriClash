@@ -11,34 +11,7 @@
 </head>
 <body>
     <div class="app">
-        <input type="checkbox" id="menu-toggle" class="menu-toggle">
-        <label for="menu-toggle" class="hamburger">
-            <span></span>
-            <span></span>
-            <span></span>
-        </label>
-        <aside class="sidebar" id="nav">
-            <div class="logo">
-                <img src="/logo.png" alt="LOGO">
-            </div>
-            <nav>
-                <a href="/" >Home</a>
-                <a href="/game">Gioca</a>
-                <a href="/classifica">Classifica</a>
-                <a href="/obiettivo">Il nostro obiettivo</a>
-                <a href="/nutriscore">Nutri-score</a>
-                <a href="/scontro">Scontro tra Prodotti</a>
-            </nav>
-            <div class="sidebar-footer">
-                <a href="/api">API Docs</a>
-                <a href="/contatti">Contatti</a>
-                <a href="/privacy">Privacy</a>
-                <a href="/account">Il mio account</a>
-                <% if(user && user.ruolo !== "user") {%>
-                    <a href="/admin" class="active">Amministratore</a>
-                <% } %>
-            </div>
-        </aside>
+        <%- include("navbar", {file: "admin"} ) %>
         <div class="chat-divider" id="chat-divider"></div>
         <main class="main">
             <header class="topbar">
@@ -85,6 +58,7 @@
                     </div>
                 <% } %>
             </div>
+            <%- include("footer") %>
         </main>
     </div>
 </body>

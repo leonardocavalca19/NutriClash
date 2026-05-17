@@ -1,6 +1,6 @@
 /* =========================================
-   1. HERO SECTION & CARDS
-   ========================================= */
+    1. HERO SECTION & CARDS
+========================================= */
 .goal-hero {
     background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%) !important;
     text-align: center;
@@ -17,8 +17,8 @@
 }
 
 /* =========================================
-   2. GRID & GOAL ITEMS
-   ========================================= */
+    2. GRID & GOAL ITEMS
+========================================= */
 .goal-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -61,8 +61,8 @@
 
 
 /* =========================================
-   3. VISION STATEMENT
-   ========================================= */
+    3. VISION STATEMENT
+========================================= */
 .vision-statement {
     background: #22c55e !important; 
     color: white !important;
@@ -125,8 +125,8 @@
 }
 
 /* =========================================
-   4. LOGICA RESPONSIVE & HAMBURGER
-   ========================================= */
+    4. LOGICA RESPONSIVE & HAMBURGER
+========================================= */
 .menu-toggle, .hamburger {
     display: none;
 }

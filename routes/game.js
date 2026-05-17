@@ -113,20 +113,20 @@ router.post('/finish', async (req, res) => {
         if (error) throw error;
 
         if (!existing) {
-            await supabase
+            console.log("non esiste, aggiungo al DB");
+            const { error } = await supabase
                 .from("partita")
                 .insert({
                     username,
                     punteggio,
                     tempo
                 });
+            if(error) throw error;
 
             return res.json({ saved: true, newRecord: true });
         }
 
-        const isBetter =
-            punteggio > existing.punteggio ||
-            (punteggio === existing.punteggio && tempo < existing.tempo);
+        const isBetter = punteggio > existing.punteggio || (punteggio === existing.punteggio && tempo < existing.tempo);
 
         if (!isBetter) {
             return res.json({ saved: true, newRecord: false });

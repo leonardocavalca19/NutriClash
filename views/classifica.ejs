@@ -12,31 +12,7 @@
 </head>
 <body>
     <div class="app">
-        <input type="checkbox" id="menu-toggle" class="menu-toggle">
-        <label for="menu-toggle" class="hamburger">
-            <span></span>
-            <span></span>
-            <span></span>
-        </label>
-        <aside class="sidebar">
-            <div class="logo"><img src="/logo.png" alt="LOGO"></div>
-            <nav>
-                <a href="/" >Home</a>
-                <a href="/game">Gioca</a>
-                <a href="/classifica"  class="active">Classifica</a>
-                <a href="/nutriscore">Nutri-score</a>
-                <a href="/scontro">Scontro tra Prodotti</a>
-            </nav>
-            <div class="sidebar-footer">
-                <a href="/api">API Docs</a>
-                <a href="/contatti">Contatti</a>
-                <a href="/privacy">Privacy</a>
-                <% if(!user) { %> <a href="/login">Accedi</a> <% }  else {%><a href="/account">Il mio account</a><% } %>
-                <% if(user && user.ruolo !== "user") {%>
-                    <a href="/admin">Amministratore</a>
-                <% } %>
-            </div>
-        </aside>
+        <%- include("navbar", {file: "classifica"} ) %>
         <div class="chat-divider" id="chat-divider"></div>
         <main class="main">
             <header class="topbar">
@@ -62,12 +38,15 @@
                                     <tr class="<%= (user && player.username === user.username) ? 'riga-utente' : '' %>">
                                         <td><%= index + 1 %>°</td>
                                         <td>
-                                            @<%= player.username %>
+                                            <% if(user && player.username === user.username) { %>
+                                                <strong>@<%= player.username %></strong>
+                                            <% } else { %>
+                                                @<%= player.username %>
+                                            <% } %>
                                         </td>
                                         <td><strong><%= player.punteggio %></strong></td>
                                         <td>
-                                            <%= Math.floor(player.tempo / 60) %>:
-                                            <%= (player.tempo % 60 < 10 ? "0" : "") + (player.tempo % 60) %>
+                                            <%= Math.floor(player.tempo / 60) %>:<%= (player.tempo % 60 < 10 ? "0" : "") + (player.tempo % 60) %>
                                         </td>
                                     </tr>
                                 <% }) %>
@@ -99,6 +78,7 @@
                     <% } %>
                 </div>
             </section>
+            <%- include("footer") %>
         </main>
     </div>
 </body>

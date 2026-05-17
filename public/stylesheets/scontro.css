@@ -1,13 +1,13 @@
 /* =========================================
-   1. INTESTAZIONE & INTRODUZIONE
-   ========================================= */
+    1. INTESTAZIONE & INTRODUZIONE
+========================================= */
 .intro-clash {
     border-bottom: 4px solid #218838;
 } 
 
 /* =========================================
-   2. SEZIONE PRINCIPALE (CONTENITORE)
-   ========================================= */
+    2. SEZIONE PRINCIPALE (CONTENITORE)
+========================================= */
 .clash-section {
     background: white;
     border-radius: 20px;
@@ -27,8 +27,8 @@
 }
 
 /* =========================================
-   3. GRID & BOX PRODOTTI
-   ========================================= */
+    3. GRID & BOX PRODOTTI
+========================================= */
 .clash-row {
     display: flex;
     align-items: center;
@@ -68,8 +68,8 @@ a > img {
 }
 
 /* =========================================
-   4. ANALISI & FEEDBACK (ALERT)
-   ========================================= */
+    4. ANALISI & FEEDBACK (ALERT)
+========================================= */
 .analysis-box {
     background: #e1f5fe;
     padding: 20px;
@@ -85,8 +85,8 @@ a > img {
 }
 
 /* =========================================
-   5. TABELLA DI CONFRONTO
-   ========================================= */
+    5. TABELLA DI CONFRONTO
+========================================= */
 .clash-summary-table {
     width: 100%;
     margin-top: 20px;
@@ -104,8 +104,8 @@ a > img {
     border-bottom: 1px solid #eee;
 }
 /* =========================================
-   5. BOTTONE FINALE
-   ========================================= */
+    6. BOTTONE FINALE
+========================================= */
 .cta-section-dark {
     background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%) !important;
     color: white !important;
@@ -137,13 +137,13 @@ a > img {
 }
 
 /* =========================================
-   LOGICA MENU (Standard per NutriClash)
-   ========================================= */
+    LOGICA MENU (Standard per NutriClash)
+========================================= */
 .menu-toggle, .hamburger { display: none; }
 
 /* =========================================
-   MEDIA QUERY & RESPONSIVE
-   ========================================= */
+    MEDIA QUERY & RESPONSIVE
+========================================= */
 @media (max-width: 768px) {
     /* 1. Hamburger & Sidebar */
     .hamburger {

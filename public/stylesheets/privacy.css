@@ -10,7 +10,7 @@
     border: 1px solid #eee;
     box-shadow: 0 4px 15px rgba(0,0,0,0.05);
 }
- 
+
 .scheda-info h3 {
     color: #28a745;
     margin-bottom: 20px;
@@ -51,8 +51,8 @@
 
 
 /* =========================================
-   3. FOOTER DOWNLOAD
-   ========================================= */
+    3. FOOTER DOWNLOAD
+========================================= */
 .download-footer {
     display: flex;
     align-items: center;
@@ -98,8 +98,8 @@
 }
 
 /* =========================================
-   4. LOGICA RESPONSIVE & MENU
-   ========================================= */
+    4. LOGICA RESPONSIVE & MENU
+========================================= */
 .menu-toggle, .hamburger { display: none; }
 
 @media (max-width: 768px) {

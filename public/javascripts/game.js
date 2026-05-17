@@ -75,8 +75,8 @@ async function setItems()
         img_element2.src = p2.image_url;
     }
 
-    name_element1.innerText = p1.product_name_it ?? p1.product_name;
-    name_element2.innerText = p2.product_name_it ?? p2.product_name;
+    name_element1.innerText = p1.product_name_it || p1.product_name;
+    name_element2.innerText = p2.product_name_it || p2.product_name;
 }
 
 async function checkChoice(index)

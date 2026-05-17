@@ -37,7 +37,13 @@ app.use(session({
     secret: process.env.SESSION_KEY,
     resave: false,
     saveUninitialized: false,
-    cookie: { secure: false }
+    cookie:
+	{
+        secure: false,
+        httpOnly: true,
+        sameSite: "lax",
+        maxAge: 1000 * 60 * 60 * 24 * 30
+    }
 }));
 
 app.use(function(req, res, next) {

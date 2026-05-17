@@ -1,0 +1,31 @@
+<input type="checkbox" id="menu-toggle" class="menu-toggle">
+<label for="menu-toggle" class="hamburger">
+    <span></span>
+    <span></span>
+    <span></span>
+</label>
+<aside class="sidebar" id="nav">
+    <div class="logo">
+        <img src="/logo.png" alt="LOGO">
+    </div>
+    <nav>
+        <a href="/" <% if(file === "index") { %> class="active" <% } %> >Home</a>
+        <a href="/game" <% if(file === "game") { %> class="active" <% } %> >Gioca</a>
+        <a href="/classifica" <% if(file === "classifica") { %> class="active" <% } %> >Classifica</a>
+        <a href="/nutriscore" <% if(file === "nutriscore") { %> class="active" <% } %> >Nutri-score</a>
+        <a href="/scontro" <% if(file === "scontro") { %> class="active" <% } %> >Scontro tra Prodotti</a>
+    </nav>
+    <div class="sidebar-footer">
+        <a href="/api" <% if(file === "api") { %> class="active" <% } %> >API Docs</a>
+        <a href="/contatti" <% if(file === "contatti") { %> class="active" <% } %> >Contatti</a>
+        <a href="/privacy" <% if(file === "privacy") { %> class="active" <% } %> >Privacy</a>
+        <% if(!user) { %> 
+            <a href="/login">Accedi</a> 
+        <% } else { %>
+            <a href="/account" <% if(file === "account") { %> class="active" <% } %> >Il mio account</a>
+        <% } %>
+        <% if(user && user.ruolo !== "user") {%>
+            <a href="/admin" <% if(file === "admin") { %> class="active" <% } %> >Amministratore</a>
+        <% } %>
+    </div>
+</aside>
