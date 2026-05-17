@@ -1,4 +1,4 @@
-# NutriClash 🍎🥗
+# NutriClash
 
 **NutriClash** è una piattaforma web interattiva progettata per sensibilizzare studenti e cittadini sull'importanza di una corretta alimentazione e sull'utilizzo del sistema **Nutriscore**. Attraverso un mix di contenuti educativi e gamification, il progetto mira a rendere l'educazione alimentare un'esperienza accessibile e coinvolgente.
 
@@ -11,7 +11,7 @@
 - **Design Moderno e Responsive**: Interfaccia ottimizzata per la fruizione sia da desktop che da dispositivi mobile.
 
 ## 🛠️ Stack Tecnologico
-- **Frontend**: HTML5, CSS3 (Validato W3C), JavaScript.
+- **Frontend**: EJS, CSS3 (Validato W3C), JavaScript.
 - **Templating Engine**: [EJS](https://ejs.co/) (Embedded JavaScript).
 - **Backend**: [Node.js](https://nodejs.org/) con framework Express.js.
 - **Database**: Database Relazionale (MySQL) per la gestione sicura e coerente di utenti, prodotti e partite.
