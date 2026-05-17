@@ -55,6 +55,7 @@
                                 <% } %>
                             </select>
                         </div>
+                        <button class="delete" data-username="<%= users[i].username %>" <% if((user.ruolo === "admin" && users[i].ruolo === "owner") || (user.username === users[i].username) || (users[i].username === "owner")) { %> disabled <% } %> >Elimina</button>
                     </div>
                 <% } %>
             </div>

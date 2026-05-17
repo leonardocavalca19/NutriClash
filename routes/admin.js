@@ -4,8 +4,7 @@ import { supabase } from "../db/supabase.js";
 
 function requireLogin(req, res, next) {
 
-    console.log(req.session.user.ruolo);
-    if (!req.session || req.session.user.ruolo === "user") {
+    if (!req.session || !req.session.user || req.session.user.ruolo === "user") {
         return res.redirect('/');
     }
 
@@ -46,10 +45,10 @@ router.post("/cambia-ruolo", express.json(), async (req, res) => {
 
         const { username, ruolo } = req.body;
         const { data: targetUser, error } = await supabase
-        .from("utenti")
-        .select("username, ruolo")
-        .eq("username", username)
-        .maybeSingle();
+            .from("utenti")
+            .select("username, ruolo")
+            .eq("username", username)
+            .maybeSingle();
 
         if(error || !targetUser)
         {
@@ -75,9 +74,9 @@ router.post("/cambia-ruolo", express.json(), async (req, res) => {
             });
         }
         const { error: updateError } = await supabase
-        .from("utenti")
-        .update({ ruolo })
-        .eq("username", username);
+            .from("utenti")
+            .update({ ruolo })
+            .eq("username", username);
         if(updateError) throw updateError;
 
         res.json({
@@ -87,6 +86,63 @@ router.post("/cambia-ruolo", express.json(), async (req, res) => {
     catch (err)
     {
         console.error(err);
+        res.status(500).json({
+            success: false,
+            error: "Errore server"
+        });
+    }
+});
+router.delete("/delete/:username", async (req, res) => {
+    console.log("DELETE ARRIVATO");
+    try
+    {
+        const username = req.params.username;
+        const { data: targetUser, error: findError } = await supabase
+            .from("utenti")
+            .select("username, ruolo")
+            .eq("username", username)
+            .maybeSingle();
+    
+            if(findError || !targetUser)
+            {
+                return res.status(404).json({
+                    success: false,
+                    error: "Utente non trovato"
+                });
+            }
+    
+            //controllo per evitare di eliminare sé stessi
+            if(req.session.user.username === username) {
+                return res.status(403).json({
+                    success: false,
+                    error: "Non puoi eliminare te stesso"
+                });
+            }
+    
+            //controllo per evitare che un admin elimini un owner
+            if(req.session.user.ruolo !== "owner" && targetUser.ruolo === "owner")
+            {
+                return res.status(403).json({
+                    success: false,
+                    error: "Non autorizzato"
+                });
+            }
+            
+            const { error: deleteError } = await supabase
+                .from("utenti")
+                .delete()
+                .eq("username", username);
+    
+            if(deleteError) throw deleteError;
+    
+            res.json({
+                success: true
+            });
+    }
+    catch(err)
+    {
+        console.error(err);
+
         res.status(500).json({
             success: false,
             error: "Errore server"
