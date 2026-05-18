@@ -2,7 +2,6 @@ import express from 'express';
 import { supabase } from "../db/supabase.js";
 const router = express.Router();
 
-// Importiamo i controlli dal tuo file antispam esterno
 import { controllaSeBannato, incrementaClickTasto } from "../public/javascripts/antispam.js";
 
 function requireLogin(req, res, next) {
