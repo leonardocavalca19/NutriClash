@@ -3,6 +3,9 @@ const router = express.Router();
 import { supabase } from "../db/supabase.js";
 import crypto from 'crypto';
 
+// Importiamo i controlli dal tuo file antispam esterno
+import { controllaSeBannato, incrementaClickTasto } from "../public/javascripts/antispam.js";
+
 // Middleware per verificare che l'utente sia loggato
 function requireLogin(req, res, next) {
     if (!req.session.user) {
@@ -11,7 +14,7 @@ function requireLogin(req, res, next) {
     next();
 }
 
-// Middleware per rate limit generale delle richieste  ---
+// Middleware per rate limit generale delle richieste 
 const memoriaAccessi = {};
 const rateLimiterManuale = (req, res, next) => {
     const ip = req.ip; 
@@ -38,7 +41,7 @@ const rateLimiterManuale = (req, res, next) => {
     next();
 };
 
-// --- Middleware per rate limit generazione nuova chiave---
+//Middleware per rate limit generazione nuova chiave
 const memoriaChiavi = {}; 
 const limitatoreChiaviAPI = (req, res, next) => {
     const ip = req.ip; 
@@ -66,7 +69,7 @@ const limitatoreChiaviAPI = (req, res, next) => {
 };
 
 // --- PAGINA PROFILO (Recupera l'elenco delle chiavi dell'utente) ---
-router.get('/', requireLogin, rateLimiterManuale, async function(req, res) {
+router.get('/', controllaSeBannato, requireLogin, rateLimiterManuale, async function(req, res) {
     try {
         const username = req.session.user.username;
 
@@ -107,11 +110,10 @@ router.get('/', requireLogin, rateLimiterManuale, async function(req, res) {
 });
 
 // --- GENERAZIONE NUOVA CHIAVE API ---
-router.post('/request-api-key', requireLogin, limitatoreChiaviAPI, async (req, res) => {
+router.post('/request-api-key', incrementaClickTasto, requireLogin, limitatoreChiaviAPI, async (req, res) => {
     try {
         const newApiKey = crypto.randomBytes(32).toString('hex');
         const username = req.session.user.username;
-
 
         const { error } = await supabase
             .from("APIkey")
@@ -130,12 +132,12 @@ router.post('/request-api-key', requireLogin, limitatoreChiaviAPI, async (req, r
 });
 
 // --- ATTIVA / DISATTIVA UNA CHIAVE ---
-router.post('/toggle-api-key', requireLogin, async (req, res) => {
+router.post('/toggle-api-key', incrementaClickTasto, requireLogin, async (req, res) => {
     try {
         const { apiKey, statoAttuale } = req.body;
         const username = req.session.user.username;
 
-        const nuovoStato = statoAttuale === 'true' ? false : true;  //Inverti stato
+        const nuovoStato = statoAttuale === 'true' ? false : true;
 
         const { error } = await supabase
             .from("APIkey")
@@ -156,7 +158,7 @@ router.post('/toggle-api-key', requireLogin, async (req, res) => {
 });
 
 // ---  ELIMINAZIONE DI UNA CHIAVE API SPECIFICA ---
-router.delete('/delete-api-key/:key', requireLogin, async (req, res) => {
+router.delete('/delete-api-key/:key', incrementaClickTasto, requireLogin, async (req, res) => {
     try {
         const apiKey = req.params.key;
         const username = req.session.user.username;
@@ -180,7 +182,7 @@ router.delete('/delete-api-key/:key', requireLogin, async (req, res) => {
 });
 
 // --- ELIMINAZIONE COMPLETA DELL'ACCOUNT ---
-router.delete('/delete/:username', requireLogin, async (req, res) => {
+router.delete('/delete/:username', incrementaClickTasto, requireLogin, async (req, res) => {
     try {
         const username = req.params.username;
         const email = req.session.user.email;   

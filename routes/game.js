@@ -2,6 +2,8 @@ import express from 'express';
 import { supabase } from "../db/supabase.js";
 const router = express.Router();
 
+import { controllaSeBannato, incrementaClickTasto } from "../public/javascripts/antispam.js";
+
 function requireLogin(req, res, next) {
     if (!req.session.user) {
         return res.redirect('/login');
@@ -10,13 +12,12 @@ function requireLogin(req, res, next) {
 }
 
 /* GET game page. */
-router.get('/', function(req, res, next) {
+router.get('/', controllaSeBannato, function(req, res, next) {
     res.render('game', { title: 'NutriClash - Game', user: req.session?.user || null });
 });
 
 /* GET products array */
 router.get('/call', async function(req, res, next){
-
     try
     {
         const { data, error } = await supabase
@@ -55,7 +56,7 @@ router.get('/call', async function(req, res, next){
 router.post('/lost', function(req, res, next){ res.render("lost", {data: req.body}); });
 
 /* POST checks the click of the user */
-router.post('/check', express.json(), async (req, res) => {
+router.post('/check', incrementaClickTasto, express.json(), async (req, res) => {
     const { p1, p2, scelta } = req.body;
 
     try
@@ -94,7 +95,7 @@ router.post('/check', express.json(), async (req, res) => {
     }
 });
 
-router.post('/finish', async (req, res) => {
+router.post('/finish', incrementaClickTasto, async (req, res) => {
     const username = req.session?.user?.username;
     if (!username) {
         return res.json({ saved: false });

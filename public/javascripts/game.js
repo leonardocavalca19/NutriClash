@@ -85,7 +85,6 @@ async function checkChoice(index)
 
     const p1 = listaProdotti[0];
     const p2 = listaProdotti[1];
-
     
     const response = await fetch("/game/check", {
         method: "POST",
@@ -98,7 +97,6 @@ async function checkChoice(index)
             scelta: index
         })
     });
-    const result = await response.json();
 
     if(!result.win)
     {
