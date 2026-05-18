@@ -11,7 +11,44 @@ function requireLogin(req, res, next) {
     next();
 }
 
-// Middleware per rate limit generale delle richieste  ---
+// Middleware antispam
+const memoriaSpam = {};
+const antispamTasto = (req, res, next) => {
+    const ip = req.ip; 
+    const ORA_ATTUALE = Date.now();
+    const LIMITE_TEMPO = 60000;         
+    const MAX_RICHIESTE = 15;           
+    const DURATA_BAN = 15 * 60 * 1000;  
+
+    if (memoriaSpam[ip] && memoriaSpam[ip].bannatoFinoA > ORA_ATTUALE) {
+        const millisecondiMancanti = memoriaSpam[ip].bannatoFinoA - ORA_ATTUALE;
+        const secondiTotali = Math.ceil(millisecondiMancanti / 1000);
+        
+        return res.status(403).render('ban', { secondiTotali });
+    }
+
+    if (!memoriaSpam[ip]) {
+        memoriaSpam[ip] = { conteggio: 1, inizioFinestra: ORA_ATTUALE, bannatoFinoA: 0 };
+    } else {
+        if (ORA_ATTUALE - memoriaSpam[ip].inizioFinestra > LIMITE_TEMPO) {
+            memoriaSpam[ip].conteggio = 1;
+            memoriaSpam[ip].inizioFinestra = ORA_ATTUALE;
+        } else {
+            memoriaSpam[ip].conteggio++;
+        }
+    }
+
+    if (memoriaSpam[ip].conteggio > MAX_RICHIESTE) {
+        memoriaSpam[ip].bannatoFinoA = ORA_ATTUALE + DURATA_BAN;
+        const secondiTotali = Math.ceil(DURATA_BAN / 1000);
+        
+        return res.status(403).render('ban', { secondiTotali });
+    }
+
+    next();
+};
+
+// Middleware per rate limit generale delle richieste 
 const memoriaAccessi = {};
 const rateLimiterManuale = (req, res, next) => {
     const ip = req.ip; 
@@ -38,7 +75,7 @@ const rateLimiterManuale = (req, res, next) => {
     next();
 };
 
-// --- Middleware per rate limit generazione nuova chiave---
+//Middleware per rate limit generazione nuova chiave
 const memoriaChiavi = {}; 
 const limitatoreChiaviAPI = (req, res, next) => {
     const ip = req.ip; 
@@ -66,7 +103,7 @@ const limitatoreChiaviAPI = (req, res, next) => {
 };
 
 // --- PAGINA PROFILO (Recupera l'elenco delle chiavi dell'utente) ---
-router.get('/', requireLogin, rateLimiterManuale, async function(req, res) {
+router.get('/', antispamTasto, requireLogin, rateLimiterManuale, async function(req, res) {
     try {
         const username = req.session.user.username;
 
@@ -107,7 +144,7 @@ router.get('/', requireLogin, rateLimiterManuale, async function(req, res) {
 });
 
 // --- GENERAZIONE NUOVA CHIAVE API ---
-router.post('/request-api-key', requireLogin, limitatoreChiaviAPI, async (req, res) => {
+router.post('/request-api-key',  antispamTasto, requireLogin, limitatoreChiaviAPI, async (req, res) => {
     try {
         const newApiKey = crypto.randomBytes(32).toString('hex');
         const username = req.session.user.username;
@@ -130,7 +167,7 @@ router.post('/request-api-key', requireLogin, limitatoreChiaviAPI, async (req, r
 });
 
 // --- ATTIVA / DISATTIVA UNA CHIAVE ---
-router.post('/toggle-api-key', requireLogin, async (req, res) => {
+router.post('/toggle-api-key',antispamTasto, requireLogin,  async (req, res) => {
     try {
         const { apiKey, statoAttuale } = req.body;
         const username = req.session.user.username;
@@ -156,7 +193,7 @@ router.post('/toggle-api-key', requireLogin, async (req, res) => {
 });
 
 // ---  ELIMINAZIONE DI UNA CHIAVE API SPECIFICA ---
-router.post('/delete-api-key', requireLogin, async (req, res) => {
+router.post('/delete-api-key', antispamTasto ,requireLogin, async (req, res) => {
     try {
         const { apiKey } = req.body;
         const username = req.session.user.username;
@@ -180,7 +217,7 @@ router.post('/delete-api-key', requireLogin, async (req, res) => {
 });
 
 // --- ELIMINAZIONE COMPLETA DELL'ACCOUNT ---
-router.post('/delete', requireLogin, async (req, res) => {
+router.post('/delete', requireLogin, antispamTasto, async (req, res) => {
     try {
         const username = req.session.user.username;
         const email = req.session.user.email;
