@@ -156,9 +156,9 @@ router.post('/toggle-api-key', requireLogin, async (req, res) => {
 });
 
 // ---  ELIMINAZIONE DI UNA CHIAVE API SPECIFICA ---
-router.post('/delete-api-key', requireLogin, async (req, res) => {
+router.delete('/delete-api-key/:key', requireLogin, async (req, res) => {
     try {
-        const { apiKey } = req.body;
+        const apiKey = req.params.key;
         const username = req.session.user.username;
 
         const { error } = await supabase
@@ -170,7 +170,7 @@ router.post('/delete-api-key', requireLogin, async (req, res) => {
         if (error) throw error;
 
         req.session.successMessage = 'Chiave API eliminata permanentemente.';
-        res.redirect('/account');
+        res.json({ success: true })
 
     } catch (err) {
         console.error("Errore eliminazione API Key:", err);
@@ -180,10 +180,10 @@ router.post('/delete-api-key', requireLogin, async (req, res) => {
 });
 
 // --- ELIMINAZIONE COMPLETA DELL'ACCOUNT ---
-router.post('/delete', requireLogin, async (req, res) => {
+router.delete('/delete/:username', requireLogin, async (req, res) => {
     try {
-        const username = req.session.user.username;
-        const email = req.session.user.email;
+        const username = req.params.username;
+        const email = req.session.user.email;   
 
         const { error } = await supabase
             .from("utenti")
@@ -193,7 +193,7 @@ router.post('/delete', requireLogin, async (req, res) => {
         if(error) throw error;
 
         req.session.destroy(() => {
-            res.redirect("/");
+            res.json({ success: true });
         });
     } catch (err) {
         console.error('Errore eliminazione account:', err.message);

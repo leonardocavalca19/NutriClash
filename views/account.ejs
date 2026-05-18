@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="/stylesheets/style.css">
     <link rel="stylesheet" href="/stylesheets/account.css">
     <script src="/javascripts/resize.js"></script>
+    <script src="/javascripts/account.js"></script>
 </head>
 <body>
 
@@ -77,7 +78,7 @@
                         <h4>Esci</h4>
                         <p>Effettua il logout</p>
                     </div>
-                    <form action="/login/logout" method="POST">
+                    <form action="/login/logout" method="DELETE">
                         <button type="submit" class="btn-logout">Logout</button>
                     </form>
                 </div>
@@ -87,9 +88,7 @@
                         <h4>Elimina Profilo</h4>
                         <p>Rimuovi permanentemente i tuoi dati dal server.</p>
                     </div>
-                    <form action="/account/delete" method="POST" onsubmit="return confirm('Vuoi davvero cancellare il tuo account NutriClash?');">
-                        <button type="submit" class="btn-elimina">Elimina</button>
-                    </form>
+                    <button data-username="<%= user.username %>" id="btn-elimina" class="btn-elimina">Elimina</button>
                 </div>
 
                 <div class="api-section">
@@ -124,12 +123,9 @@
                                             </button>
                                         </form>
 
-                                        <form action="/account/delete-api-key" method="POST" onsubmit="return confirm('Sei sicuro di voler eliminare permanentemente questa chiave API?');">
-                                            <input type="hidden" name="apiKey" value="<%= item.key %>">
-                                            <button type="submit" class="btn-delete-key">
-                                                Elimina
-                                            </button>
-                                        </form>
+                                        <button data-key="<%= item.key %>" type="submit" class="btn-delete-key">
+                                            Elimina
+                                        </button>
                                     </div>
 
                                 </div>

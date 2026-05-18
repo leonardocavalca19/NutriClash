@@ -93,7 +93,6 @@ router.post("/cambia-ruolo", express.json(), async (req, res) => {
     }
 });
 router.delete("/delete/:username", async (req, res) => {
-    console.log("DELETE ARRIVATO");
     try
     {
         const username = req.params.username;
