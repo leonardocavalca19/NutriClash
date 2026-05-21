@@ -3,16 +3,19 @@ const router = express.Router();
 import { supabase } from "../db/supabase.js";
 
 function requireLogin(req, res, next) {
-
     if (!req.session || !req.session.user || req.session.user.ruolo === "user") {
+        if (req.xhr || req.headers_accept?.includes('application/json') || req.headers['content-type'] === 'application/json') {
+            return res.status(403).json({ success: false, error: "Accesso negato. Permessi insufficienti." });
+        }
         return res.redirect('/');
     }
-
     next();
 }
 
+router.use(requireLogin);
+
 /* GET home page. */
-router.get('/', requireLogin, async function(req, res, next) {
+router.get('/', async function(req, res, next) {
     try
     {
         const { data: rows, error } = await supabase
