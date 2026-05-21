@@ -10,7 +10,7 @@ function requireLogin(req, res, next) {
 }
 
 /* GET home page. */
-router.get('/', async function(req, res, next) {
+router.get('/', requireLogin, async function(req, res, next) {
     try
     {
         const { data: rows, error } = await supabase
