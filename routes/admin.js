@@ -4,15 +4,10 @@ import { supabase } from "../db/supabase.js";
 
 function requireLogin(req, res, next) {
     if (!req.session || !req.session.user || req.session.user.ruolo === "user") {
-        if (req.xhr || req.headers_accept?.includes('application/json') || req.headers['content-type'] === 'application/json') {
-            return res.status(403).json({ success: false, error: "Accesso negato. Permessi insufficienti." });
-        }
         return res.redirect('/');
     }
     next();
 }
-
-router.use(requireLogin);
 
 /* GET home page. */
 router.get('/', async function(req, res, next) {
@@ -35,7 +30,7 @@ router.get('/', async function(req, res, next) {
         });
     }
 });
-router.post("/cambia-ruolo", express.json(), async (req, res) => {
+router.post("/cambia-ruolo", requireLogin, express.json(), async (req, res) => {
     try
     {
         const currentUser = req.session.user;
@@ -95,7 +90,7 @@ router.post("/cambia-ruolo", express.json(), async (req, res) => {
         });
     }
 });
-router.delete("/delete/:username", async (req, res) => {
+router.delete("/delete/:username", requireLogin, async (req, res) => {
     try
     {
         const username = req.params.username;
