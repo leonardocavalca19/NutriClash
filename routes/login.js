@@ -84,6 +84,7 @@ router.post('/', async function(req, res) {
 
 /* POST logs out the user */
 router.post('/logout', (req, res) => {
+    console.log(req.session);
     req.session.destroy(() => {
         res.redirect("/");
     });

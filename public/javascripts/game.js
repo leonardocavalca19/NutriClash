@@ -97,6 +97,7 @@ async function checkChoice(index)
             scelta: index
         })
     });
+    const result = await response.json();
 
     if(!result.win)
     {
